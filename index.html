@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wireworld</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1 id="title">Wireworld</h1>
+    <canvas id="WireworldCanvas" width="600" height="400"></canvas>
+    <button id="step" onclick="doStep()">Step</button>
+    <pre id="output"/>
+    <script src="utils.js"></script>
+    <script src="WireworldCanvas.js"></script>
+    <script src="Wireworld.js"></script>
+    <script>
+/*        var cells =  transpose([
+                [0,0,0,0,0,0],
+                [1,1,1,2,1,1],
+                [0,1,0,0,0,0],
+                [0,1,0,0,0,0]
+        ]);*/
+
+        var cells = [];
+        for (var i=0; i<60; i++) {
+            cells[i] = [];
+            for (var j=0; j<40; j++) {
+                var r = Math.floor(Math.random()*80);
+                switch (r) {
+                    case 0:
+                    case 1:
+                    case 2:
+                    case 4:
+                    case 5:
+                        cells[i][j] = 1;
+                        break;
+
+                    case 6:
+                    case 7:
+                        cells[i][j] = 2;
+                        break;
+
+                    case 8:
+                        cells[i][j] = 3;
+                        break;
+
+                    default:
+                        cells[i][j] = 0;
+                        break;
+                }
+            }
+        }
+
+        var c = document.getElementById('WireworldCanvas');
+        var ww = new Wireworld(cells);
+        var wwc = new WireworldCanvas(c, cells.length, cells[0].length);
+        ww.drawTo(wwc);
+
+        function doStep() {
+            ww.doStep();
+            ww.drawTo(wwc);
+        }
+    </script>
+</body>
+</html>
