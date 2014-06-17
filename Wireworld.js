@@ -3,11 +3,6 @@
  * Created by maxime on 6/15/14.
  */
 
-WW_EMPTY    = 0;
-WW_COPPER   = 1;
-WW_EHEAD    = 2;
-WW_ETAIL    = 3;
-
 function Wireworld(cells) {
     if (!isArray(cells) || !isArray(cells[0]))
     {
@@ -27,6 +22,11 @@ function Wireworld(cells) {
     }
 }
 
+Wireworld.prototype.WW_EMPTY    = 0;
+Wireworld.prototype.WW_COPPER   = 1;
+Wireworld.prototype.WW_EHEAD    = 2;
+Wireworld.prototype.WW_ETAIL    = 3;
+
 
 Wireworld.prototype.doStep = function () {
     var newCells = {};
@@ -37,7 +37,7 @@ Wireworld.prototype.doStep = function () {
 
             switch (this.cells[i][j])
             {
-                case WW_COPPER:
+                case this.WW_COPPER:
                     for (var di=-1; di<=1; di++) {
                         for (var dj=-1; dj<=1; dj++) {
                             if (i+di>=0 && i+di<this.columns
@@ -50,15 +50,15 @@ Wireworld.prototype.doStep = function () {
                     }
                     break;
 
-                case WW_EHEAD:
+                case this.WW_EHEAD:
                     newCell = WW_ETAIL;
                     break;
 
-                case WW_ETAIL:
+                case this.WW_ETAIL:
                     newCell = WW_COPPER;
                     break;
 
-                case WW_EMPTY:
+                case this.WW_EMPTY:
                 default:
                     break;
             }

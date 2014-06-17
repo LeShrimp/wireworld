@@ -1,7 +1,7 @@
 h1#title {
     text-align: center;
     color: #FF9900;
-    font-family: "Courier New";
+    font-family: "Courier New", monospace;
 }
 
 #WireworldCanvas {
