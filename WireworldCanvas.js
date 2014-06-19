@@ -2,25 +2,33 @@
  * Created by maxime on 6/11/14.
  */
 
-var WireworldCanvas = function (htmlCanvasElement, columns, rows) {
-    //Information for HOW to draw
-    this.ctx                = htmlCanvasElement.getContext('2d');
-    this.width              = htmlCanvasElement.width;
-    this.height             = htmlCanvasElement.height;
+var WireworldCanvas = function (width, height) {
+    this.htmlCanvasElement  = document.createElement('canvas');
+    this.htmlCanvasElement.setAttribute('width', width);
+    this.htmlCanvasElement.setAttribute('height', height);
 
-    //Information for WHAT to draw
-    this.columns            = columns;
-    this.rows               = rows;
-    this.cells              = null;
+    this.ctx                = htmlCanvasElement.getContext('2d');
+    this.width              = width;
+    this.height             = height;
 }
 
-WireworldCanvas.prototype.display = function () {
-    if (!isRectArray(this.cells, this.columns, this.rows)) {
-        return false;
+/**
+ * Draws an instance of wireworld to the given Canvas.
+ *
+ * @param {Wireworld} wireworld
+ */
+WireworldCanvas.prototype.drawWireworld = function (wireworld) {
+    for (var i=0; i<wireworld.columns; i++) {
+        for (var j=0; j<wireworld.rows; j++) {
+            this.drawCell(i, j, wireworld.cells[i][j]);
+        }
     }
+}
 
-    for (var i=0; i<this.columns; i++) {
-        for (var j=0; j<this.rows; j++) {
+
+WireworldCanvas.prototype.drawCircuitBoard = function (circuitBoard) {
+    for (var i=0; i<circuitBoard.columns; i++) {
+        for (var j=0; j<circuitBoard.rows; j++) {
             this.drawCell(i, j, this.cells[i][j]);
         }
     }

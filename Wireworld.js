@@ -3,6 +3,11 @@
  * Created by maxime on 6/15/14.
  */
 
+/**
+ *
+ * @param cells
+ * @constructor
+ */
 function Wireworld(cells) {
     if (!isArray(cells) || !isArray(cells[0]))
     {
@@ -22,22 +27,27 @@ function Wireworld(cells) {
     }
 }
 
-Wireworld.prototype.WW_EMPTY    = 0;
-Wireworld.prototype.WW_COPPER   = 1;
-Wireworld.prototype.WW_EHEAD    = 2;
-Wireworld.prototype.WW_ETAIL    = 3;
+Wireworld.WW_BLACK    = 0;
+Wireworld.WW_COPPER   = 1;
+Wireworld.WW_EHEAD    = 2;
+Wireworld.WW_ETAIL    = 3;
 
 
+/**
+ * Does one step of evolution. Have none of the values WW_BLACK, WW_COPPER, WW_EHEAD, WW_ETAIL
+ * are considered to be black.
+ */
 Wireworld.prototype.doStep = function () {
+    var i, j;
     var newCells = {};
 
-    for (var i=0; i<this.cells.length; i++) {
-        for (var j=0; j<this.cells[i].length; j++) {
+    for (i=0; i<this.cells.length; i++) {
+        for (j=0; j<this.cells[i].length; j++) {
             var newCell = null;
 
             switch (this.cells[i][j])
             {
-                case this.WW_COPPER:
+                case Wireworld.WW_COPPER:
                     for (var di=-1; di<=1; di++) {
                         for (var dj=-1; dj<=1; dj++) {
                             if (i+di>=0 && i+di<this.columns
@@ -50,15 +60,15 @@ Wireworld.prototype.doStep = function () {
                     }
                     break;
 
-                case this.WW_EHEAD:
+                case Wireworld.WW_EHEAD:
                     newCell = WW_ETAIL;
                     break;
 
-                case this.WW_ETAIL:
+                case Wireworld.WW_ETAIL:
                     newCell = WW_COPPER;
                     break;
 
-                case this.WW_EMPTY:
+                case Wireworld.WW_BLACK:
                 default:
                     break;
             }
@@ -72,8 +82,8 @@ Wireworld.prototype.doStep = function () {
         }
     }
 
-    for (var i in newCells) {
-        for (var j in newCells[i]) {
+    for (i in newCells) {
+        for (j in newCells[i]) {
             this.cells[i][j] = newCells[i][j];
         }
     }
