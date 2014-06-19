@@ -6,12 +6,14 @@
 </head>
 <body>
     <h1 id="title">Wireworld</h1>
-    <canvas id="WireworldCanvas" width="600" height="400"></canvas>
-    <button id="step" onclick="doStep()">Step</button>
-    <pre id="output"/>
+    <div id="container">
+        <button id="step" onclick="doStep()">Step</button>
+    </div>
     <script src="utils.js"></script>
     <script src="WireworldCanvas.js"></script>
     <script src="Wireworld.js"></script>
+    <script src="CircuitBoard.js"></script>
+    <script src="CircuitBoardCanvas.js"></script>
     <script>
 /*        var cells =  transpose([
                 [0,0,0,0,0,0],
@@ -50,14 +52,19 @@
             }
         }
 
-        var c = document.getElementById('WireworldCanvas');
-        var ww = new Wireworld(cells);
-        var wwc = new WireworldCanvas(c, cells.length, cells[0].length);
-        ww.drawTo(wwc);
+        var ww = new WireworldCircuitBoard(cells);
+        var circuit = new Wireworld([[2,2,2],[2,2,2],[2,2,2]]);
+        ww.placeCircuit(2,2,circuit);
+        var wwc = new CircuitBoardCanvas(ww, 600, 400, 'WireworldCanvas');
+        var container = document.getElementById('container');
+        container.insertBefore(wwc.htmlCanvasElement, container.firstChild);
+        wwc.draw();
+
+        var wwcb = new WireworldCircuitBoard(cells);
 
         function doStep() {
             ww.doStep();
-            ww.drawTo(wwc);
+            wwc.draw();
         }
     </script>
 </body>

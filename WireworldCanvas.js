@@ -2,14 +2,28 @@
  * Created by maxime on 6/11/14.
  */
 
-var WireworldCanvas = function (width, height) {
+/**
+ *
+ * @param wireworld
+ * @param width
+ * @param height
+ * @param id
+ * @constructor
+ */
+var WireworldCanvas = function (wireworld, width, height, id) {
     this.htmlCanvasElement  = document.createElement('canvas');
     this.htmlCanvasElement.setAttribute('width', width);
     this.htmlCanvasElement.setAttribute('height', height);
+    if (typeof id !== 'undefined') {
+        this.htmlCanvasElement.setAttribute('id', id);
+    }
 
-    this.ctx                = htmlCanvasElement.getContext('2d');
+    this.ctx                = this.htmlCanvasElement.getContext('2d');
+    this.wireworld          = wireworld;
     this.width              = width;
     this.height             = height;
+    this.cellWidth          = width/wireworld.columns;
+    this.cellHeight         = height/wireworld.rows;
 }
 
 /**
@@ -17,33 +31,21 @@ var WireworldCanvas = function (width, height) {
  *
  * @param {Wireworld} wireworld
  */
-WireworldCanvas.prototype.drawWireworld = function (wireworld) {
-    for (var i=0; i<wireworld.columns; i++) {
-        for (var j=0; j<wireworld.rows; j++) {
-            this.drawCell(i, j, wireworld.cells[i][j]);
-        }
-    }
-}
-
-
-WireworldCanvas.prototype.drawCircuitBoard = function (circuitBoard) {
-    for (var i=0; i<circuitBoard.columns; i++) {
-        for (var j=0; j<circuitBoard.rows; j++) {
-            this.drawCell(i, j, this.cells[i][j]);
+WireworldCanvas.prototype.draw = function () {
+    for (var i=0; i<this.wireworld.columns; i++) {
+        for (var j=0; j<this.wireworld.rows; j++) {
+            this.drawCell(i, j, this.wireworld.cells[i][j]);
         }
     }
 }
 
 
 WireworldCanvas.prototype.getCellRect = function (i, j) {
-    var cellWidth = this.width/this.columns;
-    var cellHeight = this.height/this.rows;
-    cellWidth = cellHeight = Math.min(cellWidth, cellHeight);
     return {
-        x: i * cellWidth,
-        y: j * cellHeight,
-        w: cellWidth,
-        h: cellHeight
+        x: i * this.cellWidth,
+        y: j * this.cellHeight,
+        w: this.cellWidth,
+        h: this.cellHeight
     };
 }
 
@@ -53,19 +55,20 @@ WireworldCanvas.prototype.drawCell = function (i, j, state) {
     this.ctx.beginPath();
     this.ctx.strokeStyle = 'black';
     switch (state) {
-        case WW_COPPER:
+        case WireworldCircuitBoard.WW_COPPER:
             this.ctx.fillStyle = '#FF9900';
             break;
 
-        case WW_EHEAD:
+        case WireworldCircuitBoard.WW_EHEAD:
             this.ctx.fillStyle = '#000099';
             break;
 
-        case WW_ETAIL:
+        case WireworldCircuitBoard.WW_ETAIL:
             this.ctx.fillStyle = '#0099FF';
             break;
 
-        case WW_EMPTY:
+        case WireworldCircuitBoard.WW_BLACK:
+        default:
             this.ctx.fillStyle = '#4C4747';
             break;
     }

@@ -9,22 +9,14 @@
  * @constructor
  */
 function Wireworld(cells) {
-    if (!isArray(cells) || !isArray(cells[0]))
+    if (!isRectArray(cells))
     {
-        throw 'Wireworld object must be initialized with 2-dimensional array.';
+        throw 'Wireworld object must be initialized with rectangular 2-dimensional array.';
     }
 
     this.cells  = cells;
     this.columns  = cells.length;
     this.rows = cells[0].length;
-
-    for (var i=0; i<this.columns; i++)
-    {
-        if (cells[i].length != this.rows)
-        {
-            throw 'Wireworld object must be initialized with rectangular 2-dimensional array.';
-        }
-    }
 }
 
 Wireworld.WW_BLACK    = 0;
@@ -34,7 +26,7 @@ Wireworld.WW_ETAIL    = 3;
 
 
 /**
- * Does one step of evolution. Have none of the values WW_BLACK, WW_COPPER, WW_EHEAD, WW_ETAIL
+ * Does one step of evolution. Every state except WW_COPPER, WW_EHEAD, WW_ETAIL
  * are considered to be black.
  */
 Wireworld.prototype.doStep = function () {
@@ -48,24 +40,28 @@ Wireworld.prototype.doStep = function () {
             switch (this.cells[i][j])
             {
                 case Wireworld.WW_COPPER:
+                    var countEHeads = 0;
                     for (var di=-1; di<=1; di++) {
                         for (var dj=-1; dj<=1; dj++) {
                             if (i+di>=0 && i+di<this.columns
                                 && j+dj>=0 && j+dj<this.rows
-                                && this.cells[i+di][j+dj] == WW_EHEAD)
+                                && this.cells[i+di][j+dj] == Wireworld.WW_EHEAD)
                             {
-                                newCell = WW_EHEAD;
+                                countEHeads++;
                             }
                         }
+                    }
+                    if (countEHeads >= 1 && countEHeads <= 3) {
+                        newCell = Wireworld.WW_EHEAD;
                     }
                     break;
 
                 case Wireworld.WW_EHEAD:
-                    newCell = WW_ETAIL;
+                    newCell = Wireworld.WW_ETAIL;
                     break;
 
                 case Wireworld.WW_ETAIL:
-                    newCell = WW_COPPER;
+                    newCell = Wireworld.WW_COPPER;
                     break;
 
                 case Wireworld.WW_BLACK:
@@ -89,11 +85,3 @@ Wireworld.prototype.doStep = function () {
     }
 }
 
-
-Wireworld.prototype.drawTo = function (wwCanvas) {
-    if (wwCanvas.columns != this.columns || wwCanvas.rows != this.rows) {
-        throw 'Incompatible WireworldCanvas object.';
-    }
-    wwCanvas.cells = this.cells;
-    wwCanvas.display();
-}

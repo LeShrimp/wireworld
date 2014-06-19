@@ -81,3 +81,18 @@ function copyPrototype(constr1, constr2) {
         proto1[prop] = proto2[prop];
     }
 }
+
+
+/**
+ * Primitive implementation of each. Executes callback(a[i])
+ * for every element in the array a.
+ *
+ * @param {Array} a
+ * @param {function} callback
+ */
+function forEach(a, callback) {
+    for (var i in a) {
+        callback(a[i]);
+    }
+}
+

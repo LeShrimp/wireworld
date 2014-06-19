@@ -4,7 +4,7 @@ h1#title {
     font-family: "Courier New", monospace;
 }
 
-#WireworldCanvas {
+#WireworldCanvas, #container {
     border: 1px solid black;
     display: block;
     margin-left: auto;
