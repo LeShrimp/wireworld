@@ -7,15 +7,15 @@
  * @param wireworld
  * @param width
  * @param height
- * @param id
+ * @param htmlId The id attribute of the generated DOM element.
  * @constructor
  */
-var WireworldCanvas = function (wireworld, width, height, id) {
+var WireworldCanvas = function (wireworld, width, height, htmlId) {
     this.htmlCanvasElement  = document.createElement('canvas');
     this.htmlCanvasElement.setAttribute('width', width);
     this.htmlCanvasElement.setAttribute('height', height);
-    if (typeof id !== 'undefined') {
-        this.htmlCanvasElement.setAttribute('id', id);
+    if (typeof htmlId !== 'undefined') {
+        this.htmlCanvasElement.setAttribute('id', htmlId);
     }
 
     this.ctx                = this.htmlCanvasElement.getContext('2d');
@@ -55,19 +55,19 @@ WireworldCanvas.prototype.drawCell = function (i, j, state) {
     this.ctx.beginPath();
     this.ctx.strokeStyle = 'black';
     switch (state) {
-        case WireworldCircuitBoard.WW_COPPER:
+        case CircuitBoard.WW_COPPER:
             this.ctx.fillStyle = '#FF9900';
             break;
 
-        case WireworldCircuitBoard.WW_EHEAD:
+        case CircuitBoard.WW_EHEAD:
             this.ctx.fillStyle = '#000099';
             break;
 
-        case WireworldCircuitBoard.WW_ETAIL:
+        case CircuitBoard.WW_ETAIL:
             this.ctx.fillStyle = '#0099FF';
             break;
 
-        case WireworldCircuitBoard.WW_BLACK:
+        case CircuitBoard.WW_BLACK:
         default:
             this.ctx.fillStyle = '#4C4747';
             break;

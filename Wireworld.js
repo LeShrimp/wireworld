@@ -1,6 +1,8 @@
 /**
  *
  * Created by maxime on 6/15/14.
+ *
+ * @requires utils.js
  */
 
 /**
