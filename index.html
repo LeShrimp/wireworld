@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <h1 id="title">Wireworld</h1>
+    <!--<h1 id="title">Wireworld</h1>-->
     <div id="container">
         <button id="step" onclick="doStep()">Step</button>
     </div>
@@ -14,18 +14,31 @@
     <script src="Wireworld.js"></script>
     <script src="CircuitBoard.js"></script>
     <script src="CircuitBoardCanvas.js"></script>
+    <script src="CircuitBox.js"></script>
+    <script src="CircuitBoxElement.js"></script>
     <script>
-/*        var cells =  transpose([
+        var circuit1 =  new Wireworld(transpose([
                 [0,0,0,0,0,0],
                 [1,1,1,2,1,1],
                 [0,1,0,0,0,0],
                 [0,1,0,0,0,0]
-        ]);*/
+        ]));
+        var circuit2 =  new Wireworld(transpose([
+            [0,0,0],
+            [1,1,1],
+            [0,1,2],
+            [0,1,2]
+        ]));
+
+        var cb = new CircuitBox();
+        cb.addCircuit(circuit1, 3);
+        cb.addCircuit(circuit2, 6);
+        var cbe = new CircuitBoxElement(cb, 100, 400, 'cbe');
 
         var cells = [];
-        for (var i=0; i<60; i++) {
+        for (var i=0; i<30; i++) {
             cells[i] = [];
-            for (var j=0; j<40; j++) {
+            for (var j=0; j<20; j++) {
                 var r = Math.floor(Math.random()*80);
                 switch (r) {
                     case 0:
@@ -52,15 +65,16 @@
             }
         }
 
-        var ww = new WireworldCircuitBoard(cells);
+        var ww = new CircuitBoard(cells);
         var circuit = new Wireworld([[2,2,2],[2,2,2],[2,2,2]]);
         ww.placeCircuit(2,2,circuit);
         var wwc = new CircuitBoardCanvas(ww, 600, 400, 'WireworldCanvas');
         var container = document.getElementById('container');
         container.insertBefore(wwc.htmlCanvasElement, container.firstChild);
+        container.appendChild(cbe.htmlElement);
         wwc.draw();
 
-        var wwcb = new WireworldCircuitBoard(cells);
+        var wwcb = new CircuitBoard(cells);
 
         function doStep() {
             ww.doStep();
