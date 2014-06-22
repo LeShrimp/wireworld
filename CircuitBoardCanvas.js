@@ -23,18 +23,8 @@ var CircuitBoardCanvas = function (circuitBoard, width, height, id) {
     this.circuitBoard = circuitBoard;
 
     this.highlightedCircuitId = null;
+};
 
-    this.htmlCanvasElement.addEventListener('mousemove', function(event) {
-        var x = event.clientX - that.htmlCanvasElement.getBoundingClientRect().left;
-        var y = event.clientY - that.htmlCanvasElement.getBoundingClientRect().top;
-        var pos = that.getPos(x, y);
-        console.log(pos.i + ', ' +pos.j)
-        if (that.highlightedCircuitId != that.circuitBoard.getCircuitAtPos(pos.i, pos.j)) {
-            that.highlightedCircuitId = that.circuitBoard.getCircuitAtPos(pos.i, pos.j)
-            that.draw();
-        };
-    });
-}
 
 copyProperties(CircuitBoardCanvas, WireworldCanvas); //Copy statics
 copyPrototype(CircuitBoardCanvas, WireworldCanvas);

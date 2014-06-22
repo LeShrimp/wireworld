@@ -15,7 +15,8 @@ var CircuitBoxElement = function (circuitBox, width, height, htmlId) {
     this.circuitBox         = circuitBox;
     this.width              = width;
     this.height             = height;
-    this.selectedCircuitId  = null;
+    this.selectedCircuit    = null;
+    this._selChangeCallback = null;
 
     this._populate();
 }
@@ -59,9 +60,17 @@ CircuitBoxElement.prototype._populate = function () {
         container.appendChild(label);
         this.htmlElement.appendChild(container);
     }
-}
+};
+
+
+CircuitBoxElement.prototype.onSelectionChanged = function (callback) {
+    this._selChangeCallback = callback;
+};
 
 
 CircuitBoxElement.prototype.selectCircuit = function (circuitId) {
-    this.selectedCircuitId = circuitId;
-}
+    this.selectedCircuit = this.circuitBox.circuits[circuitId].wireworld;
+    if (this._selChangeCallback != null) {
+        this._selChangeCallback(circuitId);
+    }
+};
