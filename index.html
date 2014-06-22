@@ -5,10 +5,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <!--<h1 id="title">Wireworld</h1>-->
-    <div id="container">
-        <button id="step" onclick="doStep()">Step</button>
-    </div>
+    <h1 id="title">Wireworld</h1>
     <script src="utils.js"></script>
     <script src="WireworldCanvas.js"></script>
     <script src="Wireworld.js"></script>
@@ -16,70 +13,12 @@
     <script src="CircuitBoardCanvas.js"></script>
     <script src="CircuitBox.js"></script>
     <script src="CircuitBoxElement.js"></script>
+    <script src="WireworldGame.js"></script>
     <script>
-        var circuit1 =  new Wireworld(transpose([
-                [0,0,0,0,0,0],
-                [1,1,1,2,1,1],
-                [0,1,0,0,0,0],
-                [0,1,0,0,0,0]
-        ]));
-        var circuit2 =  new Wireworld(transpose([
-            [0,0,0],
-            [1,1,1],
-            [0,1,2],
-            [0,1,2]
-        ]));
+        var game = new WireworldGame();
 
-        var cb = new CircuitBox();
-        cb.addCircuit(circuit1, 3);
-        cb.addCircuit(circuit2, 6);
-        var cbe = new CircuitBoxElement(cb, 100, 400, 'cbe');
-
-        var cells = [];
-        for (var i=0; i<30; i++) {
-            cells[i] = [];
-            for (var j=0; j<20; j++) {
-                var r = Math.floor(Math.random()*80);
-                switch (r) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 4:
-                    case 5:
-                        cells[i][j] = 1;
-                        break;
-
-                    case 6:
-                    case 7:
-                        cells[i][j] = 2;
-                        break;
-
-                    case 8:
-                        cells[i][j] = 3;
-                        break;
-
-                    default:
-                        cells[i][j] = 0;
-                        break;
-                }
-            }
-        }
-
-        var ww = new CircuitBoard(cells);
-        var circuit = new Wireworld([[2,2,2],[2,2,2],[2,2,2]]);
-        ww.placeCircuit(2,2,circuit);
-        var wwc = new CircuitBoardCanvas(ww, 600, 400, 'WireworldCanvas');
-        var container = document.getElementById('container');
-        container.insertBefore(wwc.htmlCanvasElement, container.firstChild);
-        container.appendChild(cbe.htmlElement);
-        wwc.draw();
-
-        var wwcb = new CircuitBoard(cells);
-
-        function doStep() {
-            ww.doStep();
-            wwc.draw();
-        }
+        game.init();
+        document.body.appendChild(game.htmlContainerElement);
     </script>
 </body>
 </html>
