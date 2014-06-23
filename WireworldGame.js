@@ -11,7 +11,6 @@ var WireworldGame = function () {
     this.htmlContainerElement = null;
 
     this.currentMode = null;
-    this.setMode(WireworldGame.SELECTION_MODE);
 };
 
 
@@ -20,7 +19,8 @@ WireworldGame.SELECTION_MODE = 1;
 WireworldGame.EXECUTION_MODE = 1;
 
 
-WireworldGame.prototype.generateDomElements = function (circuitBoard, circuitBox, message) {
+//TODO: Remove this, create fine HTML, style it, give dom elements via constructor
+BULLSHIT WireworldGame.prototype.generateDomElements = function (circuitBoard, circuitBox, message) {
     var that = this;
 
     //Setting up the circuit box
@@ -51,30 +51,34 @@ WireworldGame.prototype.setMode = function(mode) {
     var that = this;
     var cbcSelectionListener = function (event) {
         var cbc = that.circuitBoardCanvas;
-        var cbce = cbc.htmlCanvasElement;
         var cb = cbc.circuitBoard;
 
-        var x = event.clientX - cbce.getBoundingClientRect().left;
-        var y = event.clientY - cbce.getBoundingClientRect().top;
-        var pos = cbc.getPos(x, y);
-        console.log(pos.i + ', ' +pos.j)
+        var pos = cbc.getPosFromMouseEvent(event);
+        console.log(pos.i + ', ' + pos.j);
         if (cbc.highlightedCircuitId != cb.getCircuitAtPos(pos.i, pos.j)) {
             cbc.highlightedCircuitId = cb.getCircuitAtPos(pos.i, pos.j)
             cbc.draw();
         }
     };
 
+    var cbcPlacementListener = function (event) {
+        var cbc = that.circuitBoardCanvas;
+        var cb = cbc.circuitBoard;
+
+        //TODO: Here I stopped
+    };
+
     switch (mode) {
         case WireworldGame.PLACEMENT_MODE:
-            this.circuitBoardCanvas.htmlCanvasElement.addEventListener('mousemove', function(event) {
-
-            });
+            this.circuitBoardCanvas.htmlCanvasElement.addEventListener('mousemove', cbcPlacementListener);
             break;
 
         case WireworldGame.SELECTION_MODE:
             this.circuitBoardCanvas.htmlCanvasElement.addEventListener('mousemove', cbcSelectionListener);
             break;
     }
+
+    this.currentMode = mode;
 };
 
 
@@ -139,4 +143,5 @@ WireworldGame.prototype.init = function () {
     cbox.addCircuit(circuit3, 26);
 
     this.generateDomElements(cb, cbox, 'The first level.');
+    this.setMode(WireworldGame.SELECTION_MODE);
 };

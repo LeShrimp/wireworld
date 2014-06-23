@@ -42,34 +42,37 @@ CircuitBoardCanvas.prototype.draw = function () {
     }
     var circuits = this.circuitBoard.circuits;
     for (var id in circuits) {
-        this.drawCircuit(circuits[id], this.highlightedCircuitId == id);
+        this.drawCircuit(circuits[id].i, circuits[id].j, circuits[id].wireworld, this.highlightedCircuitId == id);
     }
 }
 
 
-CircuitBoardCanvas.prototype.drawCircuit = function (circuit, isHighlighted) {
-    for (var i=0; i<circuit.wireworld.columns; i++) {
-        for (var j=0; j<circuit.wireworld.rows; j++) {
-            this.drawCell(i+circuit.i, j+circuit.j, circuit.wireworld.cells[i][j]);
+CircuitBoardCanvas.prototype.drawCircuit = function (i, j, wireworld, isHighlighted) {
+    for (var k=0; k<wireworld.columns; k++) {
+        for (var l=0; l<wireworld.rows; l++) {
+            this.drawCell(k+i, l+j, wireworld.cells[k][l]);
         }
     }
     this.ctx.beginPath();
     this.ctx.strokeStyle = isHighlighted ? 'green' : 'brown';
     var oldLineWidth = this.ctx.lineWidth;
     this.ctx.lineWidth = 3;
-    var rectUpperLeft = this.getCellRect(circuit.i, circuit.j);
+    var rectUpperLeft = this.getCellRect(i, j);
     this.ctx.rect(
         rectUpperLeft.x+0.5,
         rectUpperLeft.y+0.5,
-        this.cellWidth * circuit.wireworld.columns,
-        this.cellHeight * circuit.wireworld.rows
+        this.cellWidth * wireworld.columns,
+        this.cellHeight * wireworld.rows
     );
     this.ctx.stroke();
     this.ctx.lineWidth = oldLineWidth;
 }
 
 
-CircuitBoardCanvas.prototype.getPos = function (x, y) {
+//TODO: Move this to WireworldCanvas
+CircuitBoardCanvas.prototype.getPosFromMouseEvent = function (event) {
+    var x = event.clientX - this.htmlCanvasElement.getBoundingClientRect().left;
+    var y = event.clientY - this.htmlCanvasElement.getBoundingClientRect().top;
     return {
         i: Math.floor(x/this.cellWidth),
         j: Math.floor(y/this.cellHeight)
