@@ -19,34 +19,6 @@ WireworldGame.SELECTION_MODE = 1;
 WireworldGame.EXECUTION_MODE = 1;
 
 
-//TODO: Remove this, create fine HTML, style it, give dom elements via constructor
-BULLSHIT WireworldGame.prototype.generateDomElements = function (circuitBoard, circuitBox, message) {
-    var that = this;
-
-    //Setting up the circuit box
-    this.circuitBoxElement = new CircuitBoxElement(circuitBox, 200, 400, 'circuitbox');
-    this.circuitBoxElement.onSelectionChanged(function (circuitId) {
-        that.setMode(WireworldGame.PLACEMENT_MODE);
-    });
-
-    //Setting up the circuit board
-    this.circuitBoardCanvas = new CircuitBoardCanvas(circuitBoard, 600, 400, 'circuitboard');
-    this.circuitBoardCanvas.draw();
-    this.circuitBoardCanvas.htmlCanvasElement.addEventListener('click', function (event) {
-        if (event.button == 2) {
-            that.setMode(WireworldGame.SELECTION_MODE);
-        }
-    });
-
-    this.htmlContainerElement = document.createElement('div');
-    this.htmlContainerElement.style.width = (600 + 200) + 'px';
-    this.htmlContainerElement.style.height = 400 + 'px';
-    this.htmlContainerElement.className += ' wireworld';
-    this.htmlContainerElement.appendChild(this.circuitBoardCanvas.htmlCanvasElement);
-    this.htmlContainerElement.appendChild(this.circuitBoxElement.htmlElement);
-};
-
-
 WireworldGame.prototype.setMode = function(mode) {
     var that = this;
     var cbcSelectionListener = function (event) {
@@ -142,6 +114,8 @@ WireworldGame.prototype.init = function () {
     cbox.addCircuit(circuit2, 6);
     cbox.addCircuit(circuit3, 26);
 
-    this.generateDomElements(cb, cbox, 'The first level.');
-    this.setMode(WireworldGame.SELECTION_MODE);
+    //TODO: Rewrite constructors
+    this.circuitBoxElement = new CircuitBoxElement(circuitBox, htmlElement, cellwidth);
+    this.circuitBoardCanvas = new CircuitBoardCanvas(circuitBoard, htmlElement, cellwidth);
+
 };

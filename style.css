@@ -20,11 +20,6 @@ h1#title {
     display: block;
 }
 
-#circuitboard {
-    display: inline-block;
-    float: left;
-}
-
 #circuitbox {
     display: inline-block;
     overflow: auto;
@@ -36,4 +31,45 @@ h1#title {
     display: inherit;
 }
 
+.container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /*
+     * Not sure how these compute, inline blocks have some margin sometimes.
+     * See http://css-tricks.com/fighting-the-space-between-inline-block-elements/
+     * I could consider using SASS to  create variables ant dynamically compute
+     * width and height.
+     */
+    width: 761px;
+    height: 560px;
+    border: 0 solid #ccc;
+}
 
+#circuitboard {
+    width: 600px;
+    height: 400px;
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+
+#circuitbox {
+    display: inline-block;
+    border: 1px solid #ccc;
+    width: 150px;
+    height: 400px;
+}
+
+#messagebox {
+    display: inline-block;
+    border: 1px solid #ccc;
+    width: 600px;
+    height: 150px
+}
+
+#playpause {
+    display: inline-block;
+    border: 1px solid #ccc;
+    width: 150px;
+    height: 150px;
+}
