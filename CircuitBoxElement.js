@@ -4,17 +4,17 @@
  */
 
 
-var CircuitBoxElement = function (circuitBox, width, height, htmlId) {
-    this.htmlElement  = document.createElement('div');
-    this.htmlElement.style.width = width+'px';
-    this.htmlElement.style.height = height+'px';
-    if (typeof htmlId !== 'undefined') {
-        this.htmlElement.setAttribute('id', htmlId);
-    }
-
+/**
+ *
+ * @param {CircuitBox} circuitBox
+ * @param {HTMLElement} htmlElement
+ * @param {number} cellWidth
+ * @constructor
+ */
+var CircuitBoxElement = function (circuitBox, htmlElement, cellWidth) {
+    this.htmlElement        = htmlElement;
     this.circuitBox         = circuitBox;
-    this.width              = width;
-    this.height             = height;
+    this.cellWidth          = cellWidth;
     this.selectedCircuit    = null;
     this._selChangeCallback = null;
 
@@ -26,18 +26,13 @@ CircuitBoxElement.prototype._populate = function () {
     var that = this;
     var circuits = this.circuitBox.circuits;
 
-    var maxColumns = 0;
-    for (var id in circuits) {
-        maxColumns = Math.max(maxColumns, circuits[id].wireworld.columns);
-    }
-    var cellWidth = Math.floor((this.width - 20)/maxColumns);
-
     for (var id in circuits) {
         var circuit = circuits[id];
         //Create Canvas element
-        var width = circuit.wireworld.columns * cellWidth;
-        var height = circuit.wireworld.rows * cellWidth;
-        var wwc = new WireworldCanvas(circuit.wireworld, width, height, id);
+        var width = circuit.wireworld.columns * this.cellWidth;
+        var height = circuit.wireworld.rows * this.cellWidth;
+        var htmlCanvasElement = WireworldCanvas.createCanvasElement(width, height, id)
+        var wwc = new WireworldCanvas(circuit.wireworld, htmlCanvasElement, this.cellWidth);
         wwc.draw();
 
         wwc.htmlCanvasElement.addEventListener('click',

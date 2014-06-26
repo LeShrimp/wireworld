@@ -6,18 +6,13 @@ body {
 h1#title {
     text-align: center;
     color: #FF9900;
-    font-family: "Courier New", monospace;
+    font-family: "Consolas", monospace;
 }
 
-.wireworld p {
+.container p {
     color: white;
     text-align: center;
-}
-
-.wireworld {
-    margin-left: auto;
-    margin-right:auto;
-    display: block;
+    font-family: "Consolas", monospace;
 }
 
 #circuitbox {
@@ -60,11 +55,16 @@ h1#title {
     height: 400px;
 }
 
+#circuitbox canvas {
+    margin-top: 4px;
+}
+
 #messagebox {
     display: inline-block;
     border: 1px solid #ccc;
     width: 600px;
-    height: 150px
+    height: 150px;
+    vertical-align: top;
 }
 
 #playpause {

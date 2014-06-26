@@ -4,32 +4,38 @@
 
 /**
  *
- * @param wireworld
- * @param width
- * @param height
- * @param htmlId The id attribute of the generated DOM element.
+ * @param {Wireworld} wireworld
+ * @param {HTMLCanvasElement} htmlCanvasElement
+ * @param {number} cellWidth
  * @constructor
  */
-var WireworldCanvas = function (wireworld, width, height, htmlId) {
-    this.htmlCanvasElement  = document.createElement('canvas');
-    this.htmlCanvasElement.setAttribute('width', width);
-    this.htmlCanvasElement.setAttribute('height', height);
-    if (typeof htmlId !== 'undefined') {
-        this.htmlCanvasElement.setAttribute('id', htmlId);
-    }
-
+var WireworldCanvas = function (wireworld, htmlCanvasElement, cellWidth) {
+    this.htmlCanvasElement  = htmlCanvasElement;
     this.ctx                = this.htmlCanvasElement.getContext('2d');
+    this.width              = htmlCanvasElement.width;
+    this.height             = htmlCanvasElement.height;
     this.wireworld          = wireworld;
-    this.width              = width;
-    this.height             = height;
-    this.cellWidth          = width/wireworld.columns;
-    this.cellHeight         = height/wireworld.rows;
+    this.cellWidth          = cellWidth;
+}
+
+/**
+ *
+ * @param width
+ * @param height
+ * @param id
+ * @returns {HTMLElement}
+ */
+WireworldCanvas.createCanvasElement = function(width, height, id) {
+    var e = document.createElement('canvas');
+    e.setAttribute('width', width);
+    e.setAttribute('height', height);
+    e.id = id;
+
+    return e;
 }
 
 /**
  * Draws an instance of wireworld to the given Canvas.
- *
- * @param {Wireworld} wireworld
  */
 WireworldCanvas.prototype.draw = function () {
     for (var i=0; i<this.wireworld.columns; i++) {
@@ -43,9 +49,9 @@ WireworldCanvas.prototype.draw = function () {
 WireworldCanvas.prototype.getCellRect = function (i, j) {
     return {
         x: i * this.cellWidth,
-        y: j * this.cellHeight,
+        y: j * this.cellWidth,
         w: this.cellWidth,
-        h: this.cellHeight
+        h: this.cellWidth
     };
 }
 

@@ -9,11 +9,13 @@
 
     <section class="container">
 
-        <section id="circuitboard"> </section>
-        <section id="circuitbox"> </section>
+        <canvas id="circuitboard" height="400" width="600"> </canvas>
+        <div id="circuitbox"> </div>
 
-        <section id="messagebox"> </section>
-        <section id="playpause"> </section>
+        <div id="messagebox">
+            <p>This is Wireworld!</p>
+        </div>
+        <canvas id="playpause"> </canvas>
 
     </section>
 
@@ -29,7 +31,6 @@
         var game = new WireworldGame();
 
         game.init();
-        document.body.appendChild(game.htmlContainerElement);
     </script>
 </body>
 </html>

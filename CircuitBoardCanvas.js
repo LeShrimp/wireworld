@@ -8,15 +8,14 @@
 
 /**
  * @augments WireworldCanvas
- * @param circuitBoard
- * @param width
- * @param height
- * @param id
+ * @param {CircuitBoard} circuitBoard
+ * @param {HTMLCanvasElement} htmlCanvasElement
+ * @param {number} cellWidth
  * @constructor
  */
-var CircuitBoardCanvas = function (circuitBoard, width, height, id) {
+var CircuitBoardCanvas = function (circuitBoard, htmlCanvasElement, cellWidth) {
     var that = this;
-    WireworldCanvas.call(this, circuitBoard, width, height, id);
+    WireworldCanvas.call(this, circuitBoard, htmlCanvasElement, cellWidth);
 
     //Note that due to call of parent constructor, this.circuitBoard and
     //this.wireworld refer to the same object.
@@ -62,7 +61,7 @@ CircuitBoardCanvas.prototype.drawCircuit = function (i, j, wireworld, isHighligh
         rectUpperLeft.x+0.5,
         rectUpperLeft.y+0.5,
         this.cellWidth * wireworld.columns,
-        this.cellHeight * wireworld.rows
+        this.cellWidth * wireworld.rows
     );
     this.ctx.stroke();
     this.ctx.lineWidth = oldLineWidth;
@@ -75,7 +74,7 @@ CircuitBoardCanvas.prototype.getPosFromMouseEvent = function (event) {
     var y = event.clientY - this.htmlCanvasElement.getBoundingClientRect().top;
     return {
         i: Math.floor(x/this.cellWidth),
-        j: Math.floor(y/this.cellHeight)
+        j: Math.floor(y/this.cellWidth)
     };
 }
 

@@ -114,8 +114,12 @@ WireworldGame.prototype.init = function () {
     cbox.addCircuit(circuit2, 6);
     cbox.addCircuit(circuit3, 26);
 
-    //TODO: Rewrite constructors
-    this.circuitBoxElement = new CircuitBoxElement(circuitBox, htmlElement, cellwidth);
-    this.circuitBoardCanvas = new CircuitBoardCanvas(circuitBoard, htmlElement, cellwidth);
+    var htmlCanvasElement = document.getElementById('circuitboard');
+    var cellwidth = htmlCanvasElement.width / cb.columns;
+    this.circuitBoardCanvas = new CircuitBoardCanvas(cb, htmlCanvasElement, cellwidth);
+    this.circuitBoardCanvas.draw();
+
+    var htmlElement = document.getElementById('circuitbox');
+    this.circuitBoxElement = new CircuitBoxElement(cbox, htmlElement, cellwidth);
 
 };
