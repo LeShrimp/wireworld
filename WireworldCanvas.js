@@ -10,11 +10,17 @@
  * @constructor
  */
 var WireworldCanvas = function (wireworld, htmlCanvasElement, cellWidth) {
+    /**  @type {HTMLCanvasElement} */
     this.htmlCanvasElement  = htmlCanvasElement;
+    /**  @type {CanvasRenderingContext2D} */
     this.ctx                = this.htmlCanvasElement.getContext('2d');
+    /** @type {number} */
     this.width              = htmlCanvasElement.width;
+    /** @type {number} */
     this.height             = htmlCanvasElement.height;
+    /** @type {Wireworld} */
     this.wireworld          = wireworld;
+    /** @type {number} */
     this.cellWidth          = cellWidth;
 }
 
@@ -46,6 +52,12 @@ WireworldCanvas.prototype.draw = function () {
 }
 
 
+/**
+ *
+ * @param i
+ * @param j
+ * @returns {{x: number, y: number, w: (number|*), h: *}}
+ */
 WireworldCanvas.prototype.getCellRect = function (i, j) {
     return {
         x: i * this.cellWidth,
@@ -56,6 +68,12 @@ WireworldCanvas.prototype.getCellRect = function (i, j) {
 }
 
 
+/**
+ *
+ * @param i
+ * @param j
+ * @param state
+ */
 WireworldCanvas.prototype.drawCell = function (i, j, state) {
     var rect = this.getCellRect(i, j);
     this.ctx.beginPath();

@@ -44,7 +44,13 @@ CircuitBoardCanvas.prototype.draw = function () {
     }
 }
 
-
+/**
+ *
+ * @param i
+ * @param j
+ * @param wireworld
+ * @param isHighlighted
+ */
 CircuitBoardCanvas.prototype.drawCircuit = function (i, j, wireworld, isHighlighted) {
     for (var k=0; k<wireworld.columns; k++) {
         for (var l=0; l<wireworld.rows; l++) {
@@ -68,6 +74,11 @@ CircuitBoardCanvas.prototype.drawCircuit = function (i, j, wireworld, isHighligh
 
 
 //TODO: Move this to WireworldCanvas
+/**
+ *
+ * @param event
+ * @returns {{i: number, j: number}}
+ */
 CircuitBoardCanvas.prototype.getPosFromMouseEvent = function (event) {
     var x = event.clientX - this.htmlCanvasElement.getBoundingClientRect().left;
     var y = event.clientY - this.htmlCanvasElement.getBoundingClientRect().top;

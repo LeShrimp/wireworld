@@ -4,6 +4,10 @@
  * @requires Wireworld.js
  */
 
+/**
+ *
+ * @constructor
+ */
 var CircuitBox = function() {
     this.circuits = {};
 };

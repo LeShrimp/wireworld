@@ -23,6 +23,10 @@ var CircuitBoxElement = function (circuitBox, htmlElement, cellWidth, onSelectio
 }
 
 
+/**
+ *
+ * @private
+ */
 CircuitBoxElement.prototype._populate = function () {
     var that = this;
     var circuits = this.circuitBox.circuits;
@@ -57,24 +61,42 @@ CircuitBoxElement.prototype._populate = function () {
     }
 };
 
-
+/**
+ *
+ * @param circuitId
+ */
 CircuitBoxElement.prototype.selectCircuit = function (circuitId) {
     this.selectedCircuitId = circuitId;
     this.onSelectionChanged(circuitId);
 };
 
+/**
+ *
+ * @param circuitId
+ * @returns {boolean}
+ */
 CircuitBoxElement.prototype.decCount = function (circuitId) {
     var result = this.circuitBox.decCount(circuitId);
     document.getElementById(circuitId).nextSibling.innerHTML = this.getCount(circuitId);
     return result;
 };
 
+/**
+ *
+ * @param circuitId
+ * @returns {*}
+ */
 CircuitBoxElement.prototype.incCount = function (circuitId) {
     var result = this.circuitBox.incCount(circuitId);
     document.getElementById(circuitId).nextSibling.innerHTML = this.getCount(circuitId);
     return result;
 };
 
+/**
+ *
+ * @param circuitId
+ * @returns {*}
+ */
 CircuitBoxElement.prototype.getCount = function (circuitId) {
     return this.circuitBox.circuits[circuitId].count;
 }

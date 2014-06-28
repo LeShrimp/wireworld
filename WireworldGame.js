@@ -3,6 +3,10 @@
  */
 
 
+/**
+ *
+ * @constructor
+ */
 var WireworldGame = function () {
     this.circuitBoxElement = null;
     this.circuitBoardCanvas = null;
@@ -42,7 +46,8 @@ WireworldGame.prototype.setMode = function(mode) {
         return function (event) {
             var pos = cbc.getPosFromMouseEvent(event);
             cbc.ctx.putImageData(imageData, 0, 0);
-            cbc.drawCircuit(pos.i, pos.j, cbox.getCircuitWireworld(cbox.selectedCircuitId));
+            var circuit = cbox.getCircuitWireworld(cbox.selectedCircuitId);
+            cbc.drawCircuit(pos.i-Math.floor(circuit.columns/2), pos.j-Math.floor(circuit.rows/2), circuit);
         }
     })();
 
