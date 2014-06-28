@@ -32,17 +32,26 @@ copyPrototype(CircuitBoardCanvas, WireworldCanvas);
  * @param circuitBoard
  * @override
  */
-CircuitBoardCanvas.prototype.draw = function () {
-    for (var i=0; i<this.circuitBoard.columns; i++) {
-        for (var j=0; j<this.circuitBoard.rows; j++) {
-            this.drawCell(i, j, this.circuitBoard.cells[i][j]);
+CircuitBoardCanvas.prototype.draw = (function() {
+    var buffer = null;
+
+    return function () {
+        if (buffer != null) {
+            this.ctx.putImageData(buffer, 0, 0); //For some reason this gets really slow in firefox
+        } else {
+            for (var i=0; i<this.wireworld.columns; i++) {
+                for (var j=0; j<this.wireworld.rows; j++) {
+                    this.drawCell(i, j, this.wireworld.cells[i][j]);
+                }
+            }
+            buffer = this.ctx.getImageData(0, 0, this.width, this.height);
+        }
+        var circuits = this.circuitBoard.circuits;
+        for (var id in circuits) {
+            this.drawCircuit(circuits[id].i, circuits[id].j, circuits[id].wireworld, this.highlightedCircuitId == id);
         }
     }
-    var circuits = this.circuitBoard.circuits;
-    for (var id in circuits) {
-        this.drawCircuit(circuits[id].i, circuits[id].j, circuits[id].wireworld, this.highlightedCircuitId == id);
-    }
-}
+})();
 
 /**
  *
@@ -51,40 +60,38 @@ CircuitBoardCanvas.prototype.draw = function () {
  * @param wireworld
  * @param isHighlighted
  */
-CircuitBoardCanvas.prototype.drawCircuit = function (i, j, wireworld, isHighlighted) {
+CircuitBoardCanvas.prototype.drawCircuit = function (i, j, wireworld, isHighlighted, isLegal) {
+    if (typeof isLegal === 'undefined') {
+        isLegal = true;
+    }
+
     for (var k=0; k<wireworld.columns; k++) {
         for (var l=0; l<wireworld.rows; l++) {
             this.drawCell(k+i, l+j, wireworld.cells[k][l]);
         }
     }
-    this.ctx.beginPath();
-    this.ctx.strokeStyle = isHighlighted ? 'green' : 'brown';
-    var oldLineWidth = this.ctx.lineWidth;
-    this.ctx.lineWidth = 3;
+    var ctx = this.ctx;
+    ctx.beginPath();
+    ctx.strokeStyle = isHighlighted && isLegal ? 'green' : 'brown';
+    ctx.save();
+    ctx.lineWidth = 3;
     var rectUpperLeft = this.getCellRect(i, j);
-    this.ctx.rect(
-        rectUpperLeft.x+0.5,
-        rectUpperLeft.y+0.5,
-        this.cellWidth * wireworld.columns,
-        this.cellWidth * wireworld.rows
-    );
-    this.ctx.stroke();
-    this.ctx.lineWidth = oldLineWidth;
-}
-
-
-//TODO: Move this to WireworldCanvas
-/**
- *
- * @param event
- * @returns {{i: number, j: number}}
- */
-CircuitBoardCanvas.prototype.getPosFromMouseEvent = function (event) {
-    var x = event.clientX - this.htmlCanvasElement.getBoundingClientRect().left;
-    var y = event.clientY - this.htmlCanvasElement.getBoundingClientRect().top;
-    return {
-        i: Math.floor(x/this.cellWidth),
-        j: Math.floor(y/this.cellWidth)
+    var circuitRect = {
+        x: rectUpperLeft.x+0.5,
+        y: rectUpperLeft.y+0.5,
+        w: this.cellWidth * wireworld.columns,
+        h: this.cellWidth * wireworld.rows
     };
-}
+    ctx.rect(circuitRect.x, circuitRect.y, circuitRect.w, circuitRect.h);
+    if (!isLegal) {
+        ctx.moveTo(circuitRect.x, circuitRect.y);
+        ctx.lineTo(circuitRect.x + circuitRect.w, circuitRect.y + circuitRect.h);
+        ctx.moveTo(circuitRect.x, circuitRect.y + circuitRect.h);
+        ctx.lineTo(circuitRect.x + circuitRect.w, circuitRect.y);
+    }
+    ctx.stroke();
+    ctx.restore();
+};
+
+
 

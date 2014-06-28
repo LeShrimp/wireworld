@@ -37,26 +37,46 @@ WireworldGame.prototype.setMode = function(mode) {
         }
     };
 
-    var cbcPlacementListener = (function() {
+    var cbcPlacementListeners = (function() {
         var cbc = that.circuitBoardCanvas;
         var cb = cbc.circuitBoard;
         var cbox = that.circuitBoxElement;
+        var mousePos = {i:0, j:0};
+        var placementPos = {i:0, j:0};
+        var isLegal = true;
 
-        var imageData = that.circuitBoardCanvas.ctx.getImageData(0, 0, cbc.width, cbc.height);
-        return function (event) {
-            var pos = cbc.getPosFromMouseEvent(event);
-            cbc.ctx.putImageData(imageData, 0, 0);
-            var circuit = cbox.getCircuitWireworld(cbox.selectedCircuitId);
-            cbc.drawCircuit(pos.i-Math.floor(circuit.columns/2), pos.j-Math.floor(circuit.rows/2), circuit);
-        }
+        return {
+            onMousemove: function (event) {
+                var mousePos = cbc.getPosFromMouseEvent(event);
+                var circuit = cbox.getCircuitWireworld(cbox.selectedCircuitId);
+                placementPos = {
+                    i: mousePos.i-Math.floor(circuit.columns/2),
+                    j: mousePos.j-Math.floor(circuit.rows/2)
+                };
+                cbc.draw();
+                isLegal = cb.isPlacementLegal(placementPos.i, placementPos.j, circuit);
+                cbc.drawCircuit(placementPos.i, placementPos.j, circuit, true, isLegal);
+            },
+
+            onMouseDown: function (event) {
+                if (event.button == 0 && isLegal) {
+                    cb.placeCircuit(placementPos.i, placementPos.j, cbox.getCircuitWireworld(cbox.selectedCircuitId));
+                } else if (event.button == 2) {
+                    that.setMode(WireworldGame.SELECTION_MODE);
+                }
+            }
+        };
     })();
 
     switch (mode) {
         case WireworldGame.PLACEMENT_MODE:
-            this.circuitBoardCanvas.htmlCanvasElement.addEventListener('mousemove', cbcPlacementListener);
+            this.circuitBoardCanvas.htmlCanvasElement.addEventListener('mousemove', cbcPlacementListeners.onMousemove);
+            this.circuitBoardCanvas.htmlCanvasElement.addEventListener('mousedown', cbcPlacementListeners.onMouseDown);
             break;
 
         case WireworldGame.SELECTION_MODE:
+            this.circuitBoardCanvas.htmlCanvasElement.removeEventListener('mousemove', cbcPlacementListeners.onMousemove);
+            this.circuitBoardCanvas.htmlCanvasElement.removeEventListener('mousedown', cbcPlacementListeners.onMouseDown);
             this.circuitBoardCanvas.htmlCanvasElement.addEventListener('mousemove', cbcSelectionListener);
             break;
     }
@@ -77,7 +97,7 @@ WireworldGame.prototype.init = function () {
                 case 2:
                 case 4:
                 case 5:
-                    cells[i][j] = 1;
+                    cells[i][j] = CircuitBoard.WW_EMPTY;
                     break;
 
                 case 6:
@@ -90,7 +110,7 @@ WireworldGame.prototype.init = function () {
                     break;
 
                 default:
-                    cells[i][j] = 0;
+                    cells[i][j] = CircuitBoard.WW_EMPTY;
                     break;
             }
         }

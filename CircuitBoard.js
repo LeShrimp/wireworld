@@ -38,7 +38,7 @@ CircuitBoard.prototype.placeCircuit = (function () {
         this.circuits[id++] = {
             wireworld: wireworld,
             i: i,
-            j: j,
+            j: j
         };
         return id;
     }
@@ -73,4 +73,35 @@ CircuitBoard.prototype.getCircuitAtPos = function (i, j) {
  */
 CircuitBoard.prototype.removeCircuit = function (id) {
     delete this.circuits[id];
+}
+
+
+/**
+ *
+ * @param i
+ * @param j
+ * @param {Wireworld} wireworld
+ */
+CircuitBoard.prototype.isPlacementLegal = function (i, j, wireworld) {
+    var k, l;
+
+    if (i<0 || j<0 || i+wireworld.columns > this.columns || j+wireworld.rows > this.rows) {
+        return false;
+    }
+
+    for (k=0; k<wireworld.columns; k++) {
+        for (l=0; l<wireworld.rows; l++) {
+            if (this.cells[i+k][j+l] != CircuitBoard.WW_EMPTY) {
+                return false;
+            }
+        }
+    }
+    for (k=0; k<wireworld.columns; k++) {
+        for (l=0; l<wireworld.rows; l++) {
+            if (this.getCircuitAtPos(i+k, j+l) != null) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
