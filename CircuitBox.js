@@ -19,7 +19,6 @@ CircuitBox.prototype.addCircuit = (function() {
     return function (wireworld, count) {
         id++;
         this.circuits[id] = {
-            id: id,
             wireworld: wireworld,
             count: count
         }
@@ -51,3 +50,5 @@ CircuitBox.prototype.decCount = function (circuitId) {
     circuit.count--;
     return true;
 }
+
+

@@ -33,12 +33,18 @@ WireworldGame.prototype.setMode = function(mode) {
         }
     };
 
-    var cbcPlacementListener = function (event) {
+    var cbcPlacementListener = (function() {
         var cbc = that.circuitBoardCanvas;
         var cb = cbc.circuitBoard;
+        var cbox = that.circuitBoxElement;
 
-        //TODO: Here I stopped
-    };
+        var imageData = that.circuitBoardCanvas.ctx.getImageData(0, 0, cbc.width, cbc.height);
+        return function (event) {
+            var pos = cbc.getPosFromMouseEvent(event);
+            cbc.ctx.putImageData(imageData, 0, 0);
+            cbc.drawCircuit(pos.i, pos.j, cbox.getCircuitWireworld(cbox.selectedCircuitId));
+        }
+    })();
 
     switch (mode) {
         case WireworldGame.PLACEMENT_MODE:
@@ -120,6 +126,25 @@ WireworldGame.prototype.init = function () {
     this.circuitBoardCanvas.draw();
 
     var htmlElement = document.getElementById('circuitbox');
-    this.circuitBoxElement = new CircuitBoxElement(cbox, htmlElement, cellwidth);
+    var selectionChanges = function(circuitId) { that.setMode(WireworldGame.PLACEMENT_MODE); };
+    this.circuitBoxElement = new CircuitBoxElement(cbox, htmlElement, cellwidth, selectionChanges);
 
+    var that = this;
+    var o = (function() {
+        var intervalId;
+        var doStep = function() {
+            that.circuitBoardCanvas.circuitBoard.doStep();
+            that.circuitBoardCanvas.draw();
+        }
+        return {
+            play: function() {
+                intervalId = setInterval(doStep, 500);
+            },
+            pause: function() {
+                clearInterval(intervalId);
+            }
+        }
+    })();
+
+    this.playPauseElement = new PlayPauseElement(document.getElementById('playpause'), o.play, o.pause);
 };

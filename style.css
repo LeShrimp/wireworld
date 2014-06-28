@@ -55,8 +55,8 @@ h1#title {
     height: 400px;
 }
 
-#circuitbox canvas {
-    margin-top: 4px;
+#circuitbox div {
+    padding-top: 8px;
 }
 
 #messagebox {
@@ -65,6 +65,7 @@ h1#title {
     width: 600px;
     height: 150px;
     vertical-align: top;
+    overflow: auto;
 }
 
 #playpause {

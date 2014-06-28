@@ -14,7 +14,6 @@
  * @constructor
  */
 var CircuitBoardCanvas = function (circuitBoard, htmlCanvasElement, cellWidth) {
-    var that = this;
     WireworldCanvas.call(this, circuitBoard, htmlCanvasElement, cellWidth);
 
     //Note that due to call of parent constructor, this.circuitBoard and

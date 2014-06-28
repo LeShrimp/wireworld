@@ -9,14 +9,15 @@
  * @param {CircuitBox} circuitBox
  * @param {HTMLElement} htmlElement
  * @param {number} cellWidth
+ * @param {function} onSelectionChanged A function getting called with the id of the newly selected circuit.
  * @constructor
  */
-var CircuitBoxElement = function (circuitBox, htmlElement, cellWidth) {
+var CircuitBoxElement = function (circuitBox, htmlElement, cellWidth, onSelectionChanged) {
     this.htmlElement        = htmlElement;
     this.circuitBox         = circuitBox;
     this.cellWidth          = cellWidth;
-    this.selectedCircuit    = null;
-    this._selChangeCallback = null;
+    this.onSelectionChanged = onSelectionChanged;
+    this.selectedCircuitId    = null;
 
     this._populate();
 }
@@ -27,14 +28,13 @@ CircuitBoxElement.prototype._populate = function () {
     var circuits = this.circuitBox.circuits;
 
     for (var id in circuits) {
-        var circuit = circuits[id];
+        var circuit = this.getCircuitWireworld(id);
         //Create Canvas element
-        var width = circuit.wireworld.columns * this.cellWidth;
-        var height = circuit.wireworld.rows * this.cellWidth;
-        var htmlCanvasElement = WireworldCanvas.createCanvasElement(width, height, id)
-        var wwc = new WireworldCanvas(circuit.wireworld, htmlCanvasElement, this.cellWidth);
+        var width = circuit.columns * this.cellWidth;
+        var height = circuit.rows * this.cellWidth;
+        var htmlCanvasElement = WireworldCanvas.createCanvasElement(width, height, id);
+        var wwc = new WireworldCanvas(circuit, htmlCanvasElement, this.cellWidth);
         wwc.draw();
-
         wwc.htmlCanvasElement.addEventListener('click',
             (function(id) {
                 return function(event) {
@@ -47,7 +47,7 @@ CircuitBoxElement.prototype._populate = function () {
 
         //Create label
         var label = document.createElement('p');
-        label.appendChild(document.createTextNode(''+circuit.count));
+        label.appendChild(document.createTextNode(''+this.getCount(id)));
 
         //Append stuff
         var container = document.createElement('div');
@@ -58,14 +58,31 @@ CircuitBoxElement.prototype._populate = function () {
 };
 
 
-CircuitBoxElement.prototype.onSelectionChanged = function (callback) {
-    this._selChangeCallback = callback;
-};
-
-
 CircuitBoxElement.prototype.selectCircuit = function (circuitId) {
-    this.selectedCircuit = this.circuitBox.circuits[circuitId].wireworld;
-    if (this._selChangeCallback != null) {
-        this._selChangeCallback(circuitId);
-    }
+    this.selectedCircuitId = circuitId;
+    this.onSelectionChanged(circuitId);
 };
+
+CircuitBoxElement.prototype.decCount = function (circuitId) {
+    var result = this.circuitBox.decCount(circuitId);
+    document.getElementById(circuitId).nextSibling.innerHTML = this.getCount(circuitId);
+    return result;
+};
+
+CircuitBoxElement.prototype.incCount = function (circuitId) {
+    var result = this.circuitBox.incCount(circuitId);
+    document.getElementById(circuitId).nextSibling.innerHTML = this.getCount(circuitId);
+    return result;
+};
+
+CircuitBoxElement.prototype.getCount = function (circuitId) {
+    return this.circuitBox.circuits[circuitId].count;
+}
+
+/**
+ * Returns wireworld object corresponding to circuitId.
+ * @param circuitId
+ */
+CircuitBoxElement.prototype.getCircuitWireworld = function (circuitId) {
+    return this.circuitBox.circuits[circuitId].wireworld;
+}
