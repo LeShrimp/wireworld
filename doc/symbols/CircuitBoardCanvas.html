@@ -191,13 +191,13 @@ ul.inheritsList
 	
 	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
 	
+	<li><a href="../symbols/BlueprintBox.html">BlueprintBox</a></li>
+	
+	<li><a href="../symbols/BlueprintBoxElement.html">BlueprintBoxElement</a></li>
+	
 	<li><a href="../symbols/CircuitBoard.html">CircuitBoard</a></li>
 	
 	<li><a href="../symbols/CircuitBoardCanvas.html">CircuitBoardCanvas</a></li>
-	
-	<li><a href="../symbols/CircuitBox.html">CircuitBox</a></li>
-	
-	<li><a href="../symbols/CircuitBoxElement.html">CircuitBoxElement</a></li>
 	
 	<li><a href="../symbols/PlayPauseElement.html">PlayPauseElement</a></li>
 	
@@ -261,6 +261,29 @@ ul.inheritsList
 			
 				
 				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class CircuitBoardCanvas.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/CircuitBoardCanvas.html#draw">draw</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
 				
 				
 				<dl class="inheritsList">
@@ -286,25 +309,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/CircuitBoardCanvas.html#draw">draw</a></b>(circuitBoard)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/CircuitBoardCanvas.html#drawCircuit">drawCircuit</a></b>(i, j, wireworld, isHighlighted)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/CircuitBoardCanvas.html#getPosFromMouseEvent">getPosFromMouseEvent</a></b>(event)
+								<div class="fixedFont"><b><a href="../symbols/CircuitBoardCanvas.html#drawCircuit">drawCircuit</a></b>(i, j, wireworld, isHighlighted, isLegal)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -316,7 +321,7 @@ ul.inheritsList
 				
 				
 				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/WireworldCanvas.html">WireworldCanvas</a>: </dt><dd><a href="../symbols/WireworldCanvas.html#drawCell">drawCell</a>, <a href="../symbols/WireworldCanvas.html#getCellRect">getCellRect</a></dd>
+				<dt>Methods borrowed from class <a href="../symbols/WireworldCanvas.html">WireworldCanvas</a>: </dt><dd><a href="../symbols/WireworldCanvas.html#drawCell">drawCell</a>, <a href="../symbols/WireworldCanvas.html#getCellRect">getCellRect</a>, <a href="../symbols/WireworldCanvas.html#getPosFromMouseEvent">getPosFromMouseEvent</a></dd>
 				</dl>
 				
 			
@@ -378,18 +383,15 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
-
-<!-- ============================== method details ========================= -->		
-			
 				<div class="sectionTitle">
-					Method Detail
+					Field Detail
 				</div>
 				
 					<a name="draw"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>draw</b>(circuitBoard)
+					<b>draw</b>
 					
 					</div>
 					<div class="description">
@@ -399,33 +401,27 @@ ul.inheritsList
 					</div>
 					
 					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>circuitBoard</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
+
 						
 						
 						
 						
 
-					<hr />
+					
+				
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
 				
 					<a name="drawCircuit"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>drawCircuit</b>(i, j, wireworld, isHighlighted)
+					<b>drawCircuit</b>(i, j, wireworld, isHighlighted, isLegal)
 					
 					</div>
 					<div class="description">
@@ -464,38 +460,8 @@ ul.inheritsList
 								</dt>
 								<dd></dd>
 							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="getPosFromMouseEvent"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{{i: number|j: number}}</span>
-					<b>getPosFromMouseEvent</b>(event)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
 								<dt>
-									<b>event</b>
+									<b>isLegal</b>
 									
 								</dt>
 								<dd></dd>
@@ -505,13 +471,6 @@ ul.inheritsList
 						
 						
 						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{{i: number|j: number}}</span> </dd>
-							
-							</dl>
 						
 						
 						
@@ -530,7 +489,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Jun 28 2014 02:17:58 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jun 29 2014 15:38:32 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

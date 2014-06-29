@@ -46,7 +46,7 @@ CircuitBoardCanvas.prototype.draw = (function() {
             }
             buffer = this.ctx.getImageData(0, 0, this.width, this.height);
         }
-        var circuits = this.circuitBoard.circuits;
+        var circuits = this.circuitBoard.blueprints;
         for (var id in circuits) {
             this.drawCircuit(circuits[id].i, circuits[id].j, circuits[id].wireworld, this.highlightedCircuitId == id);
         }

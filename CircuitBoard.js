@@ -29,14 +29,14 @@ CircuitBoard.WW_EMPTY = 4;
  *
  * @param {number} i
  * @param {number} j
- * @param {Wireworld} wireworld
+ * @param {Blueprint} blueprint
  * @return {number} Id of the placed circuit
  */
 CircuitBoard.prototype.placeCircuit = (function () {
     var id=1;
-    return function (i, j, wireworld) {
+    return function (i, j, blueprint) {
         this.circuits[id++] = {
-            wireworld: wireworld,
+            blueprint: blueprint,
             i: i,
             j: j
         };
@@ -56,9 +56,9 @@ CircuitBoard.prototype.getCircuitAtPos = function (i, j) {
     for (var id in this.circuits) {
         var circuit = this.circuits[id];
         if (circuit.i <= i
-            && circuit.i + circuit.wireworld.columns > i
+            && circuit.i + circuit.blueprint.wireworld.columns > i
             && circuit.j <= j
-            && circuit.j + circuit.wireworld.rows > j) {
+            && circuit.j + circuit.blueprint.wireworld.rows > j) {
                 return id;
         }
     }

@@ -15,12 +15,12 @@ h1#title {
     font-family: "Consolas", monospace;
 }
 
-#circuitbox {
+#blueprintbox {
     display: inline-block;
     overflow: auto;
 }
 
-#circuitbox canvas {
+#blueprintbox canvas {
     margin-left: auto;
     margin-right: auto;
     display: inherit;
@@ -48,14 +48,14 @@ h1#title {
     border: 1px solid #ccc;
 }
 
-#circuitbox {
+#blueprintbox {
     display: inline-block;
     border: 1px solid #ccc;
     width: 150px;
     height: 400px;
 }
 
-#circuitbox div {
+#blueprintbox div {
     padding-top: 8px;
 }
 
