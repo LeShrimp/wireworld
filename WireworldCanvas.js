@@ -92,7 +92,7 @@ WireworldCanvas.prototype.drawCell = function (i, j, state) {
     var rect = this.getCellRect(i, j);
 
     ctx.beginPath();
-    ctx.strokeStyle = 'black';
+    ctx.strokeStyle = '#3C3737';
     switch (state) {
         case CircuitBoard.WW_COPPER:
             ctx.fillStyle = '#FF9900';

@@ -6,6 +6,21 @@
 
 
 /**
+ *
+ * @param {number} i
+ * @param {number} j
+ * @param {Blueprint} blueprint The blueprint this circuit is made of.
+ * @param {number} id
+ * @constructor
+ */
+var Circuit = function(i, j, blueprint, id) {
+    this.i = i;
+    this.j = j;
+    this.blueprint = blueprint;
+    this.id = id;
+};
+
+/**
  * Creates a new instance of a Wireworld Circuitboard. This is an extension of
  * Wireworld, accepting a new cell state
  *
@@ -35,11 +50,8 @@ CircuitBoard.WW_EMPTY = 4;
 CircuitBoard.prototype.placeCircuit = (function () {
     var id=1;
     return function (i, j, blueprint) {
-        this.circuits[id++] = {
-            blueprint: blueprint,
-            i: i,
-            j: j
-        };
+        id++;
+        this.circuits[id] = new Circuit(i, j, blueprint, id);
         return id;
     }
 })();
@@ -59,7 +71,7 @@ CircuitBoard.prototype.getCircuitAtPos = function (i, j) {
             && circuit.i + circuit.blueprint.wireworld.columns > i
             && circuit.j <= j
             && circuit.j + circuit.blueprint.wireworld.rows > j) {
-                return id;
+                return circuit;
         }
     }
     return null;
@@ -69,10 +81,10 @@ CircuitBoard.prototype.getCircuitAtPos = function (i, j) {
 /**
  * Remove circuit with given id.
  *
- * @param id
+ * @param {Circuit} circuit
  */
-CircuitBoard.prototype.removeCircuit = function (id) {
-    delete this.circuits[id];
+CircuitBoard.prototype.removeCircuit = function (circuit) {
+    delete this.circuits[circuit.id];
 }
 
 
@@ -80,10 +92,11 @@ CircuitBoard.prototype.removeCircuit = function (id) {
  *
  * @param i
  * @param j
- * @param {Wireworld} wireworld
+ * @param {Blueprint} blueprint
  */
-CircuitBoard.prototype.isPlacementLegal = function (i, j, wireworld) {
+CircuitBoard.prototype.isPlacementLegal = function (i, j, blueprint) {
     var k, l;
+    var wireworld = blueprint.wireworld;
 
     if (i<0 || j<0 || i+wireworld.columns > this.columns || j+wireworld.rows > this.rows) {
         return false;

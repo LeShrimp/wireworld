@@ -20,7 +20,7 @@ var CircuitBoardCanvas = function (circuitBoard, htmlCanvasElement, cellWidth) {
     //this.wireworld refer to the same object.
     this.circuitBoard = circuitBoard;
 
-    this.highlightedCircuitId = null;
+    this.highlightedCircuit = null;
 };
 
 
@@ -39,16 +39,13 @@ CircuitBoardCanvas.prototype.draw = (function() {
         if (buffer != null) {
             this.ctx.putImageData(buffer, 0, 0); //For some reason this gets really slow in firefox
         } else {
-            for (var i=0; i<this.wireworld.columns; i++) {
-                for (var j=0; j<this.wireworld.rows; j++) {
-                    this.drawCell(i, j, this.wireworld.cells[i][j]);
-                }
-            }
+            this.drawWireworld(0, 0, this.wireworld);
             buffer = this.ctx.getImageData(0, 0, this.width, this.height);
         }
-        var circuits = this.circuitBoard.blueprints;
+        var circuits = this.circuitBoard.circuits;
         for (var id in circuits) {
-            this.drawCircuit(circuits[id].i, circuits[id].j, circuits[id].wireworld, this.highlightedCircuitId == id);
+            var borderColor = this.highlightedCircuit && this.highlightedCircuit.id == id ? 'green' : 'black';
+            this.drawWireworld(circuits[id].i, circuits[id].j, circuits[id].blueprint.wireworld, borderColor);
         }
     }
 })();
@@ -57,40 +54,33 @@ CircuitBoardCanvas.prototype.draw = (function() {
  *
  * @param i
  * @param j
- * @param wireworld
- * @param isHighlighted
+ * @param {Wireworld} wireworld
+ * @param {string} [borderColor] If none is given no border is drawn.
  */
-CircuitBoardCanvas.prototype.drawCircuit = function (i, j, wireworld, isHighlighted, isLegal) {
-    if (typeof isLegal === 'undefined') {
-        isLegal = true;
-    }
-
+CircuitBoardCanvas.prototype.drawWireworld = function (i, j, wireworld, borderColor) {
     for (var k=0; k<wireworld.columns; k++) {
         for (var l=0; l<wireworld.rows; l++) {
             this.drawCell(k+i, l+j, wireworld.cells[k][l]);
         }
     }
-    var ctx = this.ctx;
-    ctx.beginPath();
-    ctx.strokeStyle = isHighlighted && isLegal ? 'green' : 'brown';
-    ctx.save();
-    ctx.lineWidth = 3;
-    var rectUpperLeft = this.getCellRect(i, j);
-    var circuitRect = {
-        x: rectUpperLeft.x+0.5,
-        y: rectUpperLeft.y+0.5,
-        w: this.cellWidth * wireworld.columns,
-        h: this.cellWidth * wireworld.rows
-    };
-    ctx.rect(circuitRect.x, circuitRect.y, circuitRect.w, circuitRect.h);
-    if (!isLegal) {
-        ctx.moveTo(circuitRect.x, circuitRect.y);
-        ctx.lineTo(circuitRect.x + circuitRect.w, circuitRect.y + circuitRect.h);
-        ctx.moveTo(circuitRect.x, circuitRect.y + circuitRect.h);
-        ctx.lineTo(circuitRect.x + circuitRect.w, circuitRect.y);
+
+    if (typeof borderColor !== 'undefined') {
+        var ctx = this.ctx;
+        ctx.beginPath();
+        ctx.strokeStyle = borderColor;
+        ctx.save();
+        ctx.lineWidth = 3;
+        var rectUpperLeft = this.getCellRect(i, j);
+        var circuitRect = {
+            x: rectUpperLeft.x+0.5,
+            y: rectUpperLeft.y+0.5,
+            w: this.cellWidth * wireworld.columns,
+            h: this.cellWidth * wireworld.rows
+        };
+        ctx.rect(circuitRect.x, circuitRect.y, circuitRect.w, circuitRect.h);
+        ctx.stroke();
+        ctx.restore();
     }
-    ctx.stroke();
-    ctx.restore();
 };
 
 
