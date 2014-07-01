@@ -55,7 +55,7 @@ Wireworld.prototype.doStep = function () {
                             }
                         }
                     }
-                    if (countEHeads >= 1 && countEHeads <= 3) {
+                    if (countEHeads == 1 || countEHeads == 2) {
                         newCell = Wireworld.WW_EHEAD;
                     }
                     break;

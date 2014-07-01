@@ -220,15 +220,15 @@ WireworldGame.prototype.init = function () {
     var circuit2 =  new Wireworld(transpose([
         [0,0,0],
         [1,1,1],
-        [0,1,2],
-        [0,1,2]
+        [0,2,0],
+        [0,1,0]
     ]));
 
     var circuit3 =  new Wireworld(transpose([
-        [0,0,0],
+        [0,1,0],
         [1,1,1],
-        [0,1,2],
-        [0,1,2]
+        [0,1,0],
+        [0,1,0]
     ]));
 
     var cbox = new BlueprintBox();
