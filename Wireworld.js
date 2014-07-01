@@ -19,6 +19,8 @@ function Wireworld(cells) {
     this.cells  = cells;
     this.columns  = cells.length;
     this.rows = cells[0].length;
+
+    this.generation = 0;
 }
 
 Wireworld.WW_BLACK    = 0;
@@ -85,5 +87,7 @@ Wireworld.prototype.doStep = function () {
             this.cells[i][j] = newCells[i][j];
         }
     }
+
+    this.generation++;
 }
 

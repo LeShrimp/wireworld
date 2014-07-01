@@ -12,9 +12,11 @@ var WireworldGame = function () {
     this.circuitBoardCanvas = null;
     //this.playButton = null;
 
-    this.htmlContainerElement = null;
+    this.printedWireworldCanvas = null;
 
     this.currentMode = null;
+
+    this._intervalId  = null;
 };
 
 
@@ -88,31 +90,85 @@ WireworldGame.prototype.setMode = (function() {
                         if (circuit != null) {
                             cb.removeCircuit(circuit);
                             bbe.incCount(circuit.blueprint);
-                        }
-                        if (event.button == 0) {
-                            bbe.selectBlueprint(circuit.blueprint);
-                            cbcPlacementListeners.onMouseMove(event); //TODO: Think of better solution
-                        } else {
-                            cbcSelectionListeners.onMouseMove(event); //TODO: see above
+
+                            if (event.button == 0) {
+                                bbe.selectBlueprint(circuit.blueprint);
+                                cbcPlacementListeners.onMouseMove(event); //TODO: Think of better solution
+                            } else {
+                                cbcSelectionListeners.onMouseMove(event); //TODO: see above
+                            }
                         }
                     }
                 }
             })();
         }
 
+        var SimulationListeners = (function() {
+            var generation;
+
+            var simulationStep = function() {
+                    that.printedWireworldCanvas.wireworld.doStep();
+                    that.printedWireworldCanvas.draw();
+                    generation++;
+            };
+
+            return {
+                onSimulationStart : function() {
+                    var cbHtmlEl = that.circuitBoardCanvas.htmlCanvasElement;
+                    generation = 0;
+                    that.printedWireworldCanvas = that.circuitBoardCanvas.createPrintCanvas('printedwireworld');
+                    cbHtmlEl.parentNode.replaceChild(that.printedWireworldCanvas.htmlCanvasElement, cbHtmlEl);
+                    that.printedWireworldCanvas.draw();
+                    that._intervalId = setInterval(simulationStep, 500);
+                },
+                onSimulationStop : function () {
+                    if (that._intervalId != null) {
+                        clearInterval(that._intervalId);
+                        that._intervalId = null;
+                        var pwcHtmlEl = that.printedWireworldCanvas.htmlCanvasElement;
+                        pwcHtmlEl.parentNode.replaceChild(that.circuitBoardCanvas.htmlCanvasElement, pwcHtmlEl);
+                    }
+
+                    that.printedWireworldCanvas = null;
+                }
+            }
+        })();
+
+        var selectionChange = function(blueprint) {
+            if (blueprint.count) {
+                that.setMode(WireworldGame.PLACEMENT_MODE);
+            } else {
+                that.setMode(WireworldGame.SELECTION_MODE);
+            }
+        };
+
+        var cbHtmlEl = this.circuitBoardCanvas.htmlCanvasElement;
         switch (mode) {
             case WireworldGame.PLACEMENT_MODE:
-                this.circuitBoardCanvas.htmlCanvasElement.removeEventListener('mousemove', cbcSelectionListeners.onMouseMove);
-                this.circuitBoardCanvas.htmlCanvasElement.removeEventListener('mousedown', cbcSelectionListeners.onMouseDown);
-                this.circuitBoardCanvas.htmlCanvasElement.addEventListener('mousemove', cbcPlacementListeners.onMouseMove);
-                this.circuitBoardCanvas.htmlCanvasElement.addEventListener('mousedown', cbcPlacementListeners.onMouseDown);
+                SimulationListeners.onSimulationStop();
+                that.blueprintBoxElement.onSelectionChange(selectionChange);
+                cbHtmlEl.removeEventListener('mousemove', cbcSelectionListeners.onMouseMove);
+                cbHtmlEl.removeEventListener('mousedown', cbcSelectionListeners.onMouseDown);
+                cbHtmlEl.addEventListener('mousemove', cbcPlacementListeners.onMouseMove);
+                cbHtmlEl.addEventListener('mousedown', cbcPlacementListeners.onMouseDown);
                 break;
 
             case WireworldGame.SELECTION_MODE:
-                this.circuitBoardCanvas.htmlCanvasElement.removeEventListener('mousemove', cbcPlacementListeners.onMouseMove);
-                this.circuitBoardCanvas.htmlCanvasElement.removeEventListener('mousedown', cbcPlacementListeners.onMouseDown);
-                this.circuitBoardCanvas.htmlCanvasElement.addEventListener('mousemove', cbcSelectionListeners.onMouseMove);
-                this.circuitBoardCanvas.htmlCanvasElement.addEventListener('mousedown', cbcSelectionListeners.onMouseDown);
+                SimulationListeners.onSimulationStop();
+                that.blueprintBoxElement.onSelectionChange(selectionChange);
+                cbHtmlEl.removeEventListener('mousemove', cbcPlacementListeners.onMouseMove);
+                cbHtmlEl.removeEventListener('mousedown', cbcPlacementListeners.onMouseDown);
+                cbHtmlEl.addEventListener('mousemove', cbcSelectionListeners.onMouseMove);
+                cbHtmlEl.addEventListener('mousedown', cbcSelectionListeners.onMouseDown);
+                break;
+
+            case WireworldGame.EXECUTION_MODE:
+                that.blueprintBoxElement.onSelectionChange(function() {});
+                cbHtmlEl.removeEventListener('mousemove', cbcSelectionListeners.onMouseMove);
+                cbHtmlEl.removeEventListener('mousedown', cbcSelectionListeners.onMouseDown);
+                cbHtmlEl.removeEventListener('mousemove', cbcPlacementListeners.onMouseMove);
+                cbHtmlEl.removeEventListener('mousedown', cbcPlacementListeners.onMouseDown);
+                SimulationListeners.onSimulationStart();
                 break;
         }
 
@@ -186,31 +242,21 @@ WireworldGame.prototype.init = function () {
     this.circuitBoardCanvas.draw();
 
     var htmlElement = document.getElementById('blueprintbox');
-    var selectionChanges = function(blueprint) {
-        if (blueprint.count) {
-            that.setMode(WireworldGame.PLACEMENT_MODE);
-        } else {
-            that.setMode(WireworldGame.SELECTION_MODE);
-        }
-    };
-    this.blueprintBoxElement = new BlueprintBoxElement(cbox, htmlElement, cellwidth, selectionChanges);
+    this.blueprintBoxElement = new BlueprintBoxElement(cbox, htmlElement, cellwidth);
 
     var that = this;
     var o = (function() {
-        var intervalId;
-        var doStep = function() {
-            that.circuitBoardCanvas.circuitBoard.doStep();
-            that.circuitBoardCanvas.draw();
-        }
         return {
             play: function() {
-                intervalId = setInterval(doStep, 500);
+                that.setMode(WireworldGame.EXECUTION_MODE);
             },
             pause: function() {
-                clearInterval(intervalId);
+                that.setMode(WireworldGame.SELECTION_MODE);
             }
         }
     })();
 
     this.playPauseElement = new PlayPauseElement(document.getElementById('playpause'), o.play, o.pause);
+
+    this.setMode(WireworldGame.SELECTION_MODE);
 };

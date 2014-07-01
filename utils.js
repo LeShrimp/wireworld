@@ -37,6 +37,17 @@ function isRectArray(a, width, height) {
 }
 
 
+function cloneRectArray(a) {
+    var b = [];
+    for (var i=0; i<a.length; i++) {
+        b[i] = [];
+        for (var j=0; j<a[i].length; j++) {
+            b[i][j] = a[i][j];
+        }
+    }
+    return b;
+}
+
 function transpose(a) {
     if (!isRectArray(a)) {
         throw 'Unable to transpose argument. Invalid format.';

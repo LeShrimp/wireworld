@@ -41,7 +41,7 @@ h1#title {
     border: 0 solid #ccc;
 }
 
-#circuitboard {
+#circuitboard, #printedwireworld {
     width: 600px;
     height: 400px;
     display: inline-block;

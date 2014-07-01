@@ -118,3 +118,28 @@ CircuitBoard.prototype.isPlacementLegal = function (i, j, blueprint) {
     }
     return true;
 }
+
+
+CircuitBoard.prototype.print = function () {
+    var cells = cloneRectArray(this.cells);
+
+    for (id in this.circuits) {
+        var c = this.circuits[id];
+        var cw = c.blueprint.wireworld;
+        for (var i=0; i<cw.columns; i++) {
+            for (var j=0; j<cw.rows; j++) {
+                cells[c.i+i][c.j+j] = cw.cells[i][j];
+            }
+        }
+    }
+
+    for (var i=0; i<cells.length; i++) {
+        for (var j=0; j<cells[i].length; j++) {
+            if (cells[i][j].WW_EMPTY) {
+                cells[i][j] = Wireworld.WW_BLACK;
+            }
+        }
+    }
+
+    return new Wireworld(cells);
+};

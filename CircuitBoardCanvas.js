@@ -84,4 +84,22 @@ CircuitBoardCanvas.prototype.drawWireworld = function (i, j, wireworld, borderCo
 };
 
 
+/**
+ * Clone the current canvas, and create a Wireworld Canvas object with
+ * wireworld being the print of the circuitboard.
+ *
+ * @return {WireworldCanvas}
+ */
+CircuitBoardCanvas.prototype.createPrintCanvas = function (id) {
+    if (typeof id === 'undefined') {
+        id = 'printedwireworldcanvas';
+    }
+    var htmlCanvasElement = document.createElement('canvas');
+    htmlCanvasElement.width = this.htmlCanvasElement.width;
+    htmlCanvasElement.height = this.htmlCanvasElement.height;
+    htmlCanvasElement.setAttribute('id', id);
 
+    var wireworld = this.circuitBoard.print();
+
+    return new WireworldCanvas(wireworld, htmlCanvasElement, this.cellWidth);
+}

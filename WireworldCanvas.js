@@ -25,7 +25,6 @@ var WireworldCanvas = function (wireworld, htmlCanvasElement, cellWidth) {
     this.wireworld          = wireworld;
     /** @type {number} */
     this.cellWidth          = cellWidth;
-
 }
 
 /**
@@ -47,22 +46,13 @@ WireworldCanvas.createCanvasElement = function(width, height, id) {
 /**
  * Draws an instance of wireworld to the given Canvas.
  */
-WireworldCanvas.prototype.draw = (function() {
-    var buffer = null;
-
-    return function () {
-        if (buffer != null) {
-            this.ctx.putImageData(buffer, 0, 0);
-        } else {
-            for (var i=0; i<this.wireworld.columns; i++) {
-                for (var j=0; j<this.wireworld.rows; j++) {
-                    this.drawCell(i, j, this.wireworld.cells[i][j]);
-                }
-            }
-            buffer = this.ctx.getImageData(0, 0, this.width, this.height);
+WireworldCanvas.prototype.draw = function () {
+    for (var i=0; i<this.wireworld.columns; i++) {
+        for (var j=0; j<this.wireworld.rows; j++) {
+            this.drawCell(i, j, this.wireworld.cells[i][j]);
         }
     }
-})();
+}
 
 
 /**

@@ -9,14 +9,14 @@
  * @param {BlueprintBox} blueprintBox
  * @param {HTMLElement} htmlElement
  * @param {number} cellWidth
- * @param {function} onSelectionChanged A function getting called with the id of the newly selected circuit.
+ * @param {function} onSelectionChange A function getting called with the id of the newly selected circuit.
  * @constructor
  */
-var BlueprintBoxElement = function (blueprintBox, htmlElement, cellWidth, onSelectionChanged) {
+var BlueprintBoxElement = function (blueprintBox, htmlElement, cellWidth) {
     this.htmlElement        = htmlElement;
     this.blueprintBox         = blueprintBox;
     this.cellWidth          = cellWidth;
-    this.onSelectionChanged = onSelectionChanged;
+    this._onSelectionChangeListener = function (){};
     this.selectedBlueprint    = null;
 
     this._populate();
@@ -67,7 +67,7 @@ BlueprintBoxElement.prototype._populate = function () {
  */
 BlueprintBoxElement.prototype.selectBlueprint = function (blueprint) {
     this.selectedBlueprint = blueprint;
-    this.onSelectionChanged(blueprint);
+    this._onSelectionChangeListener(blueprint);
 };
 
 /**
@@ -93,3 +93,6 @@ BlueprintBoxElement.prototype.incCount = function (blueprint) {
     return true;
 };
 
+BlueprintBoxElement.prototype.onSelectionChange = function (onSelectionChangeListener) {
+    this._onSelectionChangeListener = onSelectionChangeListener;
+}
