@@ -84,19 +84,19 @@ WireworldCanvas.prototype.drawCell = function (i, j, state) {
     ctx.beginPath();
     ctx.strokeStyle = '#3C3737';
     switch (state) {
-        case CircuitBoard.WW_COPPER:
+        case Wireworld.WW_COPPER:
             ctx.fillStyle = '#FF9900';
             break;
 
-        case CircuitBoard.WW_EHEAD:
+        case Wireworld.WW_EHEAD:
             ctx.fillStyle = '#000099';
             break;
 
-        case CircuitBoard.WW_ETAIL:
+        case Wireworld.WW_ETAIL:
             ctx.fillStyle = '#0099FF';
             break;
 
-        case CircuitBoard.WW_BLACK:
+        case Wireworld.WW_BLACK:
         default:
             ctx.fillStyle = '#4C4747';
             break;

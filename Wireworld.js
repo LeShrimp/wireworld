@@ -23,6 +23,7 @@ function Wireworld(cells) {
     this.generation = 0;
 }
 
+
 Wireworld.WW_BLACK    = 0;
 Wireworld.WW_COPPER   = 1;
 Wireworld.WW_EHEAD    = 2;
@@ -47,9 +48,7 @@ Wireworld.prototype.doStep = function () {
                     var countEHeads = 0;
                     for (var di=-1; di<=1; di++) {
                         for (var dj=-1; dj<=1; dj++) {
-                            if (i+di>=0 && i+di<this.columns
-                                && j+dj>=0 && j+dj<this.rows
-                                && this.cells[i+di][j+dj] == Wireworld.WW_EHEAD)
+                            if (this.cells[(i+di)%this.columns][(j+dj)%this.rows] == Wireworld.WW_EHEAD)
                             {
                                 countEHeads++;
                             }

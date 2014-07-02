@@ -1,5 +1,5 @@
 body {
-    background-color: #050507;
+    background-color: #272121;
 }
 
 
@@ -10,7 +10,7 @@ h1#title {
 }
 
 .container p {
-    color: white;
+    color: #B7DDDD;
     text-align: center;
     font-family: "Consolas", monospace;
 }
@@ -45,14 +45,14 @@ h1#title {
     width: 600px;
     height: 400px;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 1px solid #B7DDDD;
 }
 
 #blueprintbox {
     display: inline-block;
-    border: 1px solid #ccc;
     width: 150px;
     height: 400px;
+    border: 1px solid #ccc;
 }
 
 #blueprintbox div {
@@ -61,16 +61,22 @@ h1#title {
 
 #messagebox {
     display: inline-block;
-    border: 1px solid #ccc;
     width: 600px;
     height: 150px;
     vertical-align: top;
     overflow: auto;
+    border: 1px solid #B7DDDD;
+}
+
+#messagebox p {
+    text-align: left;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 #playpause {
     display: inline-block;
-    border: 1px solid #ccc;
     width: 150px;
     height: 150px;
+    border: 1px solid #B7DDDD;
 }

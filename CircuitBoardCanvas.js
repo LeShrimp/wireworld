@@ -83,6 +83,45 @@ CircuitBoardCanvas.prototype.drawWireworld = function (i, j, wireworld, borderCo
     }
 };
 
+/**
+ *
+ * @param i
+ * @param j
+ * @param state
+ * @override
+ */
+CircuitBoardCanvas.prototype.drawCell = function (i, j, state) {
+    var ctx = this.ctx;
+    var rect = this.getCellRect(i, j);
+
+    ctx.beginPath();
+    ctx.strokeStyle = '#3C3737';
+    switch (state) {
+        case CircuitBoard.WW_COPPER:
+            ctx.fillStyle = '#FF9900';
+            break;
+
+        case CircuitBoard.WW_EHEAD:
+            ctx.fillStyle = '#000099';
+            break;
+
+        case CircuitBoard.WW_ETAIL:
+            ctx.fillStyle = '#0099FF';
+            break;
+
+        case CircuitBoard.WW_BLACK:
+            ctx.fillStyle = '#4C4747';
+            break;
+
+        case CircuitBoard.WW_EMPTY:
+        default:
+            ctx.fillStyle = '#1C1717';
+            break;
+    }
+    ctx.rect(rect.x+0.5, rect.y+0.5, rect.w, rect.h);
+    ctx.fill();
+    ctx.stroke();
+};
 
 /**
  * Clone the current canvas, and create a Wireworld Canvas object with

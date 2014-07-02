@@ -15,6 +15,7 @@ var WireworldGame = function () {
     this.printedWireworldCanvas = null;
 
     this.currentMode = null;
+    this.wireworldRules = null;
 
     this._intervalId  = null;
 };
@@ -82,6 +83,7 @@ WireworldGame.prototype.setMode = (function() {
                             cbc.highlightedCircuit = cb.getCircuitAtPos(pos.i, pos.j);
                             cbc.draw();
                         }
+                        console.log(pos.i + ', ' + pos.j + '\n');
                     },
 
                     onMouseDown: function (event) {
@@ -108,18 +110,28 @@ WireworldGame.prototype.setMode = (function() {
 
             var simulationStep = function() {
                     that.printedWireworldCanvas.wireworld.doStep();
+                    that.wireworldRules.update(that.printedWireworldCanvas.wireworld);
                     that.printedWireworldCanvas.draw();
-                    generation++;
+
+                    if (that.wireworldRules.isSuccess()) {
+                        alert("Success!");
+                        that.setMode(WireworldGame.SELECTION_MODE);
+                    }
+                    if (that.wireworldRules.isFail()) {
+                        alert("Fail!");
+                        that.setMode(WireworldGame.SELECTION_MODE);
+                    }
+
+                    console.log(that.printedWireworldCanvas.wireworld.generation);
             };
 
             return {
                 onSimulationStart : function() {
                     var cbHtmlEl = that.circuitBoardCanvas.htmlCanvasElement;
-                    generation = 0;
                     that.printedWireworldCanvas = that.circuitBoardCanvas.createPrintCanvas('printedwireworld');
                     cbHtmlEl.parentNode.replaceChild(that.printedWireworldCanvas.htmlCanvasElement, cbHtmlEl);
                     that.printedWireworldCanvas.draw();
-                    that._intervalId = setInterval(simulationStep, 500);
+                    that._intervalId = setInterval(simulationStep, 200);
                 },
                 onSimulationStop : function () {
                     if (that._intervalId != null) {
@@ -178,44 +190,48 @@ WireworldGame.prototype.setMode = (function() {
 })();
 
 
+WireworldGame.prototype.loadLevel = function() {};
+
+
 WireworldGame.prototype.init = function () {
-    var cells = [];
-    for (var i=0; i<30; i++) {
-        cells[i] = [];
-        for (var j=0; j<20; j++) {
-            var r = Math.floor(Math.random()*80);
-            switch (r) {
-                case 0:
-                case 1:
-                case 2:
-                case 4:
-                case 5:
-                    cells[i][j] = CircuitBoard.WW_COPPER;
-                    break;
+    var cells = transpose([
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,1,1,1,1,1,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,2,1,1,1,1,1,1,1,1,1,1,4,1,1,1,1,1,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    ]);
 
-                case 6:
-                case 7:
-                    cells[i][j] = 2;
-                    break;
-
-                case 8:
-                    cells[i][j] = 3;
-                    break;
-
-                default:
-                    cells[i][j] = CircuitBoard.WW_EMPTY;
-                    break;
-            }
-        }
-    }
+    this.wireworldRules = new WireworldRules([
+        {
+            "coordinates" : {"i" : 20, "j" : 14},
+            "generation" : {"from":0, "to":25},
+            "must_not" : Wireworld.WW_EHEAD
+    }, {
+            "coordinates" : {"i" : 20, "j" : 2},
+            "generation" : {"from":0, "to":25},
+            "must" : Wireworld.WW_EHEAD
+    }]);
 
     var cb = new CircuitBoard(cells);
 
     var circuit1 =  new Wireworld(transpose([
-        [0,0,0,0,0,0],
-        [1,1,1,2,1,1],
-        [0,1,0,0,0,0],
-        [0,1,0,0,0,0]
+        [1]
     ]));
     var circuit2 =  new Wireworld(transpose([
         [0,0,0],
@@ -232,7 +248,7 @@ WireworldGame.prototype.init = function () {
     ]));
 
     var cbox = new BlueprintBox();
-    cbox.addBlueprint(circuit1, 3);
+    cbox.addBlueprint(circuit1, 99);
     cbox.addBlueprint(circuit2, 6);
     cbox.addBlueprint(circuit3, 26);
 
