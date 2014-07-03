@@ -1,5 +1,6 @@
 /**
  * Created by maxime on 6/22/14.
+ * @requires WireworldLevelData.js
  */
 
 
@@ -194,63 +195,15 @@ WireworldGame.prototype.loadLevel = function() {};
 
 
 WireworldGame.prototype.init = function () {
-    var cells = transpose([
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,1,1,1,1,1,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,2,1,1,1,1,1,1,1,1,1,1,4,1,1,1,1,1,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    ]);
+    level = WireworldLevelData.getLevel("test");
+    this.wireworldRules = new WireworldRules(level.rules);
 
-    this.wireworldRules = new WireworldRules([
-        {
-            "coordinates" : {"i" : 20, "j" : 14},
-            "generation" : {"from":0, "to":25},
-            "must_not" : Wireworld.WW_EHEAD
-    }, {
-            "coordinates" : {"i" : 20, "j" : 2},
-            "generation" : {"from":0, "to":25},
-            "must" : Wireworld.WW_EHEAD
-    }]);
-
-    var cb = new CircuitBoard(cells);
-
-    var circuit1 =  new Wireworld(transpose([
-        [1]
-    ]));
-    var circuit2 =  new Wireworld(transpose([
-        [0,0,0],
-        [1,1,1],
-        [0,2,0],
-        [0,1,0]
-    ]));
-
-    var circuit3 =  new Wireworld(transpose([
-        [0,1,0],
-        [1,1,1],
-        [0,1,0],
-        [0,1,0]
-    ]));
+    var cb = new CircuitBoard(transpose(level.cells));
 
     var cbox = new BlueprintBox();
-    cbox.addBlueprint(circuit1, 99);
-    cbox.addBlueprint(circuit2, 6);
-    cbox.addBlueprint(circuit3, 26);
+    for (var i in level.blueprints) {
+        cbox.addBlueprint(new Wireworld(level.blueprints[i].cells), level.blueprints[i].count, ''+i);
+    }
 
     var circuitBoardCanvasElement = document.getElementById('circuitboard');
     var cellwidth = circuitBoardCanvasElement.width / cb.columns;
