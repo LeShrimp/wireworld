@@ -11,7 +11,7 @@
 var WireworldGame = function () {
     this.blueprintBoxElement = null;
     this.circuitBoardCanvas = null;
-    //this.playButton = null;
+    this.playStopElement = null;
 
     this.printedWireworldCanvas = null;
 
@@ -191,41 +191,54 @@ WireworldGame.prototype.setMode = (function() {
 })();
 
 
-WireworldGame.prototype.loadLevel = function() {};
+WireworldGame.prototype.loadLevel = function (levelName) {
+    //load leveldata
+    var level = WireworldLevelData.getLevel(levelName);
 
-
-WireworldGame.prototype.init = function () {
-    level = WireworldLevelData.getLevel("test");
+    //Set rules
     this.wireworldRules = new WireworldRules(level.rules);
 
+    //Setup CircuitBoard
     var cb = new CircuitBoard(transpose(level.cells));
-
-    var cbox = new BlueprintBox();
-    for (var i in level.blueprints) {
-        cbox.addBlueprint(new Wireworld(level.blueprints[i].cells), level.blueprints[i].count, ''+i);
-    }
-
     var circuitBoardCanvasElement = document.getElementById('circuitboard');
     var cellwidth = circuitBoardCanvasElement.width / cb.columns;
     this.circuitBoardCanvas = new CircuitBoardCanvas(cb, circuitBoardCanvasElement, cellwidth);
     this.circuitBoardCanvas.draw();
 
+    //Setup Blueprintbox
+    var cbox = new BlueprintBox();
+    for (var i in level.blueprints) {
+        var wireworld = new Wireworld(transpose(level.blueprints[i].cells));
+        cbox.addBlueprint(wireworld , level.blueprints[i].count, ''+i);
+    }
     var htmlElement = document.getElementById('blueprintbox');
     this.blueprintBoxElement = new BlueprintBoxElement(cbox, htmlElement, cellwidth);
 
+    //Setup Play/Stop Button
     var that = this;
-    var o = (function() {
-        return {
-            play: function() {
-                that.setMode(WireworldGame.EXECUTION_MODE);
-            },
-            pause: function() {
-                that.setMode(WireworldGame.SELECTION_MODE);
-            }
+    var playStopNode = document.getElementById('playstop');
+    var playStopListeners = {
+        play: function(ppEl) {
+            that.setMode(WireworldGame.EXECUTION_MODE);
+            ppEl.setText('Stop');
+        },
+        stop: function(ppEl) {
+            that.setMode(WireworldGame.SELECTION_MODE);
+            ppEl.setText('Play');
         }
-    })();
+    };
+    this.playStopElement = new PlayStopElement(
+        playStopNode,
+        playStopListeners.play,
+        playStopListeners.stop
+    );
 
-    this.playPauseElement = new PlayPauseElement(document.getElementById('playpause'), o.play, o.pause);
+    //Set message
+    var messageBoxElement = document.getElementById('messagebox');
+    pEl = document.createElement('p');
+    pEl.appendChild(document.createTextNode(level.message));
+    messageBoxElement.appendChild(pEl);
 
+    //Start game
     this.setMode(WireworldGame.SELECTION_MODE);
 };

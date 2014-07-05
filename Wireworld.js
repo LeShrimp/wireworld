@@ -48,7 +48,7 @@ Wireworld.prototype.doStep = function () {
                     var countEHeads = 0;
                     for (var di=-1; di<=1; di++) {
                         for (var dj=-1; dj<=1; dj++) {
-                            if (this.cells[(i+di)%this.columns][(j+dj)%this.rows] == Wireworld.WW_EHEAD)
+                            if (this.cells[(i+di+this.columns)%this.columns][(j+dj+this.rows)%this.rows] == Wireworld.WW_EHEAD)
                             {
                                 countEHeads++;
                             }

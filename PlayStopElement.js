@@ -10,13 +10,13 @@
  * @param onStop
  * @constructor
  */
-var PlayStop = function (htmlElement, onPlay, onStop) {
+var PlayStopElement = function (htmlElement, onPlay, onStop) {
     this.htmlElement = htmlElement;
     //TODO: Think about replacing by some fancy graphic or stuff.
     this._pEl = document.createElement('p');
     this.htmlElement.appendChild(this._pEl);
 
-    onStpo(this);
+    onStop(this);
     this.isPlay = 0;
 
     var that = this;

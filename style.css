@@ -56,7 +56,7 @@ h1#title {
 }
 
 #blueprintbox div {
-    padding-top: 8px;
+    padding-top: 20px;
 }
 
 #messagebox {
@@ -74,9 +74,13 @@ h1#title {
     margin-right: 20px;
 }
 
-#playpause {
+#playstop {
     display: inline-block;
     width: 150px;
     height: 150px;
     border: 1px solid #B7DDDD;
+}
+
+#playstop p {
+    margin-top: 60px;
 }
