@@ -36,6 +36,8 @@ CircuitBoardCanvas.prototype.draw = (function() {
     var buffer = null;
 
     return function () {
+        var circuit;
+
         if (buffer != null) {
             this.ctx.putImageData(buffer, 0, 0); //For some reason this gets really slow in firefox
         } else {
@@ -44,8 +46,12 @@ CircuitBoardCanvas.prototype.draw = (function() {
         }
         var circuits = this.circuitBoard.circuits;
         for (var id in circuits) {
-            var borderColor = this.highlightedCircuit && this.highlightedCircuit.id == id ? 'green' : 'black';
-            this.drawWireworld(circuits[id].i, circuits[id].j, circuits[id].blueprint.wireworld, borderColor);
+            circuit = circuits[id];
+            this.drawWireworld(circuit.i, circuit.j, circuit.blueprint.wireworld, 'black');
+        }
+        if (inArray(this.highlightedCircuit, circuits)) {
+            circuit = this.highlightedCircuit;
+            this.drawWireworld(circuit.i, circuit.j, circuit.blueprint.wireworld, 'green');
         }
     }
 })();

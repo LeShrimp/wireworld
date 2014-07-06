@@ -107,3 +107,10 @@ function forEach(a, callback) {
     }
 }
 
+function inArray(needle, haystack) {
+    for (var i in haystack) {
+        if (haystack[i] == needle)
+            return true;
+    }
+    return false;
+}

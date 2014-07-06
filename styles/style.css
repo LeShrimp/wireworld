@@ -9,6 +9,20 @@ h1#title {
     font-family: "Consolas", monospace;
 }
 
+.container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /*
+     * Not sure how these compute, inline blocks have some margin sometimes.
+     * See http://css-tricks.com/fighting-the-space-between-inline-block-elements/
+     * I could consider using SASS to  create variables ant dynamically compute
+     * width and height.
+     */
+    width: 761px;
+    height: 560px;
+}
+
 .container p {
     color: #B7DDDD;
     text-align: center;
@@ -24,21 +38,6 @@ h1#title {
     margin-left: auto;
     margin-right: auto;
     display: inherit;
-}
-
-.container {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    /*
-     * Not sure how these compute, inline blocks have some margin sometimes.
-     * See http://css-tricks.com/fighting-the-space-between-inline-block-elements/
-     * I could consider using SASS to  create variables ant dynamically compute
-     * width and height.
-     */
-    width: 761px;
-    height: 560px;
-    border: 0 solid #ccc;
 }
 
 #circuitboard, #printedwireworld {
@@ -83,4 +82,39 @@ h1#title {
 
 #playstop p {
     margin-top: 60px;
+}
+
+.tutorial {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 761px;
+    border: 1px solid #B7DDDD;
+}
+
+.tutorial p {
+    color: #B7DDDD;
+    text-align: left;
+    font-family: "Consolas", monospace;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.tutorial div {
+    text-align: center;
+}
+
+.tutorial div canvas {
+    margin: 50px;
+}
+
+.tutorial div span {
+    color: #B7DDDD;
+    text-align: center;
+    font-family: "Consolas", monospace;
+    margin: 80px
+}
+
+.tutorial . canvas {
+    display: inline-block;
 }

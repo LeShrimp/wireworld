@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wireworld</title>
+    <link rel="stylesheet" type="text/css" href="../styles/style.css">
+</head>
+<body>
+    <h1 id="title">Wireworld</h1>
+
+    <section class="tutorial">
+        <p>Welcome to Wireworld. In Wireworld space consists of cells, arranged in a grid.</p>
+        <div>
+            <canvas id="ww1"></canvas>
+        </div>
+        <p>Cells come in four &quot;states&quot;, which are from left to right: Black, Copper, Electron head and Electron tail.</p>
+        <div>
+            <canvas id="ww2"></canvas>
+            <canvas id="ww3"></canvas>
+            <canvas id="ww4"></canvas>
+            <canvas id="ww5"></canvas>
+        </div>
+        <p>Not only space, but also time is discrete in Wireworld. Although cells never move, they
+        may change their state from one point in time to the other.</p>
+        <p>Black cells always stay black.</p>
+        <div>
+            <canvas id="ww6"></canvas>
+        </div>
+        <p>Electron tails become Copper.</p>
+        <div>
+            <canvas id="ww7"></canvas>
+        </div>
+        <p>Electron heads become Electron tails.</p>
+        <div>
+            <canvas id="ww8"></canvas>
+        </div>
+        <p>And finally a cell in Copper state switches to Electron head state if one or two of its
+        neighbours are in Electron head state.</p>
+        <div>
+            <canvas id="ww9"></canvas>
+            <canvas id="ww10"></canvas>
+        </div>
+        <p>Sounds pretty boring, doesn't it? Let's take a look at the bigger picture.</p>
+        <div>
+            <canvas id="ww11"></canvas>
+        </div>
+        <p>Keep in mind that movement is illusion in Wireworld!</p>
+    </section>
+
+    <script src="../utils.js"></script>
+    <script src="../Wireworld.js"></script>
+    <script src="../WireworldCanvas.js"></script>
+    <script>
+        function drawWireworld(cells, id, steps) {
+            var cellWidth = 30;
+            var initCells = transpose(cells);
+            var ww = new Wireworld(cloneRectArray(initCells));
+            var htmlEl = document.getElementById(id);
+            htmlEl.width = cellWidth * ww.columns;
+            htmlEl.height = cellWidth * ww.rows;
+            var wwc = new WireworldCanvas(ww, htmlEl, htmlEl.width / ww.columns);
+            wwc.draw();
+
+            if (typeof steps !== 'undefined') {
+                (function animate() {
+                    ww.cells = cloneRectArray(initCells);
+                    wwc.draw();
+                    for (var i=1; i<=steps; i++) {
+                        setTimeout(
+                            function() {ww.doStep(); wwc.draw();},
+                            i*500
+                        );
+                    }
+                    setTimeout(
+                        animate,
+                        (steps+1)*500
+                    );
+                })();
+            }
+        }
+
+        //ww1
+        var cells = [
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,1,0,0,0,1,0,0,0,0,0,0],
+            [0,1,0,1,0,1,0,0,0,0,0,0],
+            [0,0,1,0,1,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,1,0,0,0,1,0],
+            [0,0,0,0,0,0,1,0,1,0,1,0],
+            [0,0,0,0,0,0,0,1,0,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0]
+        ];
+        drawWireworld(cells, 'ww1');
+
+        //ww2
+        cells = [
+            [0]
+        ];
+        drawWireworld(cells, 'ww2');
+
+        //ww3
+        cells = [
+            [1]
+        ];
+        drawWireworld(cells, 'ww3');
+
+        //ww4
+        cells = [
+            [2]
+        ];
+        drawWireworld(cells, 'ww4');
+
+        //ww5
+        cells = [
+            [3]
+        ];
+        drawWireworld(cells, 'ww5');
+
+        //ww6
+        cells = [
+            [0,0,0],
+            [0,0,0],
+            [0,0,0]
+        ];
+        drawWireworld(cells, 'ww6');
+
+        //ww7
+        cells = [
+            [0,0,0],
+            [0,3,0],
+            [0,0,0]
+        ];
+        drawWireworld(cells, 'ww7', 3);
+
+        //ww8
+        cells = [
+            [0,0,0],
+            [0,2,0],
+            [0,0,0]
+        ];
+        drawWireworld(cells, 'ww8', 3);
+
+        //ww9
+        cells = [
+            [0,0,1],
+            [1,2,0],
+            [0,2,0]
+        ];
+        drawWireworld(cells, 'ww9', 3);
+
+        //ww10
+        cells = [
+            [0,1,0],
+            [2,2,2],
+            [0,0,0]
+        ];
+        drawWireworld(cells, 'ww10', 3);
+
+        //ww11
+        var cells = [
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,2,0,0,0,1,0,0,0,0,0,0],
+            [0,1,0,1,0,1,0,0,0,0,0,0],
+            [0,0,1,0,1,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,2,0,0,0,1,0],
+            [0,0,0,0,0,0,1,0,1,0,1,0],
+            [0,0,0,0,0,0,0,1,0,1,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0]
+        ];
+        drawWireworld(cells, 'ww11', 10);
+    </script>
+</body>
+</html>

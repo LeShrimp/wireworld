@@ -44,15 +44,26 @@ WireworldGame.prototype.setMode = (function() {
                 return {
                     onMouseMove: function (event) {
                         var mousePos = cbc.getPosFromMouseEvent(event);
-                        var blueprint = bbe.selectedBlueprint;
-                        var wireworld = bbe.selectedBlueprint.wireworld;
-                        placementPos = {
-                            i: mousePos.i-Math.floor(wireworld.columns/2),
-                            j: mousePos.j-Math.floor(wireworld.rows/2)
+                        var newPlacementPos = {
+                            i: mousePos.i-Math.floor(bbe.selectedBlueprint.wireworld.columns/2),
+                            j: mousePos.j-Math.floor(bbe.selectedBlueprint.wireworld.rows/2)
                         };
-                        cbc.draw();
-                        isLegal = cb.isPlacementLegal(placementPos.i, placementPos.j, blueprint);
-                        cbc.drawWireworld(placementPos.i, placementPos.j, wireworld, isLegal ? 'green' : 'red');
+                        if (newPlacementPos.i != placementPos.i || newPlacementPos.j != placementPos.j) {
+                            placementPos = newPlacementPos;
+                            cbc.draw();
+                        }
+                        isLegal = cb.isPlacementLegal(
+                            placementPos.i,
+                            placementPos.j,
+                            bbe.selectedBlueprint,
+                            bbe.selectedBlueprint.wireworld
+                        );
+                        cbc.drawWireworld(
+                            placementPos.i,
+                            placementPos.j,
+                            bbe.selectedBlueprint.wireworld,
+                            isLegal ? 'green' : 'red'
+                        );
                     },
 
                     onMouseDown: function (event) {
@@ -107,8 +118,6 @@ WireworldGame.prototype.setMode = (function() {
         }
 
         var SimulationListeners = (function() {
-            var generation;
-
             var simulationStep = function() {
                     that.printedWireworldCanvas.wireworld.doStep();
                     that.wireworldRules.update(that.printedWireworldCanvas.wireworld);
@@ -116,10 +125,14 @@ WireworldGame.prototype.setMode = (function() {
 
                     if (that.wireworldRules.isSuccess()) {
                         alert("Success!");
+                        that.wireworldRules.reset();
+                        that.playStopElement.onStop();
                         that.setMode(WireworldGame.SELECTION_MODE);
                     }
                     if (that.wireworldRules.isFail()) {
                         alert("Fail!");
+                        that.wireworldRules.reset();
+                        that.playStopElement.onStop();
                         that.setMode(WireworldGame.SELECTION_MODE);
                     }
 
@@ -147,7 +160,7 @@ WireworldGame.prototype.setMode = (function() {
             }
         })();
 
-        var selectionChange = function(blueprint) {
+        var bbeSelectionChange = function(blueprint) {
             if (blueprint.count) {
                 that.setMode(WireworldGame.PLACEMENT_MODE);
             } else {
@@ -155,32 +168,32 @@ WireworldGame.prototype.setMode = (function() {
             }
         };
 
-        var cbHtmlEl = this.circuitBoardCanvas.htmlCanvasElement;
+        var cbcEl = this.circuitBoardCanvas.htmlCanvasElement;
         switch (mode) {
             case WireworldGame.PLACEMENT_MODE:
                 SimulationListeners.onSimulationStop();
-                that.blueprintBoxElement.onSelectionChange(selectionChange);
-                cbHtmlEl.removeEventListener('mousemove', cbcSelectionListeners.onMouseMove);
-                cbHtmlEl.removeEventListener('mousedown', cbcSelectionListeners.onMouseDown);
-                cbHtmlEl.addEventListener('mousemove', cbcPlacementListeners.onMouseMove);
-                cbHtmlEl.addEventListener('mousedown', cbcPlacementListeners.onMouseDown);
+                that.blueprintBoxElement.onSelectionChange(bbeSelectionChange);
+                cbcEl.removeEventListener('mousemove', cbcSelectionListeners.onMouseMove);
+                cbcEl.removeEventListener('mousedown', cbcSelectionListeners.onMouseDown);
+                cbcEl.addEventListener('mousemove', cbcPlacementListeners.onMouseMove);
+                cbcEl.addEventListener('mousedown', cbcPlacementListeners.onMouseDown);
                 break;
 
             case WireworldGame.SELECTION_MODE:
                 SimulationListeners.onSimulationStop();
-                that.blueprintBoxElement.onSelectionChange(selectionChange);
-                cbHtmlEl.removeEventListener('mousemove', cbcPlacementListeners.onMouseMove);
-                cbHtmlEl.removeEventListener('mousedown', cbcPlacementListeners.onMouseDown);
-                cbHtmlEl.addEventListener('mousemove', cbcSelectionListeners.onMouseMove);
-                cbHtmlEl.addEventListener('mousedown', cbcSelectionListeners.onMouseDown);
+                that.blueprintBoxElement.onSelectionChange(bbeSelectionChange);
+                cbcEl.removeEventListener('mousemove', cbcPlacementListeners.onMouseMove);
+                cbcEl.removeEventListener('mousedown', cbcPlacementListeners.onMouseDown);
+                cbcEl.addEventListener('mousemove', cbcSelectionListeners.onMouseMove);
+                cbcEl.addEventListener('mousedown', cbcSelectionListeners.onMouseDown);
                 break;
 
             case WireworldGame.EXECUTION_MODE:
                 that.blueprintBoxElement.onSelectionChange(function() {});
-                cbHtmlEl.removeEventListener('mousemove', cbcSelectionListeners.onMouseMove);
-                cbHtmlEl.removeEventListener('mousedown', cbcSelectionListeners.onMouseDown);
-                cbHtmlEl.removeEventListener('mousemove', cbcPlacementListeners.onMouseMove);
-                cbHtmlEl.removeEventListener('mousedown', cbcPlacementListeners.onMouseDown);
+                cbcEl.removeEventListener('mousemove', cbcSelectionListeners.onMouseMove);
+                cbcEl.removeEventListener('mousedown', cbcSelectionListeners.onMouseDown);
+                cbcEl.removeEventListener('mousemove', cbcPlacementListeners.onMouseMove);
+                cbcEl.removeEventListener('mousedown', cbcPlacementListeners.onMouseDown);
                 SimulationListeners.onSimulationStart();
                 break;
         }
@@ -209,7 +222,7 @@ WireworldGame.prototype.loadLevel = function (levelName) {
     var cbox = new BlueprintBox();
     for (var i in level.blueprints) {
         var wireworld = new Wireworld(transpose(level.blueprints[i].cells));
-        cbox.addBlueprint(wireworld , level.blueprints[i].count, ''+i);
+        cbox.addBlueprint(wireworld, level.blueprints[i].count, ''+i);
     }
     var htmlElement = document.getElementById('blueprintbox');
     this.blueprintBoxElement = new BlueprintBoxElement(cbox, htmlElement, cellwidth);
@@ -218,19 +231,19 @@ WireworldGame.prototype.loadLevel = function (levelName) {
     var that = this;
     var playStopNode = document.getElementById('playstop');
     var playStopListeners = {
-        play: function(ppEl) {
+        onPlay: function() {
             that.setMode(WireworldGame.EXECUTION_MODE);
-            ppEl.setText('Stop');
+            this.setText('Stop');
         },
-        stop: function(ppEl) {
+        onStop: function() {
             that.setMode(WireworldGame.SELECTION_MODE);
-            ppEl.setText('Play');
+            this.setText('Play');
         }
     };
     this.playStopElement = new PlayStopElement(
         playStopNode,
-        playStopListeners.play,
-        playStopListeners.stop
+        playStopListeners.onPlay,
+        playStopListeners.onStop
     );
 
     //Set message
