@@ -15,14 +15,16 @@ var PlayStopElement = function (htmlElement, onPlay, onStop) {
     //TODO: Think about replacing by some fancy graphic or stuff.
     this._pEl = document.createElement('p');
     this.htmlElement.appendChild(this._pEl);
+    this.onPlay = onPlay;
+    this.onStop = onStop;
 
-    onStop(this);
+    this.onStop();
     this.isPlay = 0;
 
     var that = this;
     this.htmlElement.addEventListener('click', function() {
-        this.isPlay = !this.isPlay;
-        this.isPlay ? onPlay(that) : onStop(that);
+        that.isPlay = !that.isPlay;
+        that.isPlay ? that.onPlay() : that.onStop();
     });
 };
 

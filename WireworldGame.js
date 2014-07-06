@@ -116,10 +116,14 @@ WireworldGame.prototype.setMode = (function() {
 
                     if (that.wireworldRules.isSuccess()) {
                         alert("Success!");
+                        that.wireworldRules.reset();
+                        that.playStopElement.onStop();
                         that.setMode(WireworldGame.SELECTION_MODE);
                     }
                     if (that.wireworldRules.isFail()) {
                         alert("Fail!");
+                        that.wireworldRules.reset();
+                        that.playStopElement.onStop();
                         that.setMode(WireworldGame.SELECTION_MODE);
                     }
 
@@ -218,19 +222,19 @@ WireworldGame.prototype.loadLevel = function (levelName) {
     var that = this;
     var playStopNode = document.getElementById('playstop');
     var playStopListeners = {
-        play: function(ppEl) {
+        onPlay: function() {
             that.setMode(WireworldGame.EXECUTION_MODE);
-            ppEl.setText('Stop');
+            this.setText('Stop');
         },
-        stop: function(ppEl) {
+        onStop: function() {
             that.setMode(WireworldGame.SELECTION_MODE);
-            ppEl.setText('Play');
+            this.setText('Play');
         }
     };
     this.playStopElement = new PlayStopElement(
         playStopNode,
-        playStopListeners.play,
-        playStopListeners.stop
+        playStopListeners.onPlay,
+        playStopListeners.onStop
     );
 
     //Set message

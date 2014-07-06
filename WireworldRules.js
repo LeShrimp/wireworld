@@ -55,8 +55,10 @@ WireworldRules.prototype.update = function (wireworld) {
             continue;
 
         if (rule.hasOwnProperty("must")) {
-            if (wireworld.generation < rule.generation.from || wireworld.generation > rule.generation.to) {
+            if (wireworld.generation < rule.generation.from) {
                 continue;
+            } else if (wireworld.generation > rule.generation.to) {
+                rule.status = WireworldRules.FAIL;
             } else if (wireworld.cells[rule.coordinates.i][rule.coordinates.j] == rule.must) {
                 rule.status = WireworldRules.SUCCESS;
             }
@@ -100,3 +102,11 @@ WireworldRules.prototype.isSuccess = function() {
     return true;
 }
 
+
+/**
+ */
+WireworldRules.prototype.reset = function() {
+    for (var i in this.rules) {
+        this.rules[i].status = WireworldRules.UNKNOWN;
+    }
+}
