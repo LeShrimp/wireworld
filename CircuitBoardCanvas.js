@@ -101,27 +101,27 @@ CircuitBoardCanvas.prototype.drawCell = function (i, j, state) {
     var rect = this.getCellRect(i, j);
 
     ctx.beginPath();
-    ctx.strokeStyle = '#3C3737';
+    ctx.strokeStyle = '#4D344A';
     switch (state) {
-        case CircuitBoard.WW_COPPER:
-            ctx.fillStyle = '#FF9900';
+        case Wireworld.WW_COPPER:
+            ctx.fillStyle = '#F7C11E';
             break;
 
-        case CircuitBoard.WW_EHEAD:
-            ctx.fillStyle = '#000099';
+        case Wireworld.WW_EHEAD:
+            ctx.fillStyle = '#17A4E5';
             break;
 
-        case CircuitBoard.WW_ETAIL:
-            ctx.fillStyle = '#0099FF';
+        case Wireworld.WW_ETAIL:
+            ctx.fillStyle = '#EA503A';
             break;
 
-        case CircuitBoard.WW_BLACK:
-            ctx.fillStyle = '#4C4747';
+        case Wireworld.WW_BLACK:
+            ctx.fillStyle = '#2F1E2E';
             break;
 
         case CircuitBoard.WW_EMPTY:
         default:
-            ctx.fillStyle = '#1C1717';
+            ctx.fillStyle = '#110012';
             break;
     }
     ctx.rect(rect.x+0.5, rect.y+0.5, rect.w, rect.h);

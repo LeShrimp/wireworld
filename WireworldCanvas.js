@@ -82,23 +82,23 @@ WireworldCanvas.prototype.drawCell = function (i, j, state) {
     var rect = this.getCellRect(i, j);
 
     ctx.beginPath();
-    ctx.strokeStyle = '#3C3737';
+    ctx.strokeStyle = '#4D344A';
     switch (state) {
         case Wireworld.WW_COPPER:
-            ctx.fillStyle = '#FF9900';
+            ctx.fillStyle = '#F7C11E';
             break;
 
         case Wireworld.WW_EHEAD:
-            ctx.fillStyle = '#000099';
+            ctx.fillStyle = '#17A4E5';
             break;
 
         case Wireworld.WW_ETAIL:
-            ctx.fillStyle = '#0099FF';
+            ctx.fillStyle = '#EA503A';
             break;
 
         case Wireworld.WW_BLACK:
         default:
-            ctx.fillStyle = '#4C4747';
+            ctx.fillStyle = '#2F1E2E';
             break;
     }
     ctx.rect(rect.x+0.5, rect.y+0.5, rect.w, rect.h);
