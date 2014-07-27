@@ -27,7 +27,19 @@
     <script src="./js/WireworldLevelData.js"></script>
     <script src="./js/WireworldGame.js"></script>
     <script>
-        (new WireworldGame()).loadLevel("1");
+        var level = 1;
+
+        var onWin = function() {
+            if(confirm('You won! Move to next level?'))
+                level++;
+            (new WireworldGame()).loadLevel(level, onWin, onFail);
+        };
+
+        var onFail = function() {
+            alert('Try again!');
+        };
+
+        (new WireworldGame()).loadLevel(level, onWin, onFail);
     </script>
 </body>
 </html>

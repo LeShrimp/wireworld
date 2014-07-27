@@ -32,29 +32,20 @@ copyPrototype(CircuitBoardCanvas, WireworldCanvas);
  * @param circuitBoard
  * @override
  */
-CircuitBoardCanvas.prototype.draw = (function() {
-    var buffer = null;
+CircuitBoardCanvas.prototype.draw = function() {
+    this.drawWireworld(0, 0, this.wireworld);
 
-    return function () {
-        var circuit;
-
-        if (buffer != null) {
-            this.ctx.putImageData(buffer, 0, 0); //For some reason this gets really slow in firefox
-        } else {
-            this.drawWireworld(0, 0, this.wireworld);
-            buffer = this.ctx.getImageData(0, 0, this.width, this.height);
-        }
-        var circuits = this.circuitBoard.circuits;
-        for (var id in circuits) {
-            circuit = circuits[id];
-            this.drawWireworld(circuit.i, circuit.j, circuit.blueprint.wireworld, 'black');
-        }
-        if (inArray(this.highlightedCircuit, circuits)) {
-            circuit = this.highlightedCircuit;
-            this.drawWireworld(circuit.i, circuit.j, circuit.blueprint.wireworld, 'green');
-        }
+    var circuits = this.circuitBoard.circuits;
+    var circuit;
+    for (var id in circuits) {
+        circuit = circuits[id];
+        this.drawWireworld(circuit.i, circuit.j, circuit.blueprint.wireworld, 'black');
     }
-})();
+    if (inArray(this.highlightedCircuit, circuits)) {
+        circuit = this.highlightedCircuit;
+        this.drawWireworld(circuit.i, circuit.j, circuit.blueprint.wireworld, 'green');
+    }
+};
 
 /**
  *
@@ -147,4 +138,4 @@ CircuitBoardCanvas.prototype.createPrintCanvas = function (id) {
     var wireworld = this.circuitBoard.print();
 
     return new WireworldCanvas(wireworld, htmlCanvasElement, this.cellWidth);
-}
+};

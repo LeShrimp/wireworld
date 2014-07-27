@@ -114,3 +114,15 @@ function inArray(needle, haystack) {
     }
     return false;
 }
+
+/**
+ * Clear the given DOM node.
+ */
+function getClearedElementById(id)
+{
+    var node = document.getElementById(id);
+    var clone = node.cloneNode(false);
+    node.parentNode.replaceChild(clone, node);
+    return clone;
+}
+
