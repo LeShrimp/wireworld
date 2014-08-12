@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wireworld</title>
+    <link rel="stylesheet" type="text/css" href="./styles/style.css">
+</head>
+<body>
+    <h1 id="title">Wireworld</h1>
+
+    <section class="container">
+        <canvas id="circuitboard" height="400" width="600"> </canvas>
+        <div id="blueprintbox"> </div>
+
+        <div id="messagebox"> </div>
+        <div id="playstop"> </div>
+    </section>
+
+    <script src="./js/utils.js"></script>
+    <script src="./js/WireworldCanvas.js"></script>
+    <script src="./js/Wireworld.js"></script>
+    <script src="./js/WireworldRules.js"></script>
+    <script src="./js/CircuitBoard.js"></script>
+    <script src="./js/CircuitBoardCanvas.js"></script>
+    <script src="./js/BlueprintBox.js"></script>
+    <script src="./js/BlueprintBoxElement.js"></script>
+    <script src="./js/PlayStopElement.js"></script>
+    <script src="./js/WireworldLevelData.js"></script>
+    <script src="./js/WireworldGame.js"></script>
+    <script>
+        var level;
+
+        if (!(level = getCookie('currentLevel'))) {
+            level = 1;
+        };
+
+        var onWin = function() {
+            if(confirm('You won! Move to next level?')) {
+                setCookie('currentLevel', ++level, 7);
+            }
+            (new WireworldGame()).loadLevel(level, onWin, onFail);
+        };
+
+        var onFail = function() {
+            alert('Try again!');
+        };
+
+        (new WireworldGame()).loadLevel(level, onWin, onFail);
+    </script>
+</body>
+</html>

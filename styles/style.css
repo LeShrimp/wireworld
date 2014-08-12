@@ -1,10 +1,20 @@
 body {
     background-color: #110012;
+    color: #B7DDDD;
+    font-family: "Consolas", monospace;
+    text-align: center;
 }
 
+body a {
+    color: #B7DDDD;
+    text-decoration: none;
+}
+
+body a:hover {
+    color: #EA503A;
+}
 
 h1#title {
-    text-align: center;
     color: #FF9900;
     font-family: "Consolas", monospace;
 }
@@ -19,14 +29,16 @@ h1#title {
      * I could consider using SASS to  create variables ant dynamically compute
      * width and height.
      */
-    width: 761px;
-    height: 560px;
+    width: 764px;
+    height: 700px;
+}
+
+.container div {
+    margin-top: 6px;
 }
 
 .container p {
-    color: #B7DDDD;
     text-align: center;
-    font-family: "Consolas", monospace;
 }
 
 #blueprintbox {
@@ -93,9 +105,7 @@ h1#title {
 }
 
 .tutorial p {
-    color: #B7DDDD;
     text-align: left;
-    font-family: "Consolas", monospace;
     margin-left: 50px;
     margin-right: 50px;
 }
@@ -115,6 +125,6 @@ h1#title {
     margin: 80px
 }
 
-.tutorial . canvas {
+.tutorial canvas {
     display: inline-block;
 }
