@@ -128,3 +128,14 @@ h1#title {
 .tutorial canvas {
     display: inline-block;
 }
+
+.mainMenu {
+    position: absolute;
+    width: 640px;
+    height: 480px;
+    left: 50%;
+    top: 50%;
+    margin-left: -320px;
+    margin-top: -240px;
+    font-size: 200%;
+}
