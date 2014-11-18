@@ -6,6 +6,7 @@
 
 
 /**
+ * A circuit is a placed blueprint.
  *
  * @param {number} i
  * @param {number} j
@@ -53,7 +54,7 @@ CircuitBoard.prototype.placeCircuit = (function () {
         id++;
         this.circuits[id] = new Circuit(i, j, blueprint, id);
         return id;
-    }
+    };
 })();
 
 
@@ -75,7 +76,7 @@ CircuitBoard.prototype.getCircuitAtPos = function (i, j) {
         }
     }
     return null;
-}
+};
 
 
 /**
@@ -85,7 +86,7 @@ CircuitBoard.prototype.getCircuitAtPos = function (i, j) {
  */
 CircuitBoard.prototype.removeCircuit = function (circuit) {
     delete this.circuits[circuit.id];
-}
+};
 
 
 /**
@@ -111,30 +112,35 @@ CircuitBoard.prototype.isPlacementLegal = function (i, j, blueprint) {
     }
     for (k=0; k<wireworld.columns; k++) {
         for (l=0; l<wireworld.rows; l++) {
-            if (this.getCircuitAtPos(i+k, j+l) != null) {
+            if (this.getCircuitAtPos(i+k, j+l) !== null) {
                 return false;
             }
         }
     }
     return true;
-}
+};
 
 
+/**
+ * @return {Wireworld} The wireworld object that results from 'printing'
+ *                     the circuits to the circuitboard.
+ */
 CircuitBoard.prototype.print = function () {
+    var i, j;
     var cells = cloneRectArray(this.cells);
 
-    for (id in this.circuits) {
+    for (var id in this.circuits) {
         var c = this.circuits[id];
         var cw = c.blueprint.wireworld;
-        for (var i=0; i<cw.columns; i++) {
-            for (var j=0; j<cw.rows; j++) {
+        for (i=0; i<cw.columns; i++) {
+            for (j=0; j<cw.rows; j++) {
                 cells[c.i+i][c.j+j] = cw.cells[i][j];
             }
         }
     }
 
-    for (var i=0; i<cells.length; i++) {
-        for (var j=0; j<cells[i].length; j++) {
+    for (i=0; i<cells.length; i++) {
+        for (j=0; j<cells[i].length; j++) {
             if (cells[i][j].WW_EMPTY) {
                 cells[i][j] = Wireworld.WW_BLACK;
             }

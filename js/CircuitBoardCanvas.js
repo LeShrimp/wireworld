@@ -28,19 +28,23 @@ copyProperties(CircuitBoardCanvas, WireworldCanvas); //Copy statics
 copyPrototype(CircuitBoardCanvas, WireworldCanvas);
 
 /**
+ * Draw the entire circuitBoard, i.e. initial state and
+ * placed circuits.
  *
- * @param circuitBoard
  * @override
  */
 CircuitBoardCanvas.prototype.draw = function() {
+    //Draw the 'background'
     this.drawWireworld(0, 0, this.wireworld);
 
     var circuits = this.circuitBoard.circuits;
     var circuit;
+    //Draw all placed circuits
     for (var id in circuits) {
         circuit = circuits[id];
         this.drawWireworld(circuit.i, circuit.j, circuit.blueprint.wireworld, 'black');
     }
+    //Draw the highlighted ones (i.e. the cells on which the mouse hovers) agein with green border
     if (inArray(this.highlightedCircuit, circuits)) {
         circuit = this.highlightedCircuit;
         this.drawWireworld(circuit.i, circuit.j, circuit.blueprint.wireworld, 'green');
@@ -48,6 +52,7 @@ CircuitBoardCanvas.prototype.draw = function() {
 };
 
 /**
+ * Draw a wireworld object onto the CircuitBoardCanvas.
  *
  * @param i
  * @param j
@@ -81,6 +86,7 @@ CircuitBoardCanvas.prototype.drawWireworld = function (i, j, wireworld, borderCo
 };
 
 /**
+ * Draws a single cell.
  *
  * @param i
  * @param j
@@ -110,7 +116,6 @@ CircuitBoardCanvas.prototype.drawCell = function (i, j, state) {
             ctx.fillStyle = '#2F1E2E';
             break;
 
-        case CircuitBoard.WW_EMPTY:
         default:
             ctx.fillStyle = '#110012';
             break;
@@ -121,8 +126,10 @@ CircuitBoardCanvas.prototype.drawCell = function (i, j, state) {
 };
 
 /**
- * Clone the current canvas, and create a Wireworld Canvas object with
+ * Clone the current canvas, and create a WireworldCanvas object with
  * wireworld being the print of the circuitboard.
+ *
+ * This is used when simulation is started, to forget about circuits.
  *
  * @return {WireworldCanvas}
  */

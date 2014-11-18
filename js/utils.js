@@ -127,6 +127,7 @@ function getClearedElementById(id)
 }
 
 //Cookie functions from http://www.w3schools.com/js/js_cookies.asp
+//Note that cookie setting does not work for local files in chrom
 function setCookie(cname,cvalue,exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));

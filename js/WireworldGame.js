@@ -21,6 +21,9 @@ var WireworldGame = function () {
 
     this._intervalId  = null;
 
+    //Define the actionlisteners for the different modes.
+
+    //In placement mode the player has selected a circuit and can place it with a left click
     this.cbcPlacementListeners = (function() {
         var placementPos = {i:0, j:0};
         var isLegal = true;
@@ -71,6 +74,7 @@ var WireworldGame = function () {
         };
     })();
 
+    //In Selection mode the player can select placed circuits
     this.cbcSelectionListeners = (function()
     {
         return {
@@ -109,6 +113,7 @@ var WireworldGame = function () {
         };
     })();
 
+    //In simulation mode we have to simulate the printed wireworld step by step
     this.SimulationListeners = (function() {
         var simulationStep = function() {
             that.printedWireworldCanvas.wireworld.doStep();
@@ -127,6 +132,8 @@ var WireworldGame = function () {
                 that.playStopElement.onStop();
                 that.setMode(WireworldGame.SELECTION_MODE);
             }
+
+            console.log(that.printedWireworldCanvas.wireworld.generation);
         };
 
         return {

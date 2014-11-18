@@ -5,7 +5,6 @@
  */
 
 /**
- *
  * @param {Wireworld} wireworld
  * @param {number} count
  * @param {number} blueprintId
@@ -18,7 +17,6 @@ var Blueprint = function (wireworld, count, blueprintId) {
 };
 
 /**
- *
  * @constructor
  */
 var BlueprintBox = function() {
@@ -27,6 +25,8 @@ var BlueprintBox = function() {
 
 
 /**
+ * The model of the Blueprint box for selecting blueprints. The selected
+ * blueprint can be used to place a circuit.
  *
  * @param {Wireworld} wireworld
  * @param {number} amount
@@ -38,12 +38,14 @@ BlueprintBox.prototype.addBlueprint = (function() {
         id++;
         this.blueprints[id] = new Blueprint(wireworld, count, id);
         return id;
-    }
+    };
 })();
 
 
 /**
- * Increases the amount available in the toolbox.
+ * Increases the amount of circuits that can be made from
+ * this blueprint.
+ *
  * @param blueprint
  */
 BlueprintBox.prototype.incCount = function (blueprint) {
@@ -52,7 +54,9 @@ BlueprintBox.prototype.incCount = function (blueprint) {
 
 
 /**
- * Decreases the amount of that circuit.
+ * Decreases the amount of the circuits that can be made
+ * from this blueprint.
+ *
  * @param blueprint
  * @returns {boolean} false if amount was already 0, true otherwise.
  */
@@ -63,6 +67,6 @@ BlueprintBox.prototype.decCount = function (blueprint) {
 
     blueprint.count--;
     return true;
-}
+};
 
 

@@ -6,6 +6,8 @@
  */
 
 /**
+ * A wireworld object is basically a matrix containing cell states. It is also able
+ * to do an evolution step.
  *
  * @param cells
  * @constructor
