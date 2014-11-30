@@ -68,7 +68,7 @@ WireworldCanvas.prototype.getCellRect = function (i, j) {
         w: this.cellWidth,
         h: this.cellWidth
     };
-}
+};
 
 
 /**

@@ -29,8 +29,8 @@ h1#title {
      * I could consider using SASS to  create variables and dynamically compute
      * width and height.
      */
-    width: 764px;
-    height: 700px;
+    width: 812px;
+    height: 732px;
 }
 
 .container div {
@@ -53,8 +53,8 @@ h1#title {
 }
 
 #circuitboard, #printedwireworld {
-    width: 600px;
-    height: 400px;
+    width: 648px;
+    height: 432px;
     display: inline-block;
     border: 1px solid #B7DDDD;
 }
@@ -62,7 +62,7 @@ h1#title {
 #blueprintbox {
     display: inline-block;
     width: 150px;
-    height: 400px;
+    height: 432px;
     border: 1px solid #ccc;
 }
 
@@ -72,7 +72,7 @@ h1#title {
 
 #messagebox {
     display: inline-block;
-    width: 600px;
+    width: 648px;
     height: 150px;
     vertical-align: top;
     overflow: auto;
