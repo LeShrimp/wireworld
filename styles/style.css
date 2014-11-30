@@ -26,7 +26,7 @@ h1#title {
     /*
      * Not sure how these compute, inline blocks have some margin sometimes.
      * See http://css-tricks.com/fighting-the-space-between-inline-block-elements/
-     * I could consider using SASS to  create variables ant dynamically compute
+     * I could consider using SASS to  create variables and dynamically compute
      * width and height.
      */
     width: 764px;
