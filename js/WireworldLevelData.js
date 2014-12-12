@@ -35,7 +35,7 @@ WireworldLevelData.level =
         "cells" : [ //12 x 8
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
-            [0,4,2,3,1,4,1,1,1,1,4,0],
+            [0,4,4,1,1,1,1,1,1,1,4,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
             [0,4,3,2,1,4,1,1,1,1,4,0],
@@ -47,7 +47,12 @@ WireworldLevelData.level =
                 "cells" : [
                     [1]
                 ],
-                "count" : 99
+                "count" : 1
+            }, {
+                "cells" : [
+                    [2]
+                ],
+                "count" : 1
             }
         ],
         "rules" : [
@@ -61,10 +66,81 @@ WireworldLevelData.level =
                 "must" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "Remember that each cell can be in one of four states? You see them all in the box on the right. You may set the state of those darkly colored black cells as you please. To move to the next level, electrify the two right-most copper cells."
+        "message" : "Now this is for Dummies. You may choose cells from the box on the right. Place them on any of the darkly colored cells. To put a cell back in the box press the right mouse button. To move to the next level, electrify the two right-most copper cells."
     },
 
     "2" : {
+        "cells" : [ //12 x 8
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,4,2,3,1,4,1,1,1,1,4,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,4,3,2,1,4,1,1,1,1,4,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0]
+        ],
+        "blueprints" : [
+            {
+                "cells" : [
+                    [1]
+                ],
+                "count" : 2
+            }
+        ],
+        "rules" : [
+            {
+                "coordinates" : {"i" : 9, "j" : 2},
+                "generation" : {"from":0, "to":100},
+                "must" : Wireworld.WW_EHEAD
+            }, {
+                "coordinates" : {"i" : 9, "j" : 5},
+                "generation" : {"from":0, "to":100},
+                "must" : Wireworld.WW_EHEAD
+            }
+        ],
+        "message" : "Electrify the two right-most copper cells."
+    },
+
+    "3" : {
+        "cells" : [ //12 x 8
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,4,2,1,1,1,4,4,4,4,4,0],
+            [0,4,4,4,4,4,4,2,1,1,4,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0]
+        ],
+        "blueprints" : [
+            {
+                "cells" : [
+                    [1]
+                ],
+                "count" : 1
+            }, {
+                "cells" : [
+                    [3]
+                ],
+                "count" : 1
+            }
+        ],
+        "rules" : [
+            {
+                "coordinates" : {"i" : 9, "j" : 4},
+                "generation" : {"from":0, "to":3},
+                "must" : Wireworld.WW_EHEAD
+            }, {
+                "coordinates" : {"i" : 9, "j" : 4},
+                "generation" : {"from":3, "to":100},
+                "must" : Wireworld.WW_EHEAD
+            }
+        ],
+        "message" : "Make both signals reach the right end of the wire."
+    },
+
+    "4" : {
         "cells" : [ //12 x 8
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,4,4,4,4,4,0],
@@ -97,7 +173,40 @@ WireworldLevelData.level =
         "message" : "Do you remember how the laws of Wireworld make cells change their state? An overstimulated copper cell will remain silent. Let the signal take the upper path, but not the lower one."
     },
 
-    "3" : {
+    "5" : {
+        "cells" : [ //18 x 12
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        ],
+        "blueprints" : [
+            {
+                "cells" : [
+                    [1]
+                ],
+                "count" : 99
+            }
+        ],
+        "rules" : [
+            {
+                "coordinates" : {"i" : 16, "j" : 6},
+                "generation" : {"from":2, "to":100},
+                "must" : Wireworld.WW_EHEAD
+            }
+        ],
+        "message" : "I will give you some bigger building blocks. Have fun. Electrify the right-most copper cell."
+    },
+
+    "6" : {
         "cells" : [ //18 x 12
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -130,7 +239,7 @@ WireworldLevelData.level =
         "message" : "You are bored, right? I can see it in your face. Let's move to something more interesting. Build something that lets the signal pass from left to right, but not from right to left."
     },
 
-    "4" : {
+    "7" : {
         "cells" : [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -191,7 +300,7 @@ WireworldLevelData.level =
         "message" : "So you discovered diodes. Quite good. Now find a way to enlighten the cell at the right multiple times. But make sure the signal never goes back to its origin!"
     },
 
-    "5" : {
+    "8" : {
         "cells" : [ //36 x 24
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -255,7 +364,7 @@ WireworldLevelData.level =
         "message" : "Ok, that was enough fooling around. Now build a XOR gate. You know what that is right? The signal shall pass if and only if it is alone."
     },
 
-    "6" : {
+    "9" : {
         "cells" : [ //54 x 36
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -285,7 +394,7 @@ WireworldLevelData.level =
             [0,0,0,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-            [1,1,1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [2,1,1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -302,8 +411,8 @@ WireworldLevelData.level =
                 "count" : 99
             }, {
                 "cells" : [ //This is an AND gate for n>4
+                    [0,0,0,0,0,0,0],
                     [1,0,0,0,0,0,0],
-                    [0,1,0,0,0,0,0],
                     [0,1,0,0,0,0,0],
                     [0,1,0,0,0,0,0],
                     [0,1,0,1,0,1,1],
@@ -317,17 +426,17 @@ WireworldLevelData.level =
                 "count" : 4
             }, {
                 "cells" : [ //This is an OR gate
-                    [1,0,0,0,0,0,0],
-                    [0,1,1,1,0,0,0],
+                    [0,1,1,0,0,0,0],
+                    [1,1,0,1,1,0,0],
+                    [0,1,1,0,0,1,0],
                     [0,0,0,0,1,0,0],
-                    [0,0,0,1,0,0,0],
-                    [0,0,0,1,0,0,0],
-                    [0,0,0,0,1,1,1],
-                    [0,0,0,1,0,0,0],
-                    [0,0,0,1,0,0,0],
                     [0,0,0,0,1,0,0],
-                    [0,1,1,1,0,0,0],
-                    [1,0,0,0,0,0,0]
+                    [0,0,0,0,0,1,1],
+                    [0,0,0,0,1,0,0],
+                    [0,0,0,0,1,0,0],
+                    [0,1,1,0,0,1,0],
+                    [1,1,0,1,1,0,0],
+                    [0,1,1,0,0,0,0]
                 ],
                 "count" : 5
             }, {
