@@ -48,7 +48,7 @@ WireworldRules.FAIL     = 2;
  * @param {Wireworld} wireworld
  */
 WireworldRules.prototype.update = function (wireworld) {
-    for (i in this.rules) {
+    for (var i in this.rules) {
         var rule = this.rules[i];
 
         if (rule.status != WireworldRules.UNKNOWN)
@@ -74,33 +74,39 @@ WireworldRules.prototype.update = function (wireworld) {
             }
         }
     }
-}
+};
 
 
 /**
  * @return {boolean} returns true if the rules were broken.
  */
 WireworldRules.prototype.isFail = function() {
+    //No rules? Then no failure is possible.
+    if (this.rules.length === 0) return false;
+
     for (var i in this.rules) {
         if (this.rules[i].status == WireworldRules.FAIL) {
             return true;
         }
     }
     return false;
-}
+};
 
 
 /**
  * @return {boolean} returns true if no rule can be broken anymore.
  */
 WireworldRules.prototype.isSuccess = function() {
+    //No rules? Then no success is possible.
+    if (this.rules.length === 0) return false;
+
     for (var i in this.rules) {
         if (this.rules[i].status != WireworldRules.SUCCESS) {
             return false;
         }
     }
     return true;
-}
+};
 
 
 /**
@@ -109,4 +115,4 @@ WireworldRules.prototype.reset = function() {
     for (var i in this.rules) {
         this.rules[i].status = WireworldRules.UNKNOWN;
     }
-}
+};

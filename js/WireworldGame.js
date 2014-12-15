@@ -121,13 +121,13 @@ var WireworldGame = function () {
             that.printedWireworldCanvas.draw();
 
             if (that.wireworldRules.isSuccess()) {
-                setTimeout(onWin, 1000);
+                setTimeout(that.onWin, 1000);
                 that.wireworldRules.reset();
                 that.playStopElement.onStop();
                 that.setMode(WireworldGame.SELECTION_MODE);
             }
             if (that.wireworldRules.isFail()) {
-                setTimeout(onFail, 1000);
+                setTimeout(that.onFail, 1000);
                 that.wireworldRules.reset();
                 that.playStopElement.onStop();
                 that.setMode(WireworldGame.SELECTION_MODE);
@@ -209,6 +209,8 @@ WireworldGame.prototype.setMode = function(mode) {
 };
 
 WireworldGame.prototype.loadLevel = function (levelName, onWin, onFail) {
+    this.onWin = onWin;
+    this.onFail = onFail;
     //load leveldata
     var level = WireworldLevelData.getLevel(levelName);
 
