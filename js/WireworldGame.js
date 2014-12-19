@@ -10,6 +10,7 @@
 var WireworldGame = function () {
     var that = this;
 
+    //These will be set in loadLevel, which is also the function which starts the game
     this.blueprintBoxElement = null;
     this.circuitBoardCanvas = null;
     this.playStopElement = null;
@@ -21,7 +22,7 @@ var WireworldGame = function () {
 
     this._intervalId  = null;
 
-    //Define the actionlisteners for the different modes.
+    //Define the actionlisteners for the different modes and elements.
 
     //In placement mode the player has selected a circuit and can place it with a left click
     this.cbcPlacementListeners = (function() {
@@ -133,7 +134,7 @@ var WireworldGame = function () {
                 that.setMode(WireworldGame.SELECTION_MODE);
             }
 
-            console.log(that.printedWireworldCanvas.wireworld.generation);
+            console.log('Generation: ' + that.printedWireworldCanvas.wireworld.generation);
         };
 
         return {
@@ -162,6 +163,17 @@ var WireworldGame = function () {
             that.setMode(WireworldGame.PLACEMENT_MODE);
         } else {
             that.setMode(WireworldGame.SELECTION_MODE);
+        }
+    };
+
+    this.playStopListeners = {
+        onPlay: function() {
+            that.setMode(WireworldGame.EXECUTION_MODE);
+            this.setText('Stop');
+        },
+        onStop: function() {
+            that.setMode(WireworldGame.SELECTION_MODE);
+            this.setText('Play');
         }
     };
 };
@@ -236,20 +248,10 @@ WireworldGame.prototype.loadLevel = function (levelName, onWin, onFail) {
     //Setup Play/Stop Button
     var that = this;
     var psEl = getClearedElementById('playstop');
-    var playStopListeners = {
-        onPlay: function() {
-            that.setMode(WireworldGame.EXECUTION_MODE);
-            this.setText('Stop');
-        },
-        onStop: function() {
-            that.setMode(WireworldGame.SELECTION_MODE);
-            this.setText('Play');
-        }
-    };
     this.playStopElement = new PlayStopElement(
         psEl,
-        playStopListeners.onPlay,
-        playStopListeners.onStop
+        this.playStopListeners.onPlay,
+        this.playStopListeners.onStop
     );
 
     //Set message
@@ -261,3 +263,4 @@ WireworldGame.prototype.loadLevel = function (levelName, onWin, onFail) {
     //Start game
     this.setMode(WireworldGame.SELECTION_MODE);
 };
+
