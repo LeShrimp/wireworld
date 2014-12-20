@@ -484,7 +484,7 @@ WireworldLevelData.level =
         "message" : "The blocks you got are AND, XOR and OR gates. Find out which is which and place them in a way that lets the signal pass."
     },
 
-    "sandbox" : {
+    "10" : {
         "cells" : [
             [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
             [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
@@ -527,7 +527,11 @@ WireworldLevelData.level =
             }
         ],
         "rules" : [ ],
-        "message" : "Playground for testing level ideas."
+        "message" : "What a surprise! You finished the game. I did not think you would come this far. Remember that this was " +
+                    "just a quick glance into the Wireworld. It's possibilities are endless. In fact it is quite " +
+                    "probable that the Wireworld is complex enough to simulate our entire universe. " +
+                    "<a href=\"http://www.quinapalus.com/wi-index.html\">At least if you believe that turing-completeness is " +
+                    "enough to do so.</a>"
     }
 };
 

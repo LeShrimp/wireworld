@@ -257,7 +257,7 @@ WireworldGame.prototype.loadLevel = function (levelName, onWin, onFail) {
     //Set message
     var mbEl = getClearedElementById('messagebox');
     var pEl = document.createElement('p');
-    pEl.appendChild(document.createTextNode(level.message));
+    pEl.innerHTML = level.message;
     mbEl.appendChild(pEl);
 
     //Start game
