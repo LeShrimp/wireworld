@@ -30,7 +30,7 @@ h1#title {
      * width and height.
      */
     width: 812px;
-    height: 732px;
+    height: 606px;
 }
 
 .container div {
@@ -96,6 +96,11 @@ h1#title {
     margin-top: 60px;
 }
 
+#playstop p:hover {
+    color: #EA503A;
+    cursor: default;
+}
+
 .tutorial {
     display: block;
     margin-left: auto;
@@ -138,4 +143,16 @@ h1#title {
     margin-left: -320px;
     margin-top: -240px;
     font-size: 200%;
+}
+
+#backtomenu {
+    margin-top: 20px;
+}
+
+#backtomenu a {
+    color: #2F1E2E;
+}
+
+#backtomenu a:hover {
+    color: #EA503A;
 }
