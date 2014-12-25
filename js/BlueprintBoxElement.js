@@ -9,19 +9,28 @@
  * @param {BlueprintBox} blueprintBox
  * @param {HTMLElement} htmlElement
  * @param {number} cellWidth
- * @param {function} onSelectionChange A function getting called with the id of the newly selected circuit.
  * @constructor
  */
 var BlueprintBoxElement = function (blueprintBox, htmlElement, cellWidth) {
     this.htmlElement        = htmlElement;
-    this.blueprintBox         = blueprintBox;
+    this.blueprintBox       = blueprintBox;
     this.cellWidth          = cellWidth;
+
+    this.wireworldCanvases  = {};
     this._onSelectionChangeListener = function (){};
-    this.selectedBlueprint    = null;
+    this.selectedBlueprint  = null;
 
     this._populate();
-}
+};
 
+
+BlueprintBoxElement.prototype._createOnBlueprintClickListener = function (blueprint) {
+    var that = this;
+
+    return function(event) {
+        that.selectBlueprint(blueprint);
+    };
+};
 
 /**
  *
@@ -38,16 +47,10 @@ BlueprintBoxElement.prototype._populate = function () {
         var height = blueprint.wireworld.rows * this.cellWidth;
         var htmlCanvasElement = WireworldCanvas.createCanvasElement(width, height, blueprint.id);
         var wwc = new WireworldCanvas(blueprint.wireworld, htmlCanvasElement, this.cellWidth);
+
+        this.wireworldCanvases[id] = wwc;
         wwc.draw();
-        wwc.htmlCanvasElement.addEventListener('click',
-            (function(blueprint) {
-                return function(event) {
-                    console.log(that.htmlElement.getAttribute('id')
-                        + ' was clicked. Id = \'' + blueprint.id + '\'');
-                    that.selectBlueprint(blueprint);
-                }
-            })(blueprint)
-        );
+        wwc.htmlCanvasElement.addEventListener('click', this._createOnBlueprintClickListener(blueprint));
 
         //Create label
         var label = document.createElement('p');
@@ -66,7 +69,17 @@ BlueprintBoxElement.prototype._populate = function () {
  * @param {Blueprint} blueprint
  */
 BlueprintBoxElement.prototype.selectBlueprint = function (blueprint) {
+    var wwce = this.wireworldCanvases[blueprint.id].htmlCanvasElement;
+
+    for (var id in this.wireworldCanvases) {
+        this.wireworldCanvases[id].htmlCanvasElement.style.borderWidth = '0px';
+    }
+    wwce.style.borderColor = '#4D344A';
+    wwce.style.borderWidth = '2px';
+    wwce.style.borderStyle = 'solid';
+
     this.selectedBlueprint = blueprint;
+
     this._onSelectionChangeListener(blueprint);
 };
 
@@ -95,4 +108,4 @@ BlueprintBoxElement.prototype.incCount = function (blueprint) {
 
 BlueprintBoxElement.prototype.onSelectionChange = function (onSelectionChangeListener) {
     this._onSelectionChangeListener = onSelectionChangeListener;
-}
+};
