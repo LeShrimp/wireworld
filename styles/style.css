@@ -96,7 +96,7 @@ h1#title {
     margin-top: 60px;
 }
 
-#playstop p:hover {
+#playstop:hover {
     color: #EA503A;
     cursor: default;
 }
