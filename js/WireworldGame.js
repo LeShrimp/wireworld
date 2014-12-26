@@ -19,6 +19,7 @@ var WireworldGame = function () {
 
     this.currentMode = null;
     this.wireworldRules = null;
+    this.msBetweenSimulationSteps = 200;
 
     this._intervalId  = null;
 
@@ -122,16 +123,14 @@ var WireworldGame = function () {
             that.printedWireworldCanvas.draw();
 
             if (that.wireworldRules.isSuccess()) {
-                setTimeout(that.onWin, 1000);
-                that.wireworldRules.reset();
                 that.playStopElement.onStop();
-                that.setMode(WireworldGame.SELECTION_MODE);
+                that.wireworldRules.reset();
+                that.onWin();
             }
             if (that.wireworldRules.isFail()) {
-                setTimeout(that.onFail, 1000);
-                that.wireworldRules.reset();
                 that.playStopElement.onStop();
-                that.setMode(WireworldGame.SELECTION_MODE);
+                that.wireworldRules.reset();
+                that.onFail();
             }
 
             console.log('Generation: ' + that.printedWireworldCanvas.wireworld.generation);
@@ -143,7 +142,7 @@ var WireworldGame = function () {
                 that.printedWireworldCanvas = that.circuitBoardCanvas.createPrintCanvas('printedwireworld');
                 cbHtmlEl.parentNode.replaceChild(that.printedWireworldCanvas.htmlCanvasElement, cbHtmlEl);
                 that.printedWireworldCanvas.draw();
-                that._intervalId = setInterval(simulationStep, 200);
+                that._intervalId = setInterval(simulationStep, that.msBetweenSimulationSteps);
             },
             onSimulationStop : function () {
                 if (that._intervalId !== null) {
@@ -228,6 +227,9 @@ WireworldGame.prototype.loadLevel = function (levelName, onWin, onFail) {
 
     //Set rules
     this.wireworldRules = new WireworldRules(level.rules);
+
+    //Set speed
+    this.msBetweenSimulationSteps = level.simulation_step_delay;
 
     //Setup CircuitBoard
     var cbEl = getClearedElementById('circuitboard');

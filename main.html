@@ -31,7 +31,11 @@
         var level;
 
         if (!(level = getCookie('currentLevel'))) {
-            level = 1;
+            level = 0;
+        };
+
+        var onFail = function() {
+            alert('Try again!');
         };
 
         var onWin = function() {
@@ -39,10 +43,6 @@
                 setCookie('currentLevel', ++level, 7);
             }
             (new WireworldGame()).loadLevel(level, onWin, onFail);
-        };
-
-        var onFail = function() {
-            alert('Try again!');
         };
 
         (new WireworldGame()).loadLevel(level, onWin, onFail);

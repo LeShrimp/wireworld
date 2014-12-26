@@ -25,13 +25,37 @@
 
 var WireworldLevelData = {};
 
-WireworldLevelData.getLevel = function (levelName) {
-    return WireworldLevelData.level[levelName];
+WireworldLevelData.getLevel = function (levelNumber) {
+    return WireworldLevelData.level[levelNumber];
 };
 
 WireworldLevelData.level =
-{
-    "1" : {
+[
+    {
+        "cells" : [ //9 x 6
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,1,0,0],
+            [0,0,0,0,0,0,1,0,0],
+            [0,2,1,1,1,0,1,0,0],
+            [0,0,0,0,0,1,1,0,0],
+            [0,0,0,0,0,0,0,0,0],
+        ],
+        "blueprints" : [],
+        "rules" : [
+            {
+                "coordinates" : {"i" : 6, "j" : 1},
+                "generation" : {"from": 10, "to": 10},
+                "must" : Wireworld.WW_COPPER
+            }
+        ],
+        "message" : "Welcome to the Wireworld, a world in which time and space are discrete, and that follows very simple rules. " +
+                    "Each cell can be in one of four different states. " +
+                    "A cell that is in copper state (yellow) in one step will move to electron head state (light blue) in " +
+                    "the next step, if it is surrounded by one or two cells in electron head state. Press \"play\" to see " +
+                    "these rules in action.",
+        "simulation_step_delay" : 1000
+    },
+    {
         "cells" : [ //12 x 8
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
@@ -66,10 +90,10 @@ WireworldLevelData.level =
                 "must" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "Now this is for Dummies. You may choose cells from the box on the right. Place them on any of the darkly colored cells. To put a cell back in the box press the right mouse button. To move to the next level, electrify the two right-most copper cells."
+        "message" : "Now this is for Dummies. You may choose cells from the box on the right. Place them on any of the darkly colored cells. To put a cell back in the box press the right mouse button. To move to the next level, electrify the two right-most copper cells.",
+        "simulation_step_delay" : 200
     },
-
-    "2" : {
+    {
         "cells" : [ //12 x 8
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
@@ -99,10 +123,11 @@ WireworldLevelData.level =
                 "must" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "Electrify the two right-most copper cells."
+        "message" : "Electrify the two right-most copper cells.",
+        "simulation_step_delay": 200
     },
 
-    "3" : {
+    {
         "cells" : [ //12 x 8
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
@@ -137,10 +162,11 @@ WireworldLevelData.level =
                 "must" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "Make both signals reach the right end of the wire."
+        "message" : "Make both signals reach the right end of the wire.",
+        "simulation_step_delay": 200
     },
 
-    "4" : {
+    {
         "cells" : [ //12 x 8
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,4,4,4,4,4,0],
@@ -170,10 +196,11 @@ WireworldLevelData.level =
                 "must_not" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "Do you remember how the laws of Wireworld make cells change their state? An overstimulated copper cell will remain silent. Let the signal take the upper path, but not the lower one."
+        "message" : "Do you remember how the laws of Wireworld make cells change their state? An overstimulated copper cell will remain silent. Let the signal take the upper path, but not the lower one.",
+        "simulation_step_delay": 200
     },
 
-    "5" : {
+    {
         "cells" : [ //18 x 12
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -226,10 +253,11 @@ WireworldLevelData.level =
                 "must" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "I will give you some bigger building blocks. Have fun. Electrify the right-most copper cell."
+        "message" : "I will give you some bigger building blocks. Have fun. Electrify the right-most copper cell.",
+        "simulation_step_delay": 200
     },
 
-    "6" : {
+    {
         "cells" : [ //18 x 12
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -255,14 +283,15 @@ WireworldLevelData.level =
         "rules" : [
             {
                 "coordinates" : {"i" : 16, "j" : 6},
-                "generation" : {"from":2, "to":100},
+                "generation" : {"from": 2, "to": 20},
                 "must" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "You are bored, right? I can see it in your face. Let's move to something more interesting. Build something that lets the signal pass from left to right, but not from right to left."
+        "message" : "You are bored, right? I can see it in your face. Let's move to something more interesting. Build something that lets the signal pass from left to right, but not from right to left.",
+        "simulation_step_delay": 200
     },
 
-    "7" : {
+    {
         "cells" : [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -320,10 +349,11 @@ WireworldLevelData.level =
                 "must_not" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "So you discovered diodes. Quite good. Now find a way to enlighten the cell at the right multiple times. But make sure the signal never goes back to its origin!"
+        "message" : "So you discovered diodes. Quite good. Now find a way to enlighten the cell at the right multiple times. But make sure the signal never goes back to its origin!",
+        "simulation_step_delay": 200
     },
 
-    "8" : {
+    {
         "cells" : [ //36 x 24
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -384,10 +414,11 @@ WireworldLevelData.level =
                 "must_not" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "Ok, that was enough fooling around. Now build a XOR gate. You know what that is right? The signal shall pass if and only if it is alone."
+        "message" : "Ok, that was enough fooling around. Now build a XOR gate. You know what that is right? The signal shall pass if and only if it is alone.",
+        "simulation_step_delay": 200
     },
 
-    "9" : {
+    {
         "cells" : [ //54 x 36
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -481,10 +512,11 @@ WireworldLevelData.level =
                 "must" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "The blocks you got are AND, XOR and OR gates. Find out which is which and place them in a way that lets the signal pass."
+        "message" : "The blocks you got are AND, XOR and OR gates. Find out which is which and place them in a way that lets the signal pass.",
+        "simulation_step_delay": 200
     },
 
-    "10" : {
+    {
         "cells" : [
             [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
             [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
@@ -531,7 +563,8 @@ WireworldLevelData.level =
                     "just a quick glance into the Wireworld. It's possibilities are endless. In fact it is quite " +
                     "probable that the Wireworld is complex enough to simulate our entire universe. " +
                     "<a href=\"http://www.quinapalus.com/wi-index.html\">At least if you believe that turing-completeness is " +
-                    "enough to do so.</a>"
+                    "enough to do so.</a>",
+        "simulation_step_delay": 200
     }
-};
+];
 
