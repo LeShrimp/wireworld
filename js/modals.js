@@ -1,3 +1,11 @@
+/**
+ *
+ * Created by maxime on 04.01.2015
+ *
+ * @requires modals.css
+ * @requires utils.js
+ */
+
 function create(htmlStr) {
     var frag = document.createDocumentFragment(),
         temp = document.createElement('div');
@@ -18,20 +26,49 @@ function create(htmlStr) {
  * text 'Ok'.
  *
  * Returns 1 if button 1 was clicked, 2 if button 2 was clicked.
+ *
+ * Example:
+ *      showModal({
+ *          title: 'Please confirm!',
+ *          message: 'Do you really wnat to close this window?',
+ *          bt1Text: 'Ok',
+ *          bt1Callback: function () { closeWindow(); },
+ *          bt2Text: 'Cancel',
+ *          bt2Callback: function () { cancel(); }
+ *      });
+ *
  */
-function showModal(title, text, button1, button2) {
-    button1 = (typeof button1 === 'undefined') ? 'Ok' : button1;
-    button2 = (typeof button2 === 'undefined') ? false : button2;
+function showModal(paramObj) {
+    var bt1Html, bt2Html;
+
+    if (paramObj.hasOwnProperty('bt2Text')) {
+        bt1Html = '<span id="button1">' + paramObj.bt1Text + '</span>';
+        bt2Html = '<span id="button2">' + paramObj.bt2Text + '</span>';
+    } else {
+        bt1Html = '<span id="button1" class="centerButton">' + paramObj.bt1Text + '</span>';
+        bt2Html = '';
+    }
 
     var fragment = create(
-        '<div id="openModal" class="modalDialog">' +
+        '<div id="modalDialog">' +
             '<div>' +
-                '<a href="#close" title="Close" class="close">X</a>' +
-                '<h2>' + title + '</h2>' +
-                text +
+                '<h2>' + paramObj.title + '</h2>' +
+                paramObj.message +
+                '<div id="buttonContainer">' +
+                    bt1Html +
+                    bt2Html +
+                '</div>' +
             '</div>' +
         '</div>'
     );
     document.body.insertBefore(fragment, document.body.nextSibling);
+
+    document.getElementById("button1").addEventListener('click', paramObj.bt1Callback);
+    document.getElementById("button2").addEventListener('click', paramObj.bt2Callback);
+}
+
+function closeModal() {
+    modalEl = document.getElementById('modalDialog');
+    modalEl.parentNode.removeChild(modalEl);
 }
 

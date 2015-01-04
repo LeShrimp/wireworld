@@ -38,18 +38,29 @@
         };
 
         var onFail = function() {
-            alert('Try again!');
+            showModal({
+                    title: 'Try again...',
+                    message: '',
+                    bt1Text: 'Okay',
+                    bt1Callback: function() { closeModal() }
+            });
         };
 
         var onWin = function() {
-            if(confirm('You won! Move to next level?')) {
-                setCookie('currentLevel', ++level, 7);
-            }
-            (new WireworldGame()).loadLevel(level, onWin, onFail);
+            showModal({
+                    title: 'Level Done!',
+                    message: 'That is a valid solution. Want to proceed to next level?',
+                    bt1Text: 'Yes, I\'m ready',
+                    bt1Callback: function() {
+                        closeModal(); 
+                        (new WireworldGame()).loadLevel(++level, onWin, onFail);
+                    },
+                    bt2Text: 'Not yet...',
+                    bt2Callback: function() { closeModal(); }
+            });
         };
 
         (new WireworldGame()).loadLevel(level, onWin, onFail);
-        showModal("Wurst");
     </script>
 </body>
 </html>
