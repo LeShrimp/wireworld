@@ -19,9 +19,8 @@ var WireworldGame = function () {
 
     this.currentMode = null;
     this.wireworldRules = null;
-    this.msBetweenSimulationSteps = 200;
 
-    this._intervalId  = null;
+    this.msBetweenSteps = null;
 
     //Define the actionlisteners for the different modes and elements.
 
@@ -126,28 +125,28 @@ var WireworldGame = function () {
                 that.playStopElement.onStop();
                 that.wireworldRules.reset();
                 that.onWin();
-            }
-            if (that.wireworldRules.isFail()) {
+            } else if (that.wireworldRules.isFail()) {
                 that.playStopElement.onStop();
                 that.wireworldRules.reset();
                 that.onFail();
+            } else {
+                console.log('Generation: ' + that.printedWireworldCanvas.wireworld.generation);
             }
-
-            console.log('Generation: ' + that.printedWireworldCanvas.wireworld.generation);
         };
 
+        var intervalId = null;
         return {
             onSimulationStart : function() {
                 var cbHtmlEl = that.circuitBoardCanvas.htmlCanvasElement;
                 that.printedWireworldCanvas = that.circuitBoardCanvas.createPrintCanvas('printedwireworld');
                 cbHtmlEl.parentNode.replaceChild(that.printedWireworldCanvas.htmlCanvasElement, cbHtmlEl);
                 that.printedWireworldCanvas.draw();
-                that._intervalId = setInterval(simulationStep, that.msBetweenSimulationSteps);
+                intervalId = setInterval(simulationStep, that.msBetweenSteps);
             },
             onSimulationStop : function () {
-                if (that._intervalId !== null) {
-                    clearInterval(that._intervalId);
-                    that._intervalId = null;
+                if (intervalId !== null) {
+                    clearInterval(intervalId);
+                    intervalId = null;
                     var pwcHtmlEl = that.printedWireworldCanvas.htmlCanvasElement;
                     pwcHtmlEl.parentNode.replaceChild(that.circuitBoardCanvas.htmlCanvasElement, pwcHtmlEl);
                 }
@@ -228,15 +227,15 @@ WireworldGame.prototype.loadLevel = function (levelName, onWin, onFail) {
     //Set rules
     this.wireworldRules = new WireworldRules(level.rules);
 
-    //Set speed
-    this.msBetweenSimulationSteps = level.simulation_step_delay;
-
     //Setup CircuitBoard
     var cbEl = getClearedElementById('circuitboard');
     var cb = new CircuitBoard(transpose(level.cells));
     var cellwidth = cbEl.width / cb.columns;
     this.circuitBoardCanvas = new CircuitBoardCanvas(cb, cbEl, cellwidth);
     this.circuitBoardCanvas.draw();
+
+    //Set time between automaton steps
+    this.msBetweenSteps = Math.floor(3000/this.circuitBoardCanvas.wireworld.columns);
 
     //Setup Blueprintbox
     var cbox = new BlueprintBox();
