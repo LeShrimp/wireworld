@@ -33,6 +33,44 @@ WireworldLevelData.level = [
     {
         "cells" : [ //12 x 8
             [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,4,4,4,4,0,0,0],
+            [0,2,1,1,1,4,4,4,4,1,1,0],
+            [0,0,0,0,0,4,4,4,4,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0]
+        ],
+        "blueprints" : [
+            {
+                "cells" : [
+                    [1]
+                ],
+                "count" : 2,
+                "tip": "A copper cell changes to Electron Head state if on or two of its neighbors are in Electron Head state"
+            }, {
+                "cells" : [
+                    [3]
+                ],
+                "count" : 2,
+                "tip": "An Electron Tail cell becomes a Copper cell"
+            }
+        ],
+        "rules" : [
+            {
+                "coordinates" : {"i" : 10, "j" : 4},
+                "generation" : {"from":0, "to":100},
+                "must" : Wireworld.WW_EHEAD
+            }
+        ],
+        "message" : "Hover your mouse over one of the cells in the to the right to learn about it. Click on it to select " +
+                    "it. Right-click to put it back into the box. Place the cell on any of the darkly colored cells in " +
+                    "the grid on the left. To move to the next level, let the signal go all the way to the right."
+    },
+
+    {
+        "cells" : [ //12 x 8
+            [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
             [0,4,4,1,1,1,1,1,1,1,4,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
@@ -46,12 +84,14 @@ WireworldLevelData.level = [
                 "cells" : [
                     [1]
                 ],
-                "count" : 1
+                "count" : 1,
+                "tip": "A copper cell changes to Electron Head state if on or two of its neighbors are in Electron Head state"
             }, {
                 "cells" : [
                     [2]
                 ],
-                "count" : 1
+                "count" : 1,
+                "tip": "An Electron Head cell becomes an Electron Tail"
             }
         ],
         "rules" : [
@@ -65,7 +105,7 @@ WireworldLevelData.level = [
                 "must" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "Now this is for Dummies. You may choose cells from the box on the right. Place them on any of the darkly colored cells. To put a cell back in the box press the right mouse button. To move to the next level, electrify the two right-most copper cells."
+        "message" : "Now this is for Dummies. To move to the next level, electrify the two right-most copper cells."
     },
 
     {
@@ -84,7 +124,8 @@ WireworldLevelData.level = [
                 "cells" : [
                     [1]
                 ],
-                "count" : 2
+                "count" : 2,
+                "tip": "A copper cell changes to Electron Head state if on or two of its neighbors are in Electron Head state"
             }
         ],
         "rules" : [
@@ -106,8 +147,8 @@ WireworldLevelData.level = [
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
-            [0,4,2,1,1,1,4,4,4,4,4,0],
-            [0,4,4,4,4,4,4,2,1,1,4,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,4,2,1,1,4,2,1,1,1,4,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
             [0,0,0,0,0,0,0,0,0,0,0,0]
@@ -117,12 +158,14 @@ WireworldLevelData.level = [
                 "cells" : [
                     [1]
                 ],
-                "count" : 1
+                "count" : 1,
+                "tip": "A copper cell changes to Electron Head state if on or two of its neighbors are in Electron Head state"
             }, {
                 "cells" : [
                     [3]
                 ],
-                "count" : 1
+                "count" : 1,
+                "tip": "An Electron Tail cell becomes a Copper cell"
             }
         ],
         "rules" : [
@@ -142,6 +185,54 @@ WireworldLevelData.level = [
     {
         "cells" : [ //12 x 8
             [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,4,2,1,1,4,2,1,1,1,4,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,4,4,4,4,4,4,4,4,4,4,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0]
+        ],
+        "blueprints" : [
+            {
+                "cells" : [
+                    [1]
+                ],
+                "count" : 1,
+                "tip": "A copper cell changes to Electron Head state if on or two of its neighbors are in Electron Head state"
+            }, {
+                "cells" : [
+                    [3]
+                ],
+                "count" : 1,
+                "tip": "An Electron Tail cell becomes a Copper cell"
+            }
+        ],
+        "rules" : [
+            {
+                "coordinates" : {"i" : 9, "j" : 4},
+                "generation" : {"from":0, "to":7},
+                "must" : Wireworld.WW_EHEAD
+            }, {
+                "coordinates" : {"i" : 9, "j" : 4},
+                "generation" : {"from":8, "to":15},
+                "must" : Wireworld.WW_EHEAD
+            }, {
+                "coordinates" : {"i" : 9, "j" : 4},
+                "generation" : {"from":16, "to":23},
+                "must" : Wireworld.WW_EHEAD
+            }, {
+                "coordinates" : {"i" : 9, "j" : 4},
+                "generation" : {"from":24, "to":31},
+                "must" : Wireworld.WW_EHEAD
+            }
+        ],
+        "message" : "Make an infinite amount of signals reach the right end of the wire."
+    },
+
+    {
+        "cells" : [ //12 x 8
+            [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,4,4,4,4,4,0],
             [0,0,0,0,0,0,4,1,1,1,1,0],
             [0,0,0,0,0,0,4,4,4,4,4,0],
@@ -155,7 +246,8 @@ WireworldLevelData.level = [
                 "cells" : [
                     [1]
                 ],
-                "count" : 99
+                "count" : 6,
+                "tip": "A copper cell changes to Electron Head state if on or two of its neighbors are in Electron Head state"
             }
         ],
         "rules" : [
@@ -177,6 +269,48 @@ WireworldLevelData.level = [
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,4,4,4,1,1,1,1,1,1,0],
+            [0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0],
+            [0,2,1,1,1,1,1,1,4,4,4,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,4,4,4,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        ],
+        "blueprints" : [
+            {
+                "cells" : [
+                    [0,0,0],
+                    [0,1,1],
+                    [0,1,0]
+                ],
+                "count" : 1
+            }, {
+                "cells" : [
+                    [0,1,0],
+                    [1,1,0],
+                    [0,0,0]
+                ],
+                "count" : 1
+            }
+        ],
+        "rules" : [
+            {
+                "coordinates" : {"i" : 16, "j" : 4},
+                "generation" : {"from":2, "to":100},
+                "must" : Wireworld.WW_EHEAD
+            }
+        ],
+        "message" : "I will give you some bigger building blocks. Have fun. Electrify the right-most copper cell."
+    },
+
+    {
+        "cells" : [ //18 x 12
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,4,4,4,4,4,4,0,0,0,0],
             [0,0,0,0,0,0,0,0,4,4,4,4,4,4,0,0,0,0],
             [0,0,0,0,0,0,0,0,4,4,4,4,4,4,0,0,0,0],
@@ -191,7 +325,7 @@ WireworldLevelData.level = [
             {
                 "cells" : [
                     [0,1,0],
-                    [1,1,1],
+                    [0,1,1],
                     [0,0,0]
                 ],
                 "count" : 1
@@ -225,7 +359,7 @@ WireworldLevelData.level = [
                 "must" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "I will give you some bigger building blocks. Have fun. Electrify the right-most copper cell."
+        "message" : "Can you do it again?"
     },
 
     {
@@ -248,7 +382,8 @@ WireworldLevelData.level = [
                 "cells" : [
                     [1]
                 ],
-                "count" : 99
+                "count" : 20,
+                "tip": "A copper cell changes to Electron Head state if on or two of its neighbors are in Electron Head state"
             }
         ],
         "rules" : [
@@ -301,7 +436,8 @@ WireworldLevelData.level = [
                     [0,1,0,1,0],
                     [0,0,1,0,0]
                 ],
-                "count" : 4
+                "count" : 4,
+                "tip": "A diode, it lets the signal pass from top to bottom but not from bottom up"
             }
         ],
         "rules" : [
@@ -319,7 +455,7 @@ WireworldLevelData.level = [
                 "must_not" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "So you discovered diodes. Quite good. Now find a way to enlighten the cell at the right multiple times. But make sure the signal never goes back to its origin!"
+        "message" : "So you discovered diodes. Quite good. Now use them to enlighten the cell at the right multiple times. But make sure the signal never goes back to its origin!"
     },
 
     {
@@ -354,14 +490,16 @@ WireworldLevelData.level = [
                 "cells" : [
                     [1]
                 ],
-                "count" : 99
+                "count" : 50,
+                "tip": "A copper cell changes to Electron Head state if on or two of its neighbors are in Electron Head state"
             }, {
                 "cells" : [
                     [1,1,0],
                     [1,0,1],
                     [1,1,0]
                 ],
-                "count" : 4
+                "count" : 4,
+                "tip": "A diode, it lets the signal pass from left to right, but not from right to left"
             }
         ],
         "rules" : [
@@ -440,7 +578,8 @@ WireworldLevelData.level = [
                     [0,1,0,0,0,0,0],
                     [1,0,0,0,0,0,0]
                 ],
-                "count" : 2
+                "count" : 2,
+                "tip": "AND, OR or XOR..."
             }, {
                 "cells" : [ //This is an OR gate
                     [0,1,1,0,0,0,0],
@@ -455,7 +594,8 @@ WireworldLevelData.level = [
                     [1,1,0,1,1,0,0],
                     [0,1,1,0,0,0,0]
                 ],
-                "count" : 1
+                "count" : 1,
+                "tip": "AND, OR or XOR..."
             }, {
                 "cells" : [ //This is an XOR gate (has to be slowed down by 2 steps to synch with other gates)
                     [1,1,1,0,0,0,0],
@@ -470,7 +610,8 @@ WireworldLevelData.level = [
                     [0,0,0,1,0,0,0],
                     [1,1,1,0,0,0,0]
                 ],
-                "count" : 1
+                "count" : 1,
+                "tip": "AND, OR or XOR..."
             }
         ],
         "rules" : [
@@ -507,22 +648,26 @@ WireworldLevelData.level = [
                 "cells" : [
                     [1]
                 ],
-                "count" : 384
+                "count" : 384,
+                "tip": "A copper cell changes to Electron Head state if on or two of its neighbors are in Electron Head state"
             }, {
                 "cells" : [
                     [2]
                 ],
-                "count" : 384
+                "count" : 384,
+                "tip": "An Electron Head cell becomes an Electron Tail"
             }, {
                 "cells" : [
                     [3]
                 ],
-                "count" : 384
+                "count" : 384,
+                "tip": "An Electron Tail cell becomes a Copper cell"
             }, {
                 "cells" : [
                     [0]
                 ],
-                "count" : 384
+                "count" : 384,
+                "tip": "A Black cell never changes its state"
             }
         ],
         "rules" : [ ],

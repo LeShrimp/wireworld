@@ -240,8 +240,15 @@ WireworldGame.prototype.loadLevel = function (levelName, onWin, onFail) {
     //Setup Blueprintbox
     var cbox = new BlueprintBox();
     for (var i in level.blueprints) {
-        var wireworld = new Wireworld(transpose(level.blueprints[i].cells));
-        cbox.addBlueprint(wireworld, level.blueprints[i].count, ''+i);
+        var cells = level.blueprints[i].cells;
+        var count = level.blueprints[i].count;
+        var tip   = defaultsTo(level.blueprints[i].tip, '');
+
+        cbox.addBlueprint(
+            new Wireworld(transpose(cells)),
+            count,
+            tip
+        );
     }
     var cboxEl = getClearedElementById('blueprintbox');
     this.blueprintBoxElement = new BlueprintBoxElement(cbox, cboxEl, cellwidth);

@@ -10,9 +10,10 @@
  * @param {number} blueprintId
  * @constructor
  */
-var Blueprint = function (wireworld, count, blueprintId) {
+var Blueprint = function (wireworld, count, tip, blueprintId) {
     this.wireworld = wireworld;
     this.count = count;
+    this.tip = tip;
     this.id = blueprintId;
 };
 
@@ -34,9 +35,9 @@ var BlueprintBox = function() {
  */
 BlueprintBox.prototype.addBlueprint = (function() {
     var id = 0;
-    return function (wireworld, count) {
+    return function (wireworld, count, tip) {
         id++;
-        this.blueprints[id] = new Blueprint(wireworld, count, id);
+        this.blueprints[id] = new Blueprint(wireworld, count, tip, id);
         return id;
     };
 })();

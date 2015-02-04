@@ -151,3 +151,8 @@ function getCookie(cname) {
 function deleteCookie(cname) {
     document.cookie = cname + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
+
+//Return defaultValue if value is undefined, value otherwise
+function defaultsTo(value, defaultValue) {
+    return typeof value === 'undefined' ? defaultValue : value;
+}

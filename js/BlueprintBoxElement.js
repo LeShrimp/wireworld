@@ -46,6 +46,7 @@ BlueprintBoxElement.prototype._populate = function () {
         var width = blueprint.wireworld.columns * this.cellWidth;
         var height = blueprint.wireworld.rows * this.cellWidth;
         var htmlCanvasElement = WireworldCanvas.createCanvasElement(width, height, blueprint.id);
+        htmlCanvasElement.setAttribute("title", blueprint.tip);
         var wwc = new WireworldCanvas(blueprint.wireworld, htmlCanvasElement, this.cellWidth);
 
         this.wireworldCanvases[id] = wwc;
