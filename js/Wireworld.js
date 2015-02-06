@@ -23,6 +23,7 @@ function Wireworld(cells) {
     this.rows = cells[0].length;
 
     this.generation = 0;
+    this._isDead = true;
 }
 
 
@@ -39,6 +40,8 @@ Wireworld.WW_ETAIL    = 3;
 Wireworld.prototype.doStep = function () {
     var i, j;
     var newCells = {};
+
+    this._isDead = true;
 
     for (i=0; i<this.cells.length; i++) {
         for (j=0; j<this.cells[i].length; j++) {
@@ -58,15 +61,18 @@ Wireworld.prototype.doStep = function () {
                     }
                     if (countEHeads == 1 || countEHeads == 2) {
                         newCell = Wireworld.WW_EHEAD;
+                        this._isDead = false;
                     }
                     break;
 
                 case Wireworld.WW_EHEAD:
                     newCell = Wireworld.WW_ETAIL;
+                    this._isDead = false;
                     break;
 
                 case Wireworld.WW_ETAIL:
                     newCell = Wireworld.WW_COPPER;
+                    this._isDead = false;
                     break;
 
                 case Wireworld.WW_BLACK:
@@ -74,7 +80,7 @@ Wireworld.prototype.doStep = function () {
                     break;
             }
 
-            if (newCell != null) {
+            if (newCell !== null) {
                 if (!(i in newCells)) {
                     newCells[i] = {};
                 }
@@ -90,5 +96,9 @@ Wireworld.prototype.doStep = function () {
     }
 
     this.generation++;
-}
+};
+
+Wireworld.prototype.isDead = function () {
+    return this._isDead;
+};
 

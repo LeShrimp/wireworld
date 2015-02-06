@@ -2,6 +2,11 @@
  * Created 7/3/14
  * by Maxime
  *
+ * WW_BLACK    = 0;
+ * WW_COPPER   = 1;
+ * WW_EHEAD    = 2;
+ * WW_ETAIL    = 3;
+ *
  * With a resolution of 648x432 pixels the following level sizes are possible without blurred
  * rendering:
  *
@@ -175,7 +180,7 @@ WireworldLevelData.level = [
                 "must" : Wireworld.WW_EHEAD
             }, {
                 "coordinates" : {"i" : 9, "j" : 4},
-                "generation" : {"from":3, "to":100},
+                "generation" : {"from":4, "to":100},
                 "must" : Wireworld.WW_EHEAD
             }
         ],

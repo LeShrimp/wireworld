@@ -35,6 +35,8 @@ var WireworldRules = function(rules) {
         rules[i].status = WireworldRules.UNKNOWN;
     }
     this.rules = rules;
+
+    this._overallStatus = WireworldRules.UNKNOWN;
 };
 
 WireworldRules.UNKNOWN  = 0;
@@ -48,6 +50,11 @@ WireworldRules.FAIL     = 2;
  * @param {Wireworld} wireworld
  */
 WireworldRules.prototype.update = function (wireworld) {
+    this._updateRuleStatus(wireworld);
+    this._evaluateRules(wireworld);
+};
+
+WireworldRules.prototype._updateRuleStatus = function (wireworld) {
     for (var i in this.rules) {
         var rule = this.rules[i];
 
@@ -76,20 +83,68 @@ WireworldRules.prototype.update = function (wireworld) {
     }
 };
 
+/**
+ * Evaluate the statuses of the rules (UNKNOWN, SUCCESS, FAIL for each rule) to determine
+ * what the overall status is.
+ */
+WireworldRules.prototype._evaluateRules = function (wireworld) {
+    var i;
+
+    //Start assuming that the game is neither won nor lost
+    this._overallStatus = WireworldRules.UNKNOWN;
+
+    //No rules? Then neither failure nor success are possible
+    if (this.rules.length === 0) {
+        return;
+    }
+
+    if (wireworld.isDead()) {
+        //if the wireworld is dead, i.e. will not change anymore it is sufficient that
+        //no rule failed and every "must" rule succeeded for success
+        for (i in this.rules) {
+            var rule = this.rules[i];
+            if (rule.status == WireworldRules.FAIL) {
+                return (this._overallStatus = WireworldRules.FAIL);
+
+            } else if (rule.hasOwnProperty("must") && rule.status == WireworldRules.UNKNOWN) {
+                if (wireworld.cells[rule.coordinates.i][rule.coordinates.j] != rule.must) {
+                    return (this._overallStatus = WireworldRules.FAIL);
+
+                }
+            } else if (rule.hasOwnProperty("must_not") && rule.status == WireworldRules.UNKNOWN) {
+                if (wireworld.cells[rule.coordinates.i][rule.coordinates.j] == rule.must_not) {
+                    return (this._overallStatus = WireworldRules.FAIL);
+
+                }
+            }
+        }
+
+        return (this._overallStatus = WireworldRules.SUCCESS);
+
+    } else {
+        for (i in this.rules) {
+            if (this.rules[i].status == WireworldRules.FAIL) {
+                return (this._overallStatus = WireworldRules.FAIL);
+            }
+        }
+
+        //If none of the rule has failed the game maybe won...
+        this._overallStatus = WireworldRules.SUCCESS;
+        //...unless one of the rules is not yet in success state
+        for (i in this.rules) {
+            if (this.rules[i].status != WireworldRules.SUCCESS) {
+                return (this._overallStatus = WireworldRules.UNKNOWN);
+            }
+        }
+    }
+};
+
 
 /**
  * @return {boolean} returns true if the rules were broken.
  */
 WireworldRules.prototype.isFail = function() {
-    //No rules? Then no failure is possible.
-    if (this.rules.length === 0) return false;
-
-    for (var i in this.rules) {
-        if (this.rules[i].status == WireworldRules.FAIL) {
-            return true;
-        }
-    }
-    return false;
+    return this._overallStatus === WireworldRules.FAIL;
 };
 
 
@@ -97,15 +152,7 @@ WireworldRules.prototype.isFail = function() {
  * @return {boolean} returns true if no rule can be broken anymore.
  */
 WireworldRules.prototype.isSuccess = function() {
-    //No rules? Then no success is possible.
-    if (this.rules.length === 0) return false;
-
-    for (var i in this.rules) {
-        if (this.rules[i].status != WireworldRules.SUCCESS) {
-            return false;
-        }
-    }
-    return true;
+    return this._overallStatus === WireworldRules.SUCCESS;
 };
 
 

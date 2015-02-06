@@ -117,20 +117,25 @@ var WireworldGame = function () {
     //In simulation mode we have to simulate the printed wireworld step by step
     this.SimulationListeners = (function() {
         var simulationStep = function() {
-            that.printedWireworldCanvas.wireworld.doStep();
-            that.wireworldRules.update(that.printedWireworldCanvas.wireworld);
-            that.printedWireworldCanvas.draw();
+            var wwc = that.printedWireworldCanvas;
+            var ww = wwc.wireworld;
+            var rules = that.wireworldRules;
 
-            if (that.wireworldRules.isSuccess()) {
+            ww.doStep();
+            rules.update(ww);
+
+            wwc.draw();
+
+            if (rules.isSuccess()) {
                 that.playStopElement.onStop();
-                that.wireworldRules.reset();
+                rules.reset();
                 that.onWin();
-            } else if (that.wireworldRules.isFail()) {
+            } else if (rules.isFail()) {
                 that.playStopElement.onStop();
-                that.wireworldRules.reset();
+                rules.reset();
                 that.onFail();
             } else {
-                console.log('Generation: ' + that.printedWireworldCanvas.wireworld.generation);
+                console.log('Generation: ' + ww.generation);
             }
         };
 
@@ -235,7 +240,7 @@ WireworldGame.prototype.loadLevel = function (levelName, onWin, onFail) {
     this.circuitBoardCanvas.draw();
 
     //Set time between automaton steps
-    this.msBetweenSteps = Math.floor(3000/this.circuitBoardCanvas.wireworld.columns);
+    this.msBetweenSteps = Math.ceil(6000/this.circuitBoardCanvas.wireworld.columns);
 
     //Setup Blueprintbox
     var cbox = new BlueprintBox();
