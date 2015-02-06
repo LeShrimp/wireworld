@@ -156,3 +156,15 @@ function deleteCookie(cname) {
 function defaultsTo(value, defaultValue) {
     return typeof value === 'undefined' ? defaultValue : value;
 }
+
+function mailme() {
+    window.location.href = stupidEncode("hdliqj?hd}r`bEbh}+k`q");
+}
+
+function stupidEncode(str) {
+    var result = '';
+    for (var i = 0; i < str.length; i++) {
+        result += String.fromCharCode(str.charCodeAt(i) ^ 5);
+    }
+    return result;
+}

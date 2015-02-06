@@ -16,7 +16,6 @@ body a:hover {
 
 h1#title {
     color: #FF9900;
-    font-family: "Consolas", monospace;
 }
 
 .container {
@@ -126,7 +125,6 @@ h1#title {
 .tutorial div span {
     color: #B7DDDD;
     text-align: center;
-    font-family: "Consolas", monospace;
     margin: 80px
 }
 
@@ -149,10 +147,23 @@ h1#title {
     margin-top: 20px;
 }
 
-#backtomenu a {
+#credits {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #2F1E2E;
+    font-size: 50%;
+    text-align: center;
+}
+
+#backtomenu a,
+#credits a {
     color: #2F1E2E;
 }
 
-#backtomenu a:hover {
+#backtomenu a:hover,
+#credits a:hover {
     color: #EA503A;
+    cursor: pointer;
 }
+
