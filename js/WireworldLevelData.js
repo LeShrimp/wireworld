@@ -70,7 +70,8 @@ WireworldLevelData.level = [
         ],
         "message" : "Hover your mouse over one of the cells in the to the right to learn about it. Click on it to select " +
                     "it. Right-click to put it back into the box. Place the cell on any of the darkly colored cells in " +
-                    "the grid on the left. To move to the next level, let the signal go all the way to the right."
+                    "the grid on the left. Press 'play' when you are done. To move to the next level, let the signal go " +
+                    "all the way to the right."
     },
 
     {
@@ -193,7 +194,7 @@ WireworldLevelData.level = [
             [0,4,4,4,4,4,4,4,4,4,4,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
-            [0,4,2,1,1,4,2,1,1,1,4,0],
+            [0,4,1,1,1,4,2,1,1,1,4,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
             [0,0,0,0,0,0,0,0,0,0,0,0]
