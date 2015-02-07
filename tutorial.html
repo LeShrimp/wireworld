@@ -3,6 +3,13 @@
 <head>
     <title>Wireworld</title>
     <link rel="stylesheet" type="text/css" href="./styles/style.css">
+
+    <script src="./js/utils.js"></script>
+    <script src="./js/Wireworld.js"></script>
+    <script src="./js/WireworldCanvas.js"></script>
+
+    <audio id="bgmusic" preload="auto" src="./resources/Organoid_-_02_-_Moonlight.mp3" loop="true" autobuffer></audio>
+    <script>playContinuously("bgmusic");</script>
 </head>
 <body>
     <h1 id="title">Wireworld</h1>
@@ -48,9 +55,6 @@
     </section>
     <div id="backtomenu"><a href="index.html">Back to Menu</a></div>
 
-    <script src="./js/utils.js"></script>
-    <script src="./js/Wireworld.js"></script>
-    <script src="./js/WireworldCanvas.js"></script>
     <script>
         function drawWireworld(cells, id, steps) {
             var cellWidth = 30;

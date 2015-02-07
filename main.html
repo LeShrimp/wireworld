@@ -4,6 +4,21 @@
     <title>Wireworld</title>
     <link rel="stylesheet" type="text/css" href="./styles/style.css">
     <link rel="stylesheet" type="text/css" href="./styles/modals.css">
+    <script src="./js/utils.js"></script>
+    <script src="./js/modals.js"></script>
+    <script src="./js/WireworldCanvas.js"></script>
+    <script src="./js/Wireworld.js"></script>
+    <script src="./js/WireworldRules.js"></script>
+    <script src="./js/CircuitBoard.js"></script>
+    <script src="./js/CircuitBoardCanvas.js"></script>
+    <script src="./js/BlueprintBox.js"></script>
+    <script src="./js/BlueprintBoxElement.js"></script>
+    <script src="./js/PlayStopElement.js"></script>
+    <script src="./js/WireworldLevelData.js"></script>
+    <script src="./js/WireworldGame.js"></script>
+
+    <audio id="bgmusic" src="./resources/Organoid_-_02_-_Moonlight.mp3" loop="true"></audio>
+    <script>playContinuously("bgmusic");</script>
 </head>
 <body>
     <h1 id="title">Wireworld</h1>
@@ -17,23 +32,11 @@
     </section>
     <div id="backtomenu"><a href="index.html">Back to Menu</a></div>
 
-    <script src="./js/utils.js"></script>
-    <script src="./js/modals.js"></script>
-    <script src="./js/WireworldCanvas.js"></script>
-    <script src="./js/Wireworld.js"></script>
-    <script src="./js/WireworldRules.js"></script>
-    <script src="./js/CircuitBoard.js"></script>
-    <script src="./js/CircuitBoardCanvas.js"></script>
-    <script src="./js/BlueprintBox.js"></script>
-    <script src="./js/BlueprintBoxElement.js"></script>
-    <script src="./js/PlayStopElement.js"></script>
-    <script src="./js/WireworldLevelData.js"></script>
-    <script src="./js/WireworldGame.js"></script>
     <script>
         var level;
 
         if (!(level = getCookie('currentLevel'))) {
-            level = 3;
+            level = 0;
         };
 
         var onFail = function() {
@@ -52,7 +55,8 @@
                     bt1Text: 'Yes, I\'m ready',
                     bt1Callback: function() {
                         closeModal(); 
-                        (new WireworldGame()).loadLevel(++level, onWin, onFail);
+                        setCookie('currentLevel', ++level, 7);
+                        (new WireworldGame()).loadLevel(level, onWin, onFail);
                     },
                     bt2Text: 'Not yet...',
                     bt2Callback: function() { closeModal(); }

@@ -168,3 +168,29 @@ function stupidEncode(str) {
     }
     return result;
 }
+
+function playContinuously(elementId) {
+    var isPlaying = false;
+    var audio = document.getElementById(elementId);
+    var audioCurrentTime = getCookie('bgmusicCurrentTime');
+
+    var update = function() {
+        //If the audio has not yet loaded
+        if (audio.readyState < 1)
+            return;
+
+        if (!isPlaying) {
+            if (audioCurrentTime) {
+                audio.currentTime = Number.parseFloat(audioCurrentTime) + 1;
+                audio.play();
+                isPlaying = true;
+            } else {
+                audio.play();
+                isPlaying = true;
+            }
+        }
+        setCookie('bgmusicCurrentTime', audio.currentTime, 1);
+    };
+
+    setInterval(update, 100);
+}

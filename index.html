@@ -3,7 +3,10 @@
 <head>
     <title>Wireworld</title>
     <link rel="stylesheet" type="text/css" href="./styles/style.css">
+
     <script src="./js/utils.js"></script>
+    <audio id="bgmusic" preload="auto" src="./resources/Organoid_-_02_-_Moonlight.mp3" loop="true" autobuffer></audio>
+    <script>playContinuously("bgmusic");</script>
 </head>
 <body>
     <div class="mainMenu">
@@ -19,7 +22,10 @@
             Tutorial
         </a></p>
 
-        <div id="credits">Code by <a onclick="mailme()">LeShrimp</a></div>
+        <div id="credits">
+            Code by <a onclick="mailme()">LeShrimp</a>,
+            Music by <a href="http://organoid.bandcamp.com/">Organoid</a>
+        </div>
     </div>
 </body>
 </html>
