@@ -3,8 +3,11 @@
 <head>
     <title>Wireworld</title>
     <link rel="stylesheet" type="text/css" href="./styles/style.css">
+    <link rel="stylesheet" type="text/css" href="./styles/modals.css">
 
     <script src="./js/utils.js"></script>
+    <script src="./js/modals.js"></script>
+
     <audio id="bgmusic" preload="auto" src="./resources/Organoid_-_02_-_Moonlight.mp3" loop="true" autobuffer></audio>
     <script>playContinuously("bgmusic");</script>
 </head>
@@ -12,20 +15,36 @@
     <div class="mainMenu">
         <h1 id="title">Wireworld</h1>
 
+        <p id="continue" style="display: none;"><a href="main.html">
+            Continue
+        </a></p>
         <p><a href="main.html" onclick="deleteCookie('currentLevel')">
             New Game
-        </a></p>
-        <p><a href="main.html">
-            Continue
         </a></p>
         <p><a href="tutorial.html">
             Tutorial
         </a></p>
-
-        <div id="credits">
-            Code by <a onclick="mailme()">LeShrimp</a>,
-            Music by <a href="http://organoid.bandcamp.com/">Organoid</a>
-        </div>
+        <div id="credits"><a onClick="showCredits()">
+            Credits
+        </a></div>
     </div>
+
+    <script>
+        if (getCookie('currentLevel') !== '') {
+            document.getElementById('continue').style.display = 'initial';
+        }
+
+        function showCredits() {
+            showModal({
+                    title: 'Credits',
+                    message: 
+                        '<p>Code and Design by <a onclick="mailme()">LeShrimp</a></p>' + 
+                        '<p>Music by <a href="http://organoid.bandcamp.com/">Organoid</a></p>' + 
+                        '<p>The Wireworld cellular automaton was invented by Brian Silverman</p>',
+                    bt1Text: 'Okay',
+                    bt1Callback: function() { closeModal() }
+            });
+        };
+    </script>
 </body>
 </html>

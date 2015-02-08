@@ -68,7 +68,7 @@ WireworldLevelData.level = [
                 "must" : Wireworld.WW_EHEAD
             }
         ],
-        "message" : "Hover your mouse over one of the cells in the to the right to learn about it. Click on it to select " +
+        "message" : "Hover your mouse over one of the cells in the box to the right to learn about it. Click on it to select " +
                     "it. Right-click to put it back into the box. Place the cell on any of the darkly colored cells in " +
                     "the grid on the left. Press 'play' when you are done. To move to the next level, let the signal go " +
                     "all the way to the right."

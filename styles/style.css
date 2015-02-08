@@ -8,6 +8,7 @@ body {
 body a {
     color: #B7DDDD;
     text-decoration: none;
+    cursor: pointer;
 }
 
 body a:hover {
@@ -143,10 +144,6 @@ h1#title {
     font-size: 200%;
 }
 
-#backtomenu {
-    margin-top: 20px;
-}
-
 #credits {
     position: absolute;
     bottom: 0;
@@ -166,4 +163,3 @@ h1#title {
     color: #EA503A;
     cursor: pointer;
 }
-
