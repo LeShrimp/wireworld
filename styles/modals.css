@@ -33,6 +33,7 @@
 #modalDialog #button1,
 #modalDialog #button2 {
     cursor: pointer;
+    font-weight: bold;
 }
 
 #modalDialog #button1:hover,
