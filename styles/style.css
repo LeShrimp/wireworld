@@ -144,6 +144,10 @@ h1#title {
     font-size: 200%;
 }
 
+#backtomenu {
+    margin-top: 20px;
+}
+
 #credits {
     position: absolute;
     bottom: 0;
