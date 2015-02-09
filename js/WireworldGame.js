@@ -202,6 +202,7 @@ WireworldGame.prototype.setMode = function(mode) {
 
         case WireworldGame.SELECTION_MODE:
             this.SimulationListeners.onSimulationStop();
+            this.blueprintBoxElement.deselectBlueprint();
             this.blueprintBoxElement.onSelectionChange(this.bbeSelectionChange);
             cbcEl.removeEventListener('mousemove', this.cbcPlacementListeners.onMouseMove);
             cbcEl.removeEventListener('mousedown', this.cbcPlacementListeners.onMouseDown);
@@ -210,6 +211,7 @@ WireworldGame.prototype.setMode = function(mode) {
             break;
 
         case WireworldGame.EXECUTION_MODE:
+            this.blueprintBoxElement.deselectBlueprint();
             this.blueprintBoxElement.onSelectionChange(function() {});
             cbcEl.removeEventListener('mousemove', this.cbcSelectionListeners.onMouseMove);
             cbcEl.removeEventListener('mousedown', this.cbcSelectionListeners.onMouseDown);

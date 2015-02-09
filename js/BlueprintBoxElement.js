@@ -72,16 +72,24 @@ BlueprintBoxElement.prototype._populate = function () {
 BlueprintBoxElement.prototype.selectBlueprint = function (blueprint) {
     var wwce = this.wireworldCanvases[blueprint.id].htmlCanvasElement;
 
-    for (var id in this.wireworldCanvases) {
-        this.wireworldCanvases[id].htmlCanvasElement.style.borderWidth = '0px';
-    }
     wwce.style.borderColor = '#4D344A';
     wwce.style.borderWidth = '2px';
     wwce.style.borderStyle = 'solid';
 
+    this.deselectBlueprint();
     this.selectedBlueprint = blueprint;
+    this.updateCounterElement(this.selectedBlueprint);
 
     this._onSelectionChangeListener(blueprint);
+};
+
+BlueprintBoxElement.prototype.deselectBlueprint = function () {
+    var blueprint = this.selectedBlueprint;
+    if (blueprint !== null) {
+        this.wireworldCanvases[blueprint.id].htmlCanvasElement.style.borderWidth = '0px';
+        this.selectedBlueprint = null;
+        this.updateCounterElement(blueprint); //It is important to first set selectedBlueprint to null!
+    }
 };
 
 /**
@@ -93,7 +101,8 @@ BlueprintBoxElement.prototype.decCount = function (blueprint) {
     if (!blueprint.count) {
         return false;
     }
-    document.getElementById(blueprint.id).nextSibling.innerHTML = --blueprint.count;
+    blueprint.count--;
+    this.updateCounterElement(blueprint);
     return true;
 };
 
@@ -103,8 +112,20 @@ BlueprintBoxElement.prototype.decCount = function (blueprint) {
  * @returns {*}
  */
 BlueprintBoxElement.prototype.incCount = function (blueprint) {
-    document.getElementById(blueprint.id).nextSibling.innerHTML = ++blueprint.count;
+    blueprint.count++;
+    this.updateCounterElement(blueprint);
     return true;
+};
+
+/**
+ * Update the indicator under the blueprint to indicate how many blueprints are left.
+ * Subtract 1 if the current blueprint is selected.
+ *
+ * @param {Blueprint} blueprint
+ */
+BlueprintBoxElement.prototype.updateCounterElement = function (blueprint) {
+    var newCount = this.selectedBlueprint === blueprint ? blueprint.count - 1 : blueprint.count;
+    document.getElementById(blueprint.id).nextSibling.innerHTML = newCount;
 };
 
 BlueprintBoxElement.prototype.onSelectionChange = function (onSelectionChangeListener) {
