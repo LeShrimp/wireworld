@@ -191,54 +191,6 @@ WireworldLevelData.level = [
     {
         "cells" : [ //12 x 8
             [0,0,0,0,0,0,0,0,0,0,0,0],
-            [0,4,4,4,4,4,4,4,4,4,4,0],
-            [0,4,4,4,4,4,4,4,4,4,4,0],
-            [0,4,4,4,4,4,4,4,4,4,4,0],
-            [0,4,1,1,1,4,2,1,1,1,4,0],
-            [0,4,4,4,4,4,4,4,4,4,4,0],
-            [0,4,4,4,4,4,4,4,4,4,4,0],
-            [0,0,0,0,0,0,0,0,0,0,0,0]
-        ],
-        "blueprints" : [
-            {
-                "cells" : [
-                    [1]
-                ],
-                "count" : 1,
-                "tip": "A copper cell changes to Electron Head state if on or two of its neighbors are in Electron Head state"
-            }, {
-                "cells" : [
-                    [3]
-                ],
-                "count" : 1,
-                "tip": "An Electron Tail cell becomes a Copper cell"
-            }
-        ],
-        "rules" : [
-            {
-                "coordinates" : {"i" : 9, "j" : 4},
-                "generation" : {"from":0, "to":7},
-                "must" : Wireworld.WW_EHEAD
-            }, {
-                "coordinates" : {"i" : 9, "j" : 4},
-                "generation" : {"from":8, "to":15},
-                "must" : Wireworld.WW_EHEAD
-            }, {
-                "coordinates" : {"i" : 9, "j" : 4},
-                "generation" : {"from":16, "to":23},
-                "must" : Wireworld.WW_EHEAD
-            }, {
-                "coordinates" : {"i" : 9, "j" : 4},
-                "generation" : {"from":24, "to":31},
-                "must" : Wireworld.WW_EHEAD
-            }
-        ],
-        "message" : "Make an infinite amount of signals reach the right end of the wire."
-    },
-
-    {
-        "cells" : [ //12 x 8
-            [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,4,4,4,4,4,0],
             [0,0,0,0,0,0,4,1,1,1,1,0],
             [0,0,0,0,0,0,4,4,4,4,4,0],
