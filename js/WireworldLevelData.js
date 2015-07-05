@@ -75,6 +75,56 @@ WireworldLevelData.level = [
     },
 
     {
+       "cells" : [ //18x12
+         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+         [0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0],
+         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
+       ],
+       "blueprints" : [
+           {
+               "cells" : [
+                   [1]
+               ],
+               "count" : 10,
+               "tip": "A copper cell changes to Electron Head state if on or two of its neighbors are in Electron Head state"
+           },
+           {
+               "cells" : [
+                   [2]
+               ],
+               "count" : 10,
+               "tip": "An Electron Head cell becomes an Electron Tail"
+           },
+           {
+               "cells" : [
+                   [3]
+               "count" : 10,
+               "tip": "An Electron Tail cell becomes a Copper cell"
+           }
+       ],
+
+       "rules": [
+         {
+           "coordinates" : {"i" : 10, "j" : 4},
+           "generation" : {"from":0, "to":100},
+           "must" : Wireworld.WW_EHEAD
+         }
+       ],
+       "message" : "Build a repeater with period 5!"
+
+    },
+
+    {
         "cells" : [ //12 x 8
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,4,4,4,4,4,4,4,4,4,4,0],
@@ -636,4 +686,3 @@ WireworldLevelData.level = [
                     "enough to do so.</a>"
     }
 ];
-
